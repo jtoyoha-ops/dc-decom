@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+title: "DC-DECOM: Cost-Optimal Decarbonization Pathways for Data Centers in Japan"
+message: "If you use this software or data, please cite the journal article (Energies, Manuscript ID energies-4309361; DOI to be inserted at proof stage) and (optionally) this repository."
+type: software
+authors:
+  - family-names: "Toyohara"
+    given-names: "Jin"
+    alias: "jtoyoha-ops"
+repository-code: "https://github.com/jtoyoha-ops/dc-decom"
+url: "https://github.com/jtoyoha-ops/dc-decom"
+license: MIT
+keywords:
+  - data center decarbonization
+  - cost optimization
+  - Power Usage Effectiveness
+  - PUE
+  - renewable energy
+  - carbon pricing
+  - GX-ETS
+  - Japan
+  - linear programming
+  - PuLP

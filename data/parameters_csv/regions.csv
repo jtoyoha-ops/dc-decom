@@ -1,0 +1,6 @@
+region,city,annual_mean_T_C,base_share_2024,tariff_yen_per_kWh,ppa_yen_per_kWh,re_max_GW
+Hokkaido,Sapporo,9.2,0.03,20.0,12.0,337
+Tohoku,Sendai,12.8,0.05,18.5,13.0,180
+Kanto,Tokyo,16.5,0.60,19.9,16.0,98.8
+Kansai,Osaka,17.1,0.22,16.0,15.0,75
+Kyushu,Fukuoka,17.3,0.10,15.5,14.0,140

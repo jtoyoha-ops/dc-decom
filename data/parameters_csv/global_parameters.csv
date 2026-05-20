@@ -1,0 +1,43 @@
+parameter,value,unit,source,notes
+C_base,1.14,dimensionless,calibrated,PUE air-cooling intercept
+alpha,0.0167,1/C,calibrated,linear PUE temperature coefficient
+beta,0.0102,1/C^2,calibrated,quadratic PUE coefficient above T_thresh
+T_thresh,15.0,C,NTT_Facilities,free-cooling threshold
+C_pump,0.055,dimensionless,Vertiv,liquid cooling overhead
+gamma,0.0015,1/C,Haghshenas,liquid cooling temperature coefficient
+P_base_2024,2.85,GW,paper_Eq6,non-AI baseline load (19 TWh - AI portion) over 8760h utilization
+P_AI_0,1.5,GW,paper_Eq7,2024 AI workload
+g_AI,0.30,fraction_per_year,JST_Vol3,AI demand CAGR
+eta_HW_rate,0.30,fraction_per_year,JST_Moore,CPU efficiency CAGR
+eta_arch_rate,0.05,fraction_per_year,NVIDIA,architecture factor annual
+EF_grid_2024,0.43,kg-CO2/kWh,MOE_2022,grid emission factor base
+EF_grid_2040,0.10,kg-CO2/kWh,SEP7,grid emission factor 2040 target
+EF_fossil,0.49,kg-CO2/kWh,METI_Cogen,CGS natural gas emission factor
+P_carbon_2026,3000,yen/t-CO2,GX-ETS,FY2026 mid-point
+P_carbon_2035,11000,yen/t-CO2,MRI,2035 mid-point
+P_carbon_2040,18000,yen/t-CO2,projected,2040 extrapolation
+E_2024,8.2,Mt-CO2/yr,base-year_calc,total Japan DC emissions baseline
+N_resilience,1,unitless,N+1_standard,backup redundancy
+Deploy_max_liquid,0.5,GW/yr/region,SoftBank_Tomakomai,liquid cooling deployment cap
+Deploy_max_PV,1.0,GW/yr/region,FIT_historical,PV deployment cap
+discount_rate,0.03,fraction,Imagawa_IEA_ETSAP,social discount rate
+curtail_penalty,500,yen/kWh,VOLL_proxy,curtailment penalty
+horizon_start,2024,year,paper,planning horizon start
+horizon_end,2040,year,paper,planning horizon end
+hours_per_year,8760,hours,calendar,
+rep_hours_per_year,96,hours,4_seasons_x_24h,representative hours
+cooling_air_capex,150,yen_thousand/kW,paper_Table6,air cooling baseline CAPEX
+cooling_dlc_capex,195,yen_thousand/kW,paper_Table6,DLC: +20-30% vs air; mid 30%
+cooling_immersion_capex,225,yen_thousand/kW,paper_Table6,immersion: +50% vs air
+bess_capex_2025,60,yen_thousand/kWh,NEDO,BESS Li-ion 2025 cost
+bess_capex_2035,30,yen_thousand/kWh,NEDO,BESS Li-ion 2035 cost
+bess_efficiency,0.90,fraction,round_trip,
+pv_lcoe,9.9,yen/kWh,METI_CV,utility-scale PV LCOE
+pv_cf_avg,0.15,fraction,regional_avg,capacity factor
+cgs_capex,230,yen_thousand/kW,METI_Cogen,gas CGS unit cost
+cgs_eff_total,0.762,fraction,METI_Cogen,total efficiency (elec+heat)
+cgs_eff_elec,0.423,fraction,METI_Cogen,electrical efficiency only
+pue_air_2024_avg,1.55,dimensionless,Uptime_2024,initial fleet PUE
+pue_dlc_avg,1.15,dimensionless,Vertiv,DLC operating PUE
+pue_immersion_avg,1.05,dimensionless,MHI,immersion operating PUE
+opex_om_rate,0.02,fraction_of_capex_per_year,industry_standard,O&M as fraction of CAPEX

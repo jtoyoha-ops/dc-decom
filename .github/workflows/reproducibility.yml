@@ -1,0 +1,41 @@
+name: reproducibility
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  reproduce-headline-numbers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install CBC solver
+        run: sudo apt-get update && sudo apt-get install -y coinor-cbc
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Lint
+        run: ruff check src/
+
+      - name: Type-check
+        run: mypy src/dc_decom/
+
+      - name: Run all three scenarios
+        run: |
+          python src/scripts/run_ref.py --out out/ref.json
+          python src/scripts/run_ccn.py --out out/ccn.json
+          python src/scripts/run_rcn.py --out out/rcn.json
+
+      - name: Assert headline numbers
+        run: pytest tests/test_headline_numbers.py -v

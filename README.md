@@ -1,5 +1,10 @@
 # DC-DECOM
 
+[![CI](https://github.com/jtoyoha-ops/dc-decom/actions/workflows/reproducibility.yml/badge.svg)](https://github.com/jtoyoha-ops/dc-decom/actions/workflows/reproducibility.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Data CC BY 4.0](https://img.shields.io/badge/Data%20License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+
 **Cost-Optimal Decarbonization Pathways for Data Centers in Japan: A Bottom-Up Model Integrating Location, Energy Systems, and Carbon Pricing**
 
 > Companion code and input data for the *Energies* article (Manuscript ID: `energies-4309361`).

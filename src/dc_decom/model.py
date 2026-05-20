@@ -23,7 +23,7 @@ Constraints implemented (paper Section 3.8):
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 import numpy as np
 import pulp
@@ -51,7 +51,7 @@ class SolveResult:
     # Annual time-series (year-indexed dict of region-indexed dict)
     annual: Dict[str, Dict[str, Dict[int, float]]]
     # Per-year, per-region snapshot table
-    table: List[Dict[str, float]]
+    table: List[Dict[str, object]]
 
 
 # ----------------------------------------------------------------------
@@ -426,8 +426,10 @@ def build_and_solve(scenario: Scenario,
     curt_cost = _val(pulp.lpSum(curt_terms))
     obj = capex_total + opex_total + energy_cost + carbon_cost_v + curt_cost
 
-    annual = {"capacity": {}, "energy": {}, "emissions": {}, "load": {}}
-    table = []
+    annual: Dict[str, Dict[str, Dict[int, float]]] = {
+        "capacity": {}, "energy": {}, "emissions": {}, "load": {}
+    }
+    table: List[Dict[str, object]] = []
     for ti, t in enumerate(years):
         for r in regs:
             energy_kwh = {src: _val(E[(src, r, t)]) for src in energy_sources}
@@ -436,7 +438,7 @@ def build_and_solve(scenario: Scenario,
                 energy_kwh["grid"] * float(ef_grid[ti])
                 + energy_kwh["cgs"] * p.EF_fossil
             )  # TWh * kg/kWh = Mt
-            row = {
+            row: Dict[str, object] = {
                 "year": t, "region": r,
                 "it_load_GW": it_load_rt[(r, t)],
                 "facility_load_TWh": total_E,

@@ -1,7 +1,8 @@
 # DC-DECOM
 
 [![CI](https://github.com/jtoyoha-ops/dc-decom/actions/workflows/reproducibility.yml/badge.svg)](https://github.com/jtoyoha-ops/dc-decom/actions/workflows/reproducibility.yml)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20312805.svg)](https://doi.org/10.5281/zenodo.20312805)
+[![Article DOI](https://img.shields.io/badge/Article%20DOI-10.3390%2Fen19102485-blue.svg)](https://doi.org/10.3390/en19102485)
+[![Software DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20312805.svg)](https://doi.org/10.5281/zenodo.20312805)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![License: Data CC BY 4.0](https://img.shields.io/badge/Data%20License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
@@ -117,7 +118,7 @@ dc-decom/
 
 Please cite the journal article as the canonical reference. A machine-readable `CITATION.cff` is provided at the repository root; GitHub renders a "Cite this repository" widget that produces the recommended BibTeX/APA.
 
-> Toyohara, J.; Zhou, W. *Cost-Optimal Decarbonization Pathways for Data Centers in Japan: A Bottom-Up Model Integrating Location, Energy Systems, and Carbon Pricing*. **Energies** 2026. (Journal DOI inserted upon publication)
+> Toyohara, J.; Zhou, W. *Cost-Optimal Decarbonization Pathways for Data Centers in Japan: A Bottom-Up Model Integrating Location, Energy Systems, and Carbon Pricing*. **Energies** 2026, *19*(10), 2485. [https://doi.org/10.3390/en19102485](https://doi.org/10.3390/en19102485)
 
 > Software archive: [10.5281/zenodo.20312805](https://doi.org/10.5281/zenodo.20312805) (this repository, v1.0.0).
 

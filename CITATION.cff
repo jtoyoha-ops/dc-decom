@@ -35,6 +35,10 @@ preferred-citation:
       given-names: "Weisheng"
   journal: "Energies"
   year: 2026
+  volume: 19
+  issue: 10
+  start: 2485
+  doi: "10.3390/en19102485"
+  url: "https://doi.org/10.3390/en19102485"
   publisher:
     name: "MDPI"
-  notes: "Manuscript ID energies-4309361. DOI to be inserted at proof stage."

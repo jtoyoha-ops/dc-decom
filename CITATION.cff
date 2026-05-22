@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: "DC-DECOM: Cost-Optimal Decarbonization Pathways for Data Centers in Japan"
-message: "If you use this software or data, please cite the journal article (Energies, Manuscript ID energies-4309361; DOI to be inserted at proof stage) and (optionally) this repository via the Zenodo DOI below."
+message: "If you use this software or data, please cite the journal article (Energies 2026, 19(10), 2485, https://doi.org/10.3390/en19102485) and (optionally) this repository via the Zenodo DOI below."
 type: software
 authors:
   - family-names: "Toyohara"

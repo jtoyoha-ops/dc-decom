@@ -1,0 +1,10 @@
+id,group,value,unit,low,high,status,source_id,notes
+bess_duration_h,structural,4.0,h,,,dev,DEV,placeholder for tests only; never a result
+gen_capex,structural,60.0,thousand yen/kW,,,dev,DEV,emergency generator CAPEX placeholder
+ppa_tier1_share,structural,0.15,fraction of RE potential energy,,,dev,DEV,tier-1 PPA volume = share x RE_max x CF_avg x 8.76 x ppa_volume_factor(t)
+ppa_tier2_share,structural,0.35,fraction of RE potential energy,,,dev,DEV,tier-2 PPA volume
+ppa_tier2_premium_yen_per_kWh,structural,3.0,yen/kWh,,,dev,DEV,tier-2 price = regional PPA price + premium
+nfc_yen_per_kWh,structural,0.6,yen/kWh,,,dev,DEV,non-fossil certificate price (certificates option)
+reinforcement_cost_yen_per_kW,policy,30000.0,yen/kW,,,dev,DEV,cost per kW of connected peak added in reinforced years
+operator_burden_share,policy,0.5,fraction,,,dev,DEV,theta
+siting_subsidy_yen_per_kW,policy,20000.0,yen/kW,,,dev,DEV,R-CN subsidy per kW of new non-metro IT nameplate

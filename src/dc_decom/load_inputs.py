@@ -19,6 +19,7 @@ class RegionData:
     tariff_yen_per_kWh: float
     ppa_yen_per_kWh: float
     re_max_GW: float
+    grid_ef_base: float       # kg-CO2/kWh, regional grid EF in 2024 (Table 9)
 
 
 @dataclass(frozen=True)
@@ -85,6 +86,9 @@ class GlobalParameters:
 def load_regions(path: Path | None = None) -> Dict[str, RegionData]:
     path = path or (DATA_DIR / "regions.csv")
     df = pd.read_csv(path)
+    if "grid_ef_base" not in df.columns:
+        raise KeyError(f"{path}: missing column grid_ef_base "
+                       "(regional grid emission factor, paper Table 9)")
     out: Dict[str, RegionData] = {}
     for _, row in df.iterrows():
         out[row["region"]] = RegionData(
@@ -95,6 +99,7 @@ def load_regions(path: Path | None = None) -> Dict[str, RegionData]:
             tariff_yen_per_kWh=float(row["tariff_yen_per_kWh"]),
             ppa_yen_per_kWh=float(row["ppa_yen_per_kWh"]),
             re_max_GW=float(row["re_max_GW"]),
+            grid_ef_base=float(row["grid_ef_base"]),
         )
     return out
 

@@ -3,26 +3,40 @@
 This module assembles the multi-region, multi-year linear program described
 in Section 3 of the accompanying paper. To keep solve times manageable, the
 hourly dispatch dimension of the published formulation is aggregated into
-annual totals via the representative-hour weights of the 96-hour profiles
-(temperature-dependent PUE is still applied at the hourly level when building
-the annual aggregates). All other modelling choices follow the paper.
+annual totals, and the PUE equations are evaluated at the regional annual
+mean temperature (see ``_weighted_avg_pue``).
 
 Decision variables:
     cap_<tech>[r, t]   - installed capacity at end of year t (GW IT load)
     delta_<tech>[r, t] - capacity addition in year t (GW IT load / GW / GWh)
-    E_<source>[r, t]   - annual electricity from each source (GWh)
-    Curt[r, t]         - annual curtailment (GWh, usually zero)
+    E_<source>[r, t]   - annual electricity from each source (TWh)
+    E_ch[r, t]         - annual BESS charging (TWh)
+    Curt[r, t]         - annual curtailment (TWh)
 
 Constraints implemented (paper Section 3.8):
-    (a) Annual energy balance per region.
-    (b) System-wide CO2 cap (Eq. 13), if scenario enables it.
-    (c) Regional renewable capacity bound (Eq. 14).
-    (d) Resilience N+1 backup capacity (Eq. 15).
-    (e) Deployment-rate bounds on liquid cooling and PV (Eq. 16).
+    (a) Annual energy balance per region, with BESS charging (Eq. 12).
+    (b) System-wide CO2 cap (Eqs. 13-14) with regional grid emission
+        factors (Eq. 10, Table 9), if the scenario enables it.
+    (c) Regional renewable bound Cap_PV + Cap_PPA <= RE_max (Eq. 15).
+    (d) Resilience N+1 backup capacity (Eq. 16).
+    (e) Deployment-rate bounds on liquid cooling and PV (Eq. 17).
+    (f) Calibration years 2024-2025 without new DLC, immersion, PV or BESS
+        (Section 3.9).
+
+Implementation errors fixed in v2.0.0 (code that contradicted the paper):
+    E1 share_2040 applied by region name (Table 7, Section 4.5).
+    E2 BESS discharge requires charging: E_disch = eff x E_ch (Eq. 12).
+    E3 backup Cap_CGS >= (1 + 1/N) x IT load (Eq. 16, N = 1 in Table 8).
+    E4 2024-2025 are calibration years (Section 3.9).
+    E5 regional grid emission factor EF(r, t) (Eq. 10, Table 9).
+    E6 regional inputs of Table 9 / Section 3.2 (data/parameters_csv/regions.csv).
+    E7 Eq. 15 bounds PV plus PPA, not PV alone.
+    E8 5% CAPEX subsidy for non-metro DLC, immersion, CGS and BESS in R-CN
+       (Table 7, Scenario.regional_subsidy); reported as SolveResult.subsidy_total.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Dict, List
 
 import numpy as np
@@ -36,6 +50,11 @@ from .carbon import (
 from .load_inputs import GlobalParameters, RegionData
 from .pue import PUEParameters, pue_for_technology
 from .scenarios import METRO, Scenario
+
+# Section 3.9: 2024-2025 are calibration years fixed at observed values.
+CALIBRATION_YEARS = (2024, 2025)
+# Table 7: R-CN includes regional DC subsidies (5% effective CAPEX discount).
+SUBSIDY_RATE = 0.05
 
 
 @dataclass
@@ -52,6 +71,14 @@ class SolveResult:
     annual: Dict[str, Dict[str, Dict[int, float]]]
     # Per-year, per-region snapshot table
     table: List[Dict[str, object]]
+    # Regional CAPEX subsidy of R-CN (E8), yen discounted; already deducted
+    # from capex_total and objective_yen.
+    subsidy_total: float = 0.0
+    # Cumulative curtailment 2024-2040 over all regions (TWh)
+    curtail_TWh_total: float = 0.0
+    # Per-year, per-region discounted cost components (yen), gross of the
+    # subsidy and with the metro siting premium separated
+    components: List[Dict[str, object]] = field(default_factory=list)
 
 
 # ----------------------------------------------------------------------
@@ -140,12 +167,22 @@ def build_and_solve(scenario: Scenario,
     p_carb = carbon_price_trajectory(np.array(years), p)
     co2_cap = co2_cap_trajectory(np.array(years), p)  # Mt-CO2/yr
 
+    # Regional grid EF (Eq. 10, Table 9; fix E5): the Table 9 value of each
+    # region declines in proportion to the national path of
+    # grid_emission_factor (EF_grid_2024 -> EF_grid_2040).
+    def ef_rt(r: str, ti: int) -> float:
+        return float(regions[r].grid_ef_base * ef_grid[ti] / p.EF_grid_2024)
+
     # ------------------- regional share trajectory --------------------
+    # Fix E1: targets are looked up by region name. Fix E4: shares stay at
+    # the base-year values through the calibration years and move linearly
+    # from 2025 to the 2040 target.
     base_shares = np.array([regions[r].base_share_2024 for r in regs])
-    target_shares = np.array(scenario.share_2040)
+    target_shares = np.array([scenario.share_2040[r] for r in regs])
     shares = np.zeros((len(years), len(regs)))
+    start = CALIBRATION_YEARS[-1]
     for ti, yr in enumerate(years):
-        frac = (yr - p.horizon_start) / (p.horizon_end - p.horizon_start)
+        frac = max(0.0, (yr - start) / (p.horizon_end - start))
         shares[ti] = base_shares + (target_shares - base_shares) * frac
         shares[ti] /= shares[ti].sum()  # renormalise just in case
 
@@ -164,6 +201,9 @@ def build_and_solve(scenario: Scenario,
          for src in energy_sources for r in regs for t in years}
     curt = {(r, t): pulp.LpVariable(f"curt_{r}_{t}", lowBound=0)
             for r in regs for t in years}
+    # BESS charging (Eq. 12; fix E2)
+    E_ch = {(r, t): pulp.LpVariable(f"E_ch_{r}_{t}", lowBound=0)
+            for r in regs for t in years}
 
     # ------------------- capacity book-keeping --------------------
     # 2024 initial fleet: all air-cooling, distributed by 2024 shares
@@ -177,7 +217,7 @@ def build_and_solve(scenario: Scenario,
                 prev2 = 0 if t == years[0] else cap[(tech, r, t - 1)]
                 prob += cap[(tech, r, t)] == prev2 + delta[(tech, r, t)]
 
-    # ------------------- deployment-rate cap (Eq. 16) --------------------
+    # ------------------- deployment-rate cap (Eq. 17) --------------------
     for r in regs:
         for t in years:
             prob += delta[("dlc", r, t)] + delta[("immersion", r, t)] \
@@ -190,6 +230,15 @@ def build_and_solve(scenario: Scenario,
                 # Kanto/Kansai. We approximate this by allowing only replacement
                 # of the air fleet (no net IT growth in non-metro).
                 pass  # share-trajectory already pins this via energy-balance below.
+
+    # ------------------- calibration years (Section 3.9; fix E4) -------------
+    # 2024-2025 are fixed at observed values: no DLC, immersion, PV or BESS
+    # additions in these years.
+    for r in regs:
+        for t in years:
+            if t in CALIBRATION_YEARS:
+                for tech in ("dlc", "immersion", "pv", "bess"):
+                    prob += delta[(tech, r, t)] == 0
 
     # ------------------- annual IT load and total electricity --------------------
     # total IT load (GW) by year (national)
@@ -240,12 +289,14 @@ def build_and_solve(scenario: Scenario,
             fac_demand[(r, t)] = expr
 
     # ------------------- energy balance (Constraint a, Eq. 12) --------------------
+    # Eq. 12: sum_s E_s + Curt = Load + E_BESS,ch (fix E2: the charging term
+    # was missing up to v1.0.1).
     for r in regs:
         for t in years:
             prob += (
                 pulp.lpSum(E[(src, r, t)] for src in energy_sources)
                 + curt[(r, t)]
-                == fac_demand[(r, t)] / 1000.0
+                == fac_demand[(r, t)] / 1000.0 + E_ch[(r, t)]
             )
             # fac_demand is in GWh; we convert to TWh: /1000.
 
@@ -258,6 +309,8 @@ def build_and_solve(scenario: Scenario,
             # cap[bess] is in GWh; annual discharge <= cap * cycles * eff
             prob += E[("bess_disch", r, t)] \
                 <= cap[("bess", r, t)] * cycles_per_yr / 1000.0 * p.bess_efficiency
+            # Fix E2: discharge = round-trip efficiency x charging (Eq. 12)
+            prob += E[("bess_disch", r, t)] == p.bess_efficiency * E_ch[(r, t)]
             # PV annual energy bounded by capacity * CF * 8760
             prob += E[("pv", r, t)] \
                 <= cap[("pv", r, t)] * p.pv_cf_avg * 8.760 / 1000.0 * 1000.0
@@ -265,15 +318,20 @@ def build_and_solve(scenario: Scenario,
             prob += E[("cgs", r, t)] \
                 <= cap[("cgs", r, t)] * 0.5 * 8.760 / 1000.0 * 1000.0
 
-    # ------------------- RE capacity bound (Constraint c, Eq. 14) --------------------
+    # ------------------- RE capacity bound (Constraint c, Eq. 15) --------------------
+    # Eq. 15: Cap_PV + Cap_PPA <= RE_max (fix E7: up to v1.0.1 only PV was
+    # bounded). The PPA capacity is the PPA energy at the solar CF:
+    # Cap_PPA = E_PPA / (CF x 8.76).
     # On-site PV is realistically limited to ~10-15% of facility load because
     # of intermittency, rooftop area, and grid-injection constraints. The
     # REPOS potential captures the *physical* upper bound but operational
     # rooftop/adjacent-land deployment is far smaller in practice.
     onsite_pv_share = 0.10
+    ppa_GW_per_TWh = 1.0 / (p.pv_cf_avg * 8.760)
     for r in regs:
         for t in years:
-            prob += cap[("pv", r, t)] <= regions[r].re_max_GW
+            prob += cap[("pv", r, t)] + E[("ppa", r, t)] * ppa_GW_per_TWh \
+                <= regions[r].re_max_GW
             # Operational cap: PV energy <= 10% of facility load
             prob += E[("pv", r, t)] <= onsite_pv_share * (
                 fac_demand[(r, t)] / 1000.0
@@ -309,33 +367,28 @@ def build_and_solve(scenario: Scenario,
         for t in years:
             prob += E[("cgs", r, t)] <= 0.05 * (fac_demand[(r, t)] / 1000.0)
 
-    # ------------------- BESS bound vs grid charging --------------------
-    # BESS discharge is bounded by capacity * cycles (already constrained).
-    # Implicit: BESS must be charged from grid/PPA/PV at the same period.
-    # We approximate the round-trip loss by requiring net energy <= 0.
-
     # ------------------- C-CN geographic restriction --------------------
     # In C-CN, the share trajectory is held at 2024 baseline (already enforced
     # via scenario.share_2040). The 2024 shares dominate Kanto+Kansai (82%),
     # so the redistribution effect emerges through scenario.share_2040.
 
-    # ------------------- Resilience (Constraint d, Eq. 15) --------------------
+    # ------------------- Resilience (Constraint d, Eq. 16) --------------------
     # Backup (CGS) >= (1 + 1/N) * critical_load, where critical_load is taken as
-    # the IT load. With N=1, backup >= 2 * IT.
-    # We relax this to backup >= 0.05 * IT (5% reserve) to avoid over-constraining
-    # the model; the paper notes the constraint rarely binds.
-    reserve_factor = 0.05
+    # the IT load. With N=1 (Table 8), backup >= 2 * IT. Fix E3: up to v1.0.1
+    # this was relaxed to backup >= 0.05 * IT.
+    reserve_factor = 1.0 + 1.0 / p.N_resilience
     for r in regs:
         for t in years:
             prob += cap[("cgs", r, t)] >= reserve_factor * it_load_rt[(r, t)]
 
-    # ------------------- CO2 cap (Constraint b, Eq. 13) --------------------
-    # Total annual emissions (Mt-CO2) <= cap[t]
+    # ------------------- CO2 cap (Constraint b, Eqs. 13-14) --------------------
+    # Total annual emissions (Mt-CO2) <= cap[t]; grid emissions use the
+    # regional factor EF(r, t) of Eq. 10 (fix E5; v1.0.1 used the national one).
     if scenario.apply_co2_cap:
         for ti, t in enumerate(years):
-            # Emissions in Mt-CO2: (TWh * kg/kWh) / 1e3 = Mt
+            # TWh * kg/kWh = Mt
             total_emissions = pulp.lpSum(
-                E[("grid", r, t)] * ef_grid[ti]   # TWh * kg/kWh = Mt (since TWh = 1e9 kWh, kg*1e9 = Mt*1e6 -> /1e3)
+                E[("grid", r, t)] * ef_rt(r, ti)
                 + E[("cgs", r, t)] * p.EF_fossil
                 for r in regs
             )
@@ -361,25 +414,38 @@ def build_and_solve(scenario: Scenario,
     # for new builds. Paper Section 4.2 cost decomposition attributes
     # ~10% of the R-CN advantage to lower siting cost.
     siting_premium = {r: (1.10 if r in METRO else 1.0) for r in regs}
+    # Fix E8: regional DC subsidy of R-CN (Table 7), a 5% discount on the
+    # CAPEX of DLC, immersion, CGS and BESS outside Kanto/Kansai. Up to
+    # v1.0.1 the flag Scenario.regional_subsidy was not used.
+    sub_factor = {r: ((1.0 - SUBSIDY_RATE)
+                      if (scenario.regional_subsidy and r not in METRO) else 1.0)
+                  for r in regs}
 
     capex_terms = []
     opex_terms = []
     energy_terms = []
     carbon_terms = []
     curt_terms = []
+    disc_t = {t: 1.0 / (1.0 + p.discount_rate) ** (t - p.horizon_start) for t in years}
+    price_t = {t: float(p_carb[ti]) for ti, t in enumerate(years)}
 
     for ti, t in enumerate(years):
-        disc = 1.0 / (1.0 + p.discount_rate) ** (t - p.horizon_start)
+        disc = disc_t[t]
         for r in regs:
             premium = siting_premium[r]
+            sub = sub_factor[r]
             # CAPEX (deltas) - cooling upgrade + CGS only
             for tech in ("dlc", "immersion", "cgs"):
                 unit = capex_unit_yen_per_GW[tech] * premium
+                if sub != 1.0:
+                    unit = unit * sub
                 capex_terms.append(delta[(tech, r, t)] * unit * disc)
             # BESS CAPEX (year-dependent yen/kWh -> yen/GWh)
             bess_unit_yen_per_GWh = _bess_capex_yen_per_kWh(p, t) * 1e6 * premium
-            capex_terms.append(delta[("bess", r, t)] * bess_unit_yen_per_GWh * disc)
-            # OPEX (O&M on installed cap)
+            bess_capex_unit = bess_unit_yen_per_GWh * sub if sub != 1.0 \
+                else bess_unit_yen_per_GWh
+            capex_terms.append(delta[("bess", r, t)] * bess_capex_unit * disc)
+            # OPEX (O&M on installed cap; not subsidised)
             for tech in ("dlc", "immersion", "cgs"):
                 unit = capex_unit_yen_per_GW[tech] * premium
                 opex_terms.append(cap[(tech, r, t)] * unit * om_rate * disc)
@@ -397,8 +463,8 @@ def build_and_solve(scenario: Scenario,
             )
             # Carbon (Eq. 10): price * emissions / 1000
             # E_TWh * 1e6 * EF[kg/kWh] = t-CO2 ; * price[yen/t] = yen
-            ef_g = float(ef_grid[ti])
-            price = float(p_carb[ti])
+            ef_g = ef_rt(r, ti)
+            price = price_t[t]
             carbon_terms.append(E[("grid", r, t)] * 1e6 * ef_g * price * disc)
             carbon_terms.append(E[("cgs", r, t)] * 1e6 * p.EF_fossil * price * disc)
             # Curtailment penalty
@@ -409,7 +475,7 @@ def build_and_solve(scenario: Scenario,
              + pulp.lpSum(curt_terms))
 
     # ------------------- Solve --------------------
-    solver = pulp.PULP_CBC_CMD(msg=1 if solver_msg else 0)
+    solver = pulp.PULP_CBC_CMD(msg=1 if solver_msg else 0, threads=1)
     prob.solve(solver)
     status = pulp.LpStatus[prob.status]
 
@@ -430,26 +496,69 @@ def build_and_solve(scenario: Scenario,
         "capacity": {}, "energy": {}, "emissions": {}, "load": {}
     }
     table: List[Dict[str, object]] = []
+    components: List[Dict[str, object]] = []
+    subsidy_total = 0.0
+    curt_TWh_total = 0.0
     for ti, t in enumerate(years):
+        disc = disc_t[t]
+        price = price_t[t]
         for r in regs:
             energy_kwh = {src: _val(E[(src, r, t)]) for src in energy_sources}
             total_E = sum(energy_kwh.values())
+            ef_g = ef_rt(r, ti)
+            curt_v = _val(curt[(r, t)])
+            curt_TWh_total += curt_v
             emissions_Mt = (
-                energy_kwh["grid"] * float(ef_grid[ti])
+                energy_kwh["grid"] * ef_g
                 + energy_kwh["cgs"] * p.EF_fossil
             )  # TWh * kg/kWh = Mt
+            d = {tech: _val(delta[(tech, r, t)]) for tech in techs_cool + techs_supply}
+            c = {tech: _val(cap[(tech, r, t)]) for tech in techs_cool + techs_supply}
             row: Dict[str, object] = {
                 "year": t, "region": r,
                 "it_load_GW": it_load_rt[(r, t)],
                 "facility_load_TWh": total_E,
                 **{f"E_{k}_TWh": v for k, v in energy_kwh.items()},
-                **{f"cap_{tech}_GW": _val(cap[(tech, r, t)]) for tech in techs_cool},
-                "cap_pv_GW": _val(cap[("pv", r, t)]),
-                "cap_bess_GWh": _val(cap[("bess", r, t)]),
-                "cap_cgs_GW": _val(cap[("cgs", r, t)]),
+                **{f"cap_{tech}_GW": c[tech] for tech in techs_cool},
+                "cap_pv_GW": c["pv"],
+                "cap_bess_GWh": c["bess"],
+                "cap_cgs_GW": c["cgs"],
                 "emissions_Mt": emissions_Mt,
+                "E_ch_TWh": _val(E_ch[(r, t)]),
+                "curt_TWh": curt_v,
+                "ef_grid": ef_g,
             }
             table.append(row)
+
+            # Discounted cost components (yen): gross of the subsidy, with the
+            # metro siting premium as a separate line.
+            premium = siting_premium[r]
+            sub = sub_factor[r]
+            comp: Dict[str, float] = {}
+            for name, techs in (("cooling", ("dlc", "immersion")), ("cgs", ("cgs",))):
+                base_capex = sum(d[x] * capex_unit_yen_per_GW[x] for x in techs) * disc
+                base_opex = sum(c[x] * capex_unit_yen_per_GW[x] for x in techs) * om_rate * disc
+                comp[f"{name}_capex"] = base_capex
+                comp[f"{name}_opex"] = base_opex
+                comp[f"{name}_premium"] = (base_capex + base_opex) * (premium - 1.0)
+            bess_base = _bess_capex_yen_per_kWh(p, t) * 1e6
+            comp["bess_capex"] = d["bess"] * bess_base * disc
+            comp["bess_opex"] = c["bess"] * bess_base * om_rate * disc
+            comp["bess_premium"] = (comp["bess_capex"] + comp["bess_opex"]) * (premium - 1.0)
+            comp["energy_grid"] = energy_kwh["grid"] * regions[r].tariff_yen_per_kWh * 1e9 * disc
+            comp["energy_ppa"] = energy_kwh["ppa"] * regions[r].ppa_yen_per_kWh * 1e9 * disc
+            comp["energy_pv"] = energy_kwh["pv"] * p.pv_lcoe * 1e9 * disc
+            comp["energy_cgs_fuel"] = energy_kwh["cgs"] * (8.0 / p.cgs_eff_elec) * 1e9 * disc
+            comp["carbon_grid"] = energy_kwh["grid"] * 1e6 * ef_g * price * disc
+            comp["carbon_cgs"] = energy_kwh["cgs"] * 1e6 * p.EF_fossil * price * disc
+            comp["curtailment"] = curt_v * 1e9 * p.curtail_penalty * disc
+            gross_capex = (comp["cooling_capex"] + comp["cgs_capex"] + comp["bess_capex"]) \
+                * premium
+            comp["subsidy"] = gross_capex * (1.0 - sub)
+            subsidy_total += comp["subsidy"]
+            procured = (energy_kwh["grid"] + energy_kwh["ppa"] + energy_kwh["pv"]
+                        + energy_kwh["cgs"])
+            components.append({"year": t, "region": r, "procured_TWh": procured, **comp})
 
     return SolveResult(
         scenario=scenario.name,
@@ -462,4 +571,8 @@ def build_and_solve(scenario: Scenario,
         curtail_cost=curt_cost,
         annual=annual,
         table=table,
+        subsidy_total=subsidy_total,
+        curtail_TWh_total=curt_TWh_total,
+        components=components,
     )
+

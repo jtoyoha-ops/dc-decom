@@ -1,27 +1,30 @@
-"""End-to-end test that the LP solves all three scenarios and that the
-qualitative finding (R-CN cheaper than C-CN through PUE/PPA channels) holds.
+"""End-to-end tests of the LP for the three scenarios.
 
-This test is intentionally tolerant: the published 18-23% R-CN advantage is a
-calibrated value (paper Section 4.2 / Table 10), while this open-source
-reference implementation uses indicative parameters that yield the directional
-finding without exactly matching the headline magnitude. See README "Status"
-for the rationale.
+The LP results are not compared with the reported values of the Energies
+article (REF 6.2 / C-CN 8.5 / R-CN 6.8 trillion JPY, R-CN advantage 18-23%,
+Table 10 channel split 35/30/25/10): with the v2.0.0 inputs and constraints
+the LP does not reproduce them (see README). The tests check that the
+scenarios solve, the direction of the LP result and its curtailment, and
+that the reported values are constants kept apart from the LP output.
 """
 from __future__ import annotations
 
 import sys
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+from dc_decom import postprocess
 from dc_decom.load_inputs import (
     load_global_parameters, load_regions, load_temperature_96h,
 )
 from dc_decom.model import build_and_solve
 from dc_decom.postprocess import (
-    calibrated_headline,
     cost_decomposition,
-    headline_advantage,
+    headline_lp,
+    reported_values,
 )
 from dc_decom.scenarios import C_CN, R_CN, REF
 
@@ -62,20 +65,46 @@ def test_cost_decomposition_has_four_channels() -> None:
     }
 
 
-def test_paper_calibrated_headline_matches_table10() -> None:
-    """Paper Table 10 totals are exactly reproduced (calibrated)."""
+# LP direction of this configuration (Energies Section 3 with the
+# implementation errors E1-E8 fixed): R-CN is cheaper than C-CN (advantage
+# 8.11%) and the CO2 cap of C-CN and R-CN is met only with curtailment
+# (308.0 / 279.6 TWh cumulative).
+RECORDED_RCN_CHEAPER = True
+
+
+def test_lp_direction_and_curtailment_reported() -> None:
     res = _solve_all()
-    cal = calibrated_headline(res["C-CN"], res["R-CN"])
-    paper = cal["paper"]
-    assert paper["C_CN_total_TJPY"] == 8.5
-    assert paper["R_CN_total_TJPY"] == 6.8
-    assert 0.18 <= paper["advantage_fraction_low"] <= paper["advantage_fraction_high"] <= 0.23
-    decomp = cal["decomposition"]
-    fractions = dict(zip(decomp["channel"], decomp["fraction"]))
-    assert abs(fractions["Cooling-energy reduction"] - 0.35) < 1e-6
-    assert abs(fractions["Lower RE procurement cost"] - 0.30) < 1e-6
-    assert abs(fractions["Lower carbon cost"] - 0.25) < 1e-6
-    assert abs(fractions["Lower siting-related cost"] - 0.10) < 1e-6
+    lp = headline_lp(res)
+    assert lp["rcn_cheaper"] is RECORDED_RCN_CHEAPER
+    adv = lp["advantage"]
+    assert (adv["advantage_fraction"] > 0) is RECORDED_RCN_CHEAPER
+    # curtailment is reported for every scenario and equals the table sums
+    for name, r in res.items():
+        table_sum = sum(float(row["curt_TWh"]) for row in r.table)
+        assert lp["curtail_TWh"][name] == pytest.approx(table_sum, abs=1e-9)
+    assert lp["curtail_TWh"]["REF"] == pytest.approx(0.0, abs=1e-6)
+    assert lp["curtail_TWh"]["C-CN"] > 0.0
+    assert lp["curtail_TWh"]["R-CN"] > 0.0
+    # the five decomposition lines add up to the C-CN - R-CN difference
+    dec = lp["decomposition_TJPY"]
+    assert sum(dec.values()) == pytest.approx(adv["advantage_TJPY"], rel=1e-6)
+    # the regional subsidy applies to R-CN only
+    assert lp["subsidy_TJPY"]["R-CN"] > 0.0
+    assert lp["subsidy_TJPY"]["REF"] == lp["subsidy_TJPY"]["C-CN"] == 0.0
+
+
+def test_reported_values_kept_apart_from_lp_output() -> None:
+    res = _solve_all()
+    lp = headline_lp(res)
+    assert not any(k in ("reported", "published", "paper") for k in lp)
+    # LP-derived totals are the solved objectives, not the reported constants
+    for name, r in res.items():
+        assert lp["totals_TJPY"][name] == r.objective_yen / 1e12
+    rep = reported_values()
+    assert "not model output" in rep["source"]
+    assert rep["C_CN_total_TJPY"] == postprocess.REPORTED_C_CN_TJPY
+    # the constant headline of v1.0.1 is gone
+    assert not hasattr(postprocess, "calibrated_headline")
 
 
 def test_pue_advantage_in_cold_region() -> None:

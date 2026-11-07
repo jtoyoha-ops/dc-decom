@@ -22,3 +22,20 @@ Original public-data attributions are preserved in the `data/` files and in
 the Energies article's bibliography. Users of these data are expected to
 respect the original publishers' attribution requirements (Japan Meteorological
 Agency, METI, MIC, MOE, REI, and the JST report series).
+
+Sources of the processed government data in data/parameters_v2/ (terms of use:
+Public Data License 1.0 of the respective websites; the processed data were
+made by the author and are not products of these agencies; the source list
+with URLs and access dates is data/parameters_v2/sources.csv):
+
+- temperature_96h_jma.csv, pv_cf_96h_jma.csv, jma_summary.csv and the values
+  derived from them:
+  出典：気象庁ホームページ（https://www.data.jma.go.jp/risk/obsdl/）の時別値
+  （2020〜2023年、札幌・仙台・東京・大阪・福岡の気温・全天日射量）を加工して作成
+- ef_fy2024.csv:
+  環境省・経済産業省「電気事業者別排出係数（特定排出者の温室効果ガス排出量算定用）
+  －R6年度実績－」（https://policies.env.go.jp/earth/ghg-santeikohyo/calc.html）を
+  加工して作成
+- tariff_fy2025.csv:
+  電力・ガス取引監視等委員会「電力取引の状況（電力取引報）」
+  （https://www.egc.meti.go.jp/info/business/report/results.html）を加工して作成

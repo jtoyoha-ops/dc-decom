@@ -1,7 +1,8 @@
 cff-version: 1.2.0
 title: "DC-DECOM: Cost-Optimal Decarbonization Pathways for Data Centers in Japan"
-message: "If you use this software or data, please cite the journal article and (optionally) this repository via the Zenodo DOI below."
+message: "If you use this software or data, please cite it as below. Version 2.0.0 is the model (DC-DECOM v2) of the doctoral dissertation (preferred citation); versions 1.x accompany the Energies article (references)."
 type: software
+abstract: "DC-DECOM is a multi-regional bottom-up linear programming model of the decarbonization of Japan's data centers over 2024-2040. Version 2.0.0 contains the updated model of the doctoral dissertation (DC-DECOM v2: 96 representative hours, endogenous siting, grid constraints and reinforcement cost, non-fossil certificates, PUE recalibrated with JMA observed temperatures, rolling A/B/C policy comparison, uncertainty analysis), the v1 model of Toyohara & Zhou (2026) with implementation errors E1-E8 fixed, input data with sources, and the committed results. The results of 2.0.0 differ from those of 1.x and from the values reported in the article."
 authors:
   - family-names: "Toyohara"
     given-names: "Jin"
@@ -10,9 +11,16 @@ authors:
     given-names: "Weisheng"
 repository-code: "https://github.com/jtoyoha-ops/dc-decom"
 url: "https://github.com/jtoyoha-ops/dc-decom"
-doi: "10.5281/zenodo.20312805"
-version: "1.0.0"
-date-released: "2026-05-21"
+doi: "10.5281/zenodo.20312804"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.20312804"
+    description: "Zenodo concept DOI (all versions; resolves to the latest version)"
+  - type: doi
+    value: "10.5281/zenodo.20312805"
+    description: "Zenodo version DOI of v1.0.0 (cited in the Data Availability statement of the Energies article)"
+version: "2.0.0"
+date-released: "2026-11-07"
 license: MIT
 keywords:
   - data center decarbonization
@@ -26,19 +34,30 @@ keywords:
   - linear programming
   - PuLP
 preferred-citation:
-  type: article
-  title: "Cost-Optimal Decarbonization Pathways for Data Centers in Japan: A Bottom-Up Model Integrating Location, Energy Systems, and Carbon Pricing"
+  type: thesis
+  title: "Policy Engineering for Data Center Decarbonization in the Era of Generative AI: Integrating Technology Assessment, System Optimization, and International Institutional Comparison"
   authors:
     - family-names: "Toyohara"
       given-names: "Jin"
-    - family-names: "Zhou"
-      given-names: "Weisheng"
-  journal: "Energies"
-  year: 2026
-  volume: 19
-  issue: 10
-  start: 2485
-  doi: "10.3390/en19102485"
-  url: "https://doi.org/10.3390/en19102485"
-  publisher:
-    name: "MDPI"
+  thesis-type: "Doctoral dissertation"
+  institution:
+    name: "Ritsumeikan University, Graduate School of Policy Science"
+  year: 2027
+  month: 3
+references:
+  - type: article
+    title: "Cost-Optimal Decarbonization Pathways for Data Centers in Japan: A Bottom-Up Model Integrating Location, Energy Systems, and Carbon Pricing"
+    authors:
+      - family-names: "Toyohara"
+        given-names: "Jin"
+      - family-names: "Zhou"
+        given-names: "Weisheng"
+    journal: "Energies"
+    year: 2026
+    volume: 19
+    issue: 10
+    start: 2485
+    doi: "10.3390/en19102485"
+    url: "https://doi.org/10.3390/en19102485"
+    publisher:
+      name: "MDPI"

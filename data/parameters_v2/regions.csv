@@ -1,0 +1,39 @@
+id,region,group,value,unit,low,high,status,source_id,derivation,notes
+annual_mean_T_C,Hokkaido,existing,10.3934,C,,,derived,JMA_OBSDL,"96-slice weighted mean, JMA 2020-2023 hourly (station 47412 Sapporo)",Table 9: 9.2
+annual_mean_T_C,Tohoku,existing,14.0319,C,,,derived,JMA_OBSDL,"96-slice weighted mean, JMA 2020-2023 hourly (station 47590 Sendai)",Table 9: 12.8
+annual_mean_T_C,Kanto,existing,16.8458,C,,,derived,JMA_OBSDL,"96-slice weighted mean, JMA 2020-2023 hourly (station 47662 Tokyo)",Table 9: 16.5
+annual_mean_T_C,Kansai,existing,17.7319,C,,,derived,JMA_OBSDL,"96-slice weighted mean, JMA 2020-2023 hourly (station 47772 Osaka)",Table 9: 17.1
+annual_mean_T_C,Kyushu,existing,18.1707,C,,,derived,JMA_OBSDL,"96-slice weighted mean, JMA 2020-2023 hourly (station 47807 Fukuoka)",Table 9: 17.3
+base_share_2024,Hokkaido,existing,0.03,fraction,,,paper,ENERGIES2026,Table 9 (MIC),
+base_share_2024,Tohoku,existing,0.05,fraction,,,paper,ENERGIES2026,Table 9 (MIC),
+base_share_2024,Kanto,existing,0.6,fraction,,,paper,ENERGIES2026,Table 9 (MIC),
+base_share_2024,Kansai,existing,0.22,fraction,,,paper,ENERGIES2026,Table 9 (MIC),
+base_share_2024,Kyushu,existing,0.1,fraction,,,paper,ENERGIES2026,Table 9 (MIC),
+tariff_yen_per_kWh,Hokkaido,existing,20.133,yen/kWh,18.917,21.621,sourced,EGC_TORIHIKI,"特別高圧 sales revenue / sales volume, all retailers, 北海道 area, 12 months 2025-04..2026-03; low/high = monthly min/max",Table 9: 20.0
+tariff_yen_per_kWh,Tohoku,existing,18.543,yen/kWh,17.572,19.701,sourced,EGC_TORIHIKI,"特別高圧 sales revenue / sales volume, all retailers, 東北 area, 12 months 2025-04..2026-03; low/high = monthly min/max",Table 9: 18.5
+tariff_yen_per_kWh,Kanto,existing,18.038,yen/kWh,17.347,19.114,sourced,EGC_TORIHIKI,"特別高圧 sales revenue / sales volume, all retailers, 東京 area, 12 months 2025-04..2026-03; low/high = monthly min/max",Table 9: 19.9
+tariff_yen_per_kWh,Kansai,existing,16.171,yen/kWh,15.496,17.705,sourced,EGC_TORIHIKI,"特別高圧 sales revenue / sales volume, all retailers, 関西 area, 12 months 2025-04..2026-03; low/high = monthly min/max",Table 9: 16.0
+tariff_yen_per_kWh,Kyushu,existing,15.227,yen/kWh,14.439,15.893,sourced,EGC_TORIHIKI,"特別高圧 sales revenue / sales volume, all retailers, 九州 area, 12 months 2025-04..2026-03; low/high = monthly min/max",Table 9: 15.5
+ppa_yen_per_kWh,Hokkaido,existing,12.0,yen/kWh,10.0,14.0,paper,ENERGIES2026,Table 9 (REI corporate PPA 2024); range +-2 yen/kWh (assumption),
+ppa_yen_per_kWh,Tohoku,existing,13.0,yen/kWh,11.0,15.0,paper,ENERGIES2026,Table 9 (REI corporate PPA 2024); range +-2 yen/kWh (assumption),
+ppa_yen_per_kWh,Kanto,existing,16.0,yen/kWh,14.0,18.0,paper,ENERGIES2026,Table 9 (REI corporate PPA 2024); range +-2 yen/kWh (assumption),
+ppa_yen_per_kWh,Kansai,existing,15.0,yen/kWh,13.0,17.0,paper,ENERGIES2026,Table 9 (REI corporate PPA 2024); range +-2 yen/kWh (assumption),
+ppa_yen_per_kWh,Kyushu,existing,13.0,yen/kWh,11.0,15.0,paper,ENERGIES2026,Table 9 (REI corporate PPA 2024); range +-2 yen/kWh (assumption),
+re_max_GW,Hokkaido,existing,337.471,GW,,,paper,ENERGIES2026,Table 9 / Section 3.2 (REPOS solar potential),
+re_max_GW,Tohoku,existing,142.0,GW,,,paper,ENERGIES2026,Table 9 / Section 3.2 (REPOS solar potential),
+re_max_GW,Kanto,existing,98.833,GW,,,paper,ENERGIES2026,Table 9 / Section 3.2 (REPOS solar potential),
+re_max_GW,Kansai,existing,73.0,GW,,,paper,ENERGIES2026,Table 9 / Section 3.2 (REPOS solar potential),
+re_max_GW,Kyushu,existing,115.0,GW,,,paper,ENERGIES2026,Table 9 / Section 3.2 (REPOS solar potential),
+grid_ef_base,Hokkaido,existing,0.526,kg-CO2/kWh,0.518,0.526,sourced,MOE_EF_R6,"北海道電力(株) 基礎排出係数 (残差 menu), R6年度実績; low = company-wide reference value",Table 9: 0.49; scaled by ef_national(t)/ef_national(2024) in the model
+grid_ef_base,Tohoku,existing,0.421,kg-CO2/kWh,0.4,0.421,sourced,MOE_EF_R6,"東北電力(株) 基礎排出係数 (残差 menu), R6年度実績; low = company-wide reference value",Table 9: 0.52; scaled by ef_national(t)/ef_national(2024) in the model
+grid_ef_base,Kanto,existing,0.452,kg-CO2/kWh,0.421,0.452,sourced,MOE_EF_R6,"東京電力エナジーパートナー(株) 基礎排出係数 (残差 menu), R6年度実績; low = company-wide reference value",Table 9: 0.44; scaled by ef_national(t)/ef_national(2024) in the model
+grid_ef_base,Kansai,existing,0.415,kg-CO2/kWh,0.396,0.415,sourced,MOE_EF_R6,"関西電力(株) 基礎排出係数 (残差 menu), R6年度実績; low = company-wide reference value",Table 9: 0.36; scaled by ef_national(t)/ef_national(2024) in the model
+grid_ef_base,Kyushu,existing,0.472,kg-CO2/kWh,0.449,0.472,sourced,MOE_EF_R6,"九州電力(株) 基礎排出係数 (残差 menu), R6年度実績; low = company-wide reference value",Table 9: 0.37; scaled by ef_national(t)/ef_national(2024) in the model
+conn_capacity_GW_per_yr,Hokkaido,policy,0.2,GW/yr,0.05,0.6,assumption,ASSUMPTION,c0: facility peak that can newly connect per year without reinforcement; no regional public value. Context: OCCTO FY2025 forecast DC new-build peak +0.63 GW/yr nationally (2025-2034),
+conn_capacity_GW_per_yr,Tohoku,policy,0.2,GW/yr,0.05,0.6,assumption,ASSUMPTION,c0: facility peak that can newly connect per year without reinforcement; no regional public value. Context: OCCTO FY2025 forecast DC new-build peak +0.63 GW/yr nationally (2025-2034),
+conn_capacity_GW_per_yr,Kyushu,policy,0.2,GW/yr,0.05,0.6,assumption,ASSUMPTION,c0: facility peak that can newly connect per year without reinforcement; no regional public value. Context: OCCTO FY2025 forecast DC new-build peak +0.63 GW/yr nationally (2025-2034),
+conn_capacity_reinforced_GW_per_yr,Hokkaido,policy,0.6,GW/yr,0.3,1.2,assumption,ASSUMPTION,c1 after reinforcement (from reinforcement_year),
+conn_capacity_reinforced_GW_per_yr,Tohoku,policy,0.6,GW/yr,0.3,1.2,assumption,ASSUMPTION,c1 after reinforcement (from reinforcement_year),
+conn_capacity_reinforced_GW_per_yr,Kyushu,policy,0.6,GW/yr,0.3,1.2,assumption,ASSUMPTION,c1 after reinforcement (from reinforcement_year),
+shell_premium_yen_per_kW,Kanto,structural,0.0,yen/kW,0.0,100000.0,assumption,ASSUMPTION,metro construction/land premium per kW of new IT nameplate; no sourced regional cost index for the non-metro regions (non-metro = 0 reference),
+shell_premium_yen_per_kW,Kansai,structural,0.0,yen/kW,0.0,100000.0,assumption,ASSUMPTION,metro construction/land premium per kW of new IT nameplate; no sourced regional cost index for the non-metro regions (non-metro = 0 reference),

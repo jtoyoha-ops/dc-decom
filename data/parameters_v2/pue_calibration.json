@@ -1,0 +1,542 @@
+{
+  "description": "Air-cooling PUE (Energies Eq. 8) recalibrated so that the hourly-weighted annual PUE (JMA 2020-2023 96-slice profile) matches the survey-range midpoints; T_thresh fixed at 15 C; alpha, beta >= 0. Base = fit with PUE >= 1 in every slice (the bounds-only fit gives PUE < 1 in cold slices).",
+  "inputs": {
+    "temperature_profile": "data/parameters_v2/temperature_96h_jma.csv",
+    "targets": "midpoints of Energies Table 5 / ch04 tab:pue-validation ranges",
+    "survey_ranges": {
+      "Hokkaido": [
+        1.2,
+        1.3
+      ],
+      "Tohoku": [
+        1.3,
+        1.4
+      ],
+      "Kanto": [
+        1.4,
+        1.6
+      ],
+      "Kansai": [
+        1.4,
+        1.6
+      ],
+      "Kyushu": [
+        1.4,
+        1.6
+      ]
+    },
+    "T_thresh_C": 15.0,
+    "pue_floor": 1.0,
+    "regressors": {
+      "Hokkaido": {
+        "one": 1.0,
+        "T_mean": 10.393369,
+        "hinge2_mean": 12.61521
+      },
+      "Tohoku": {
+        "one": 1.0,
+        "T_mean": 14.031868,
+        "hinge2_mean": 21.76953
+      },
+      "Kanto": {
+        "one": 1.0,
+        "T_mean": 16.845791,
+        "hinge2_mean": 36.74253
+      },
+      "Kansai": {
+        "one": 1.0,
+        "T_mean": 17.731913,
+        "hinge2_mean": 47.048683
+      },
+      "Kyushu": {
+        "one": 1.0,
+        "T_mean": 18.170715,
+        "hinge2_mean": 48.25597
+      }
+    }
+  },
+  "coefficients": {
+    "C_base": 1.05741,
+    "alpha": 0.01541,
+    "beta": 0.003771
+  },
+  "fit": {
+    "R2": 0.949462,
+    "adj_R2": 0.898923,
+    "ss_res": 0.002679,
+    "ss_tot": 0.053,
+    "residual_se": 0.036596,
+    "n": 5,
+    "k": 3,
+    "dof": 2
+  },
+  "per_city": {
+    "Hokkaido": {
+      "city": "Sapporo",
+      "T_mean_jma_C": 10.393369,
+      "pue_air_hourly_weighted": 1.265144,
+      "survey_range": [
+        1.2,
+        1.3
+      ],
+      "midpoint": 1.25,
+      "inside_range": true,
+      "pue_air_min_slice": 1.0,
+      "pue_air_peak_slice": 1.805055,
+      "T_min_slice_C": -3.7255,
+      "T_peak_slice_C": 24.837
+    },
+    "Tohoku": {
+      "city": "Sendai",
+      "T_mean_jma_C": 14.031868,
+      "pue_air_hourly_weighted": 1.355734,
+      "survey_range": [
+        1.3,
+        1.4
+      ],
+      "midpoint": 1.35,
+      "inside_range": true,
+      "pue_air_min_slice": 1.076956,
+      "pue_air_peak_slice": 1.938999,
+      "T_min_slice_C": 1.2684,
+      "T_peak_slice_C": 26.2481
+    },
+    "Kanto": {
+      "city": "Tokyo",
+      "T_mean_jma_C": 16.845791,
+      "pue_air_hourly_weighted": 1.45556,
+      "survey_range": [
+        1.4,
+        1.6
+      ],
+      "midpoint": 1.5,
+      "inside_range": true,
+      "pue_air_min_slice": 1.120868,
+      "pue_air_peak_slice": 2.243247,
+      "T_min_slice_C": 4.118,
+      "T_peak_slice_C": 28.9986
+    },
+    "Kansai": {
+      "city": "Osaka",
+      "T_mean_jma_C": 17.731913,
+      "pue_air_hourly_weighted": 1.508079,
+      "survey_range": [
+        1.4,
+        1.6
+      ],
+      "midpoint": 1.5,
+      "inside_range": true,
+      "pue_air_min_slice": 1.137585,
+      "pue_air_peak_slice": 2.398744,
+      "T_min_slice_C": 5.2028,
+      "T_peak_slice_C": 30.2361
+    },
+    "Kyushu": {
+      "city": "Fukuoka",
+      "T_mean_jma_C": 18.170715,
+      "pue_air_hourly_weighted": 1.519394,
+      "survey_range": [
+        1.4,
+        1.6
+      ],
+      "midpoint": 1.5,
+      "inside_range": true,
+      "pue_air_min_slice": 1.158809,
+      "pue_air_peak_slice": 2.341041,
+      "T_min_slice_C": 6.5801,
+      "T_peak_slice_C": 29.7875
+    }
+  },
+  "all_inside_survey_ranges": true,
+  "base": {
+    "coefficients": {
+      "C_base": 1.05741,
+      "alpha": 0.01541,
+      "beta": 0.003771
+    },
+    "fit_hourly_weighted_vs_midpoints": {
+      "R2": 0.949462,
+      "adj_R2": 0.898923,
+      "ss_res": 0.002679,
+      "ss_tot": 0.053,
+      "residual_se": 0.036596,
+      "n": 5,
+      "k": 3,
+      "dof": 2
+    },
+    "per_city": {
+      "Hokkaido": {
+        "city": "Sapporo",
+        "T_mean_jma_C": 10.393369,
+        "pue_air_hourly_weighted": 1.265144,
+        "survey_range": [
+          1.2,
+          1.3
+        ],
+        "midpoint": 1.25,
+        "inside_range": true,
+        "pue_air_min_slice": 1.0,
+        "pue_air_peak_slice": 1.805055,
+        "T_min_slice_C": -3.7255,
+        "T_peak_slice_C": 24.837
+      },
+      "Tohoku": {
+        "city": "Sendai",
+        "T_mean_jma_C": 14.031868,
+        "pue_air_hourly_weighted": 1.355734,
+        "survey_range": [
+          1.3,
+          1.4
+        ],
+        "midpoint": 1.35,
+        "inside_range": true,
+        "pue_air_min_slice": 1.076956,
+        "pue_air_peak_slice": 1.938999,
+        "T_min_slice_C": 1.2684,
+        "T_peak_slice_C": 26.2481
+      },
+      "Kanto": {
+        "city": "Tokyo",
+        "T_mean_jma_C": 16.845791,
+        "pue_air_hourly_weighted": 1.45556,
+        "survey_range": [
+          1.4,
+          1.6
+        ],
+        "midpoint": 1.5,
+        "inside_range": true,
+        "pue_air_min_slice": 1.120868,
+        "pue_air_peak_slice": 2.243247,
+        "T_min_slice_C": 4.118,
+        "T_peak_slice_C": 28.9986
+      },
+      "Kansai": {
+        "city": "Osaka",
+        "T_mean_jma_C": 17.731913,
+        "pue_air_hourly_weighted": 1.508079,
+        "survey_range": [
+          1.4,
+          1.6
+        ],
+        "midpoint": 1.5,
+        "inside_range": true,
+        "pue_air_min_slice": 1.137585,
+        "pue_air_peak_slice": 2.398744,
+        "T_min_slice_C": 5.2028,
+        "T_peak_slice_C": 30.2361
+      },
+      "Kyushu": {
+        "city": "Fukuoka",
+        "T_mean_jma_C": 18.170715,
+        "pue_air_hourly_weighted": 1.519394,
+        "survey_range": [
+          1.4,
+          1.6
+        ],
+        "midpoint": 1.5,
+        "inside_range": true,
+        "pue_air_min_slice": 1.158809,
+        "pue_air_peak_slice": 2.341041,
+        "T_min_slice_C": 6.5801,
+        "T_peak_slice_C": 29.7875
+      }
+    },
+    "all_inside_survey_ranges": true,
+    "min_slice_pue_all_cities": 1.0,
+    "physical_check_pue_ge_1": true,
+    "method": "scipy.optimize.minimize SLSQP: least squares on the 5 midpoints, alpha >= 0, beta >= 0, PUE_air >= 1 in all 480 slices; rounded to 6 decimals (C_base raised to keep the floor if binding)",
+    "floor_binding": true,
+    "unrounded": [
+      1.0574110262848628,
+      0.015410287554653856,
+      0.0037710024029624215
+    ]
+  },
+  "bounds_only": {
+    "coefficients": {
+      "C_base": 0.88126,
+      "alpha": 0.034904,
+      "beta": 0.0
+    },
+    "fit_hourly_weighted_vs_midpoints": {
+      "R2": 0.96861,
+      "adj_R2": 0.937219,
+      "ss_res": 0.001664,
+      "ss_tot": 0.053,
+      "residual_se": 0.028842,
+      "n": 5,
+      "k": 3,
+      "dof": 2
+    },
+    "per_city": {
+      "Hokkaido": {
+        "city": "Sapporo",
+        "T_mean_jma_C": 10.393369,
+        "pue_air_hourly_weighted": 1.24403,
+        "survey_range": [
+          1.2,
+          1.3
+        ],
+        "midpoint": 1.25,
+        "inside_range": true,
+        "pue_air_min_slice": 0.751225,
+        "pue_air_peak_slice": 1.748171,
+        "T_min_slice_C": -3.7255,
+        "T_peak_slice_C": 24.837
+      },
+      "Tohoku": {
+        "city": "Sendai",
+        "T_mean_jma_C": 14.031868,
+        "pue_air_hourly_weighted": 1.371028,
+        "survey_range": [
+          1.3,
+          1.4
+        ],
+        "midpoint": 1.35,
+        "inside_range": true,
+        "pue_air_min_slice": 0.925532,
+        "pue_air_peak_slice": 1.797424,
+        "T_min_slice_C": 1.2684,
+        "T_peak_slice_C": 26.2481
+      },
+      "Kanto": {
+        "city": "Tokyo",
+        "T_mean_jma_C": 16.845791,
+        "pue_air_hourly_weighted": 1.469245,
+        "survey_range": [
+          1.4,
+          1.6
+        ],
+        "midpoint": 1.5,
+        "inside_range": true,
+        "pue_air_min_slice": 1.024995,
+        "pue_air_peak_slice": 1.893427,
+        "T_min_slice_C": 4.118,
+        "T_peak_slice_C": 28.9986
+      },
+      "Kansai": {
+        "city": "Osaka",
+        "T_mean_jma_C": 17.731913,
+        "pue_air_hourly_weighted": 1.500175,
+        "survey_range": [
+          1.4,
+          1.6
+        ],
+        "midpoint": 1.5,
+        "inside_range": true,
+        "pue_air_min_slice": 1.062859,
+        "pue_air_peak_slice": 1.936621,
+        "T_min_slice_C": 5.2028,
+        "T_peak_slice_C": 30.2361
+      },
+      "Kyushu": {
+        "city": "Fukuoka",
+        "T_mean_jma_C": 18.170715,
+        "pue_air_hourly_weighted": 1.515491,
+        "survey_range": [
+          1.4,
+          1.6
+        ],
+        "midpoint": 1.5,
+        "inside_range": true,
+        "pue_air_min_slice": 1.110932,
+        "pue_air_peak_slice": 1.920963,
+        "T_min_slice_C": 6.5801,
+        "T_peak_slice_C": 29.7875
+      }
+    },
+    "all_inside_survey_ranges": true,
+    "min_slice_pue_all_cities": 0.751225,
+    "physical_check_pue_ge_1": false,
+    "method": "scipy.optimize.lsq_linear (bvls), alpha >= 0, beta >= 0, C_base free (alpha, beta >= 0 only)",
+    "active_bounds": {
+      "alpha": false,
+      "beta": true
+    },
+    "unrounded": [
+      0.8812599817247103,
+      0.034904399376164894,
+      0.0
+    ]
+  },
+  "paper_coefficients": {
+    "coefficients": {
+      "C_base": 1.14,
+      "alpha": 0.0167,
+      "beta": 0.0102
+    },
+    "comparison": {
+      "at_table9_annual_means": {
+        "R2": 0.870537,
+        "adj_R2": 0.741074,
+        "ss_res": 0.006862,
+        "ss_tot": 0.053,
+        "residual_se": 0.058573,
+        "n": 5,
+        "k": 3,
+        "dof": 2,
+        "pue": {
+          "Hokkaido": 1.29364,
+          "Tohoku": 1.35376,
+          "Kanto": 1.4385,
+          "Kansai": 1.470552,
+          "Kyushu": 1.482868
+        }
+      },
+      "at_jma_annual_means": {
+        "R2": 0.833431,
+        "adj_R2": 0.666863,
+        "ss_res": 0.008828,
+        "ss_tot": 0.053,
+        "residual_se": 0.066438,
+        "n": 5,
+        "k": 3,
+        "dof": 2,
+        "pue": {
+          "Hokkaido": 1.313569,
+          "Tohoku": 1.374332,
+          "Kanto": 1.456076,
+          "Kansai": 1.512249,
+          "Kyushu": 1.545996
+        }
+      },
+      "hourly_weighted_jma": {
+        "R2": -9.343585,
+        "adj_R2": -19.687169,
+        "ss_res": 0.54821,
+        "ss_tot": 0.053,
+        "residual_se": 0.52355,
+        "n": 5,
+        "k": 3,
+        "dof": 2,
+        "pue": {
+          "Hokkaido": 1.442244,
+          "Tohoku": 1.596381,
+          "Kanto": 1.796099,
+          "Kansai": 1.91602,
+          "Kyushu": 1.935662
+        }
+      }
+    },
+    "per_city_hourly": {
+      "Hokkaido": {
+        "city": "Sapporo",
+        "T_mean_jma_C": 10.393369,
+        "pue_air_hourly_weighted": 1.442244,
+        "survey_range": [
+          1.2,
+          1.3
+        ],
+        "midpoint": 1.25,
+        "inside_range": false,
+        "pue_air_min_slice": 1.077784,
+        "pue_air_peak_slice": 2.541797,
+        "T_min_slice_C": -3.7255,
+        "T_peak_slice_C": 24.837
+      },
+      "Tohoku": {
+        "city": "Sendai",
+        "T_mean_jma_C": 14.031868,
+        "pue_air_hourly_weighted": 1.596381,
+        "survey_range": [
+          1.3,
+          1.4
+        ],
+        "midpoint": 1.35,
+        "inside_range": false,
+        "pue_air_min_slice": 1.161182,
+        "pue_air_peak_slice": 2.868845,
+        "T_min_slice_C": 1.2684,
+        "T_peak_slice_C": 26.2481
+      },
+      "Kanto": {
+        "city": "Tokyo",
+        "T_mean_jma_C": 16.845791,
+        "pue_air_hourly_weighted": 1.796099,
+        "survey_range": [
+          1.4,
+          1.6
+        ],
+        "midpoint": 1.5,
+        "inside_range": false,
+        "pue_air_min_slice": 1.208771,
+        "pue_air_peak_slice": 3.623077,
+        "T_min_slice_C": 4.118,
+        "T_peak_slice_C": 28.9986
+      },
+      "Kansai": {
+        "city": "Osaka",
+        "T_mean_jma_C": 17.731913,
+        "pue_air_hourly_weighted": 1.91602,
+        "survey_range": [
+          1.4,
+          1.6
+        ],
+        "midpoint": 1.5,
+        "inside_range": false,
+        "pue_air_min_slice": 1.226887,
+        "pue_air_peak_slice": 4.012758,
+        "T_min_slice_C": 5.2028,
+        "T_peak_slice_C": 30.2361
+      },
+      "Kyushu": {
+        "city": "Fukuoka",
+        "T_mean_jma_C": 18.170715,
+        "pue_air_hourly_weighted": 1.935662,
+        "survey_range": [
+          1.4,
+          1.6
+        ],
+        "midpoint": 1.5,
+        "inside_range": false,
+        "pue_air_min_slice": 1.249888,
+        "pue_air_peak_slice": 3.867887,
+        "T_min_slice_C": 6.5801,
+        "T_peak_slice_C": 29.7875
+      }
+    }
+  },
+  "liquid": {
+    "note": "Eq. 9 is linear in T: the hourly weighted mean equals the value at the mean temperature; coefficients kept (C_pump 0.055, gamma 0.0015, immersion offset 0.025).",
+    "C_pump": 0.055,
+    "gamma": 0.0015,
+    "immersion_offset": 0.025,
+    "per_city_at_jma_mean_T": {
+      "Hokkaido": {
+        "pue_dlc": 1.07059,
+        "pue_immersion": 1.04559,
+        "dlc_inside_1.05-1.10": true,
+        "immersion_inside_1.05-1.10": false
+      },
+      "Tohoku": {
+        "pue_dlc": 1.076048,
+        "pue_immersion": 1.051048,
+        "dlc_inside_1.05-1.10": true,
+        "immersion_inside_1.05-1.10": true
+      },
+      "Kanto": {
+        "pue_dlc": 1.080269,
+        "pue_immersion": 1.055269,
+        "dlc_inside_1.05-1.10": true,
+        "immersion_inside_1.05-1.10": true
+      },
+      "Kansai": {
+        "pue_dlc": 1.081598,
+        "pue_immersion": 1.056598,
+        "dlc_inside_1.05-1.10": true,
+        "immersion_inside_1.05-1.10": true
+      },
+      "Kyushu": {
+        "pue_dlc": 1.082256,
+        "pue_immersion": 1.057256,
+        "dlc_inside_1.05-1.10": true,
+        "immersion_inside_1.05-1.10": true
+      }
+    }
+  },
+  "limitations": [
+    "Targets are survey ranges (not plant measurements); the fit is a match to the calibration targets, not an independent validation.",
+    "The 96-slice profile averages each season-hour over 2020-2023, so the peak-slice PUE is lower than the PUE of the hottest actual hours.",
+    "The PUE >= 1 constraint is definitional; no sourced lower bound above 1 is used."
+  ]
+}

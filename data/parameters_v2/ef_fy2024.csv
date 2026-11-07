@@ -1,0 +1,6 @@
+region,retailer,basic_ef_residual_kg_per_kWh,basic_ef_company_reference_kg_per_kWh,national_average_kg_per_kWh,substitute_kg_per_kWh
+Hokkaido,北海道電力(株),0.526,0.518,0.423,0.416
+Tohoku,東北電力(株),0.421,0.4,0.423,0.416
+Kanto,東京電力エナジーパートナー(株),0.452,0.421,0.423,0.416
+Kansai,関西電力(株),0.415,0.396,0.423,0.416
+Kyushu,九州電力(株),0.472,0.449,0.423,0.416

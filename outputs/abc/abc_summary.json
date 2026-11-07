@@ -1,0 +1,1363 @@
+{
+  "rules": {
+    "file": "config/abc_rules.yaml",
+    "sha256": "c718b5c7333af2dc9b8f7a23c2979c5781a4d61d5e98838edd6bcc92a956248d",
+    "unchanged_since_freeze": true
+  },
+  "parameters": {
+    "dir": "data/parameters_v2",
+    "fixed": "before the runs (data/parameters_v2/FREEZE.md)"
+  },
+  "base_options": "rep96, ModelOptions(certificates=True) = experiments_v2 change C1 (non-fossil certificates at nfc_yen_per_kWh 0.4); every design and A0 use the same options",
+  "scenario": "A0",
+  "review_years": [
+    2026,
+    2030,
+    2035
+  ],
+  "n_paths": 18,
+  "paths": [
+    "c-low_d-low_l-base",
+    "c-low_d-low_l-slow",
+    "c-low_d-base_l-base",
+    "c-low_d-base_l-slow",
+    "c-low_d-high_l-base",
+    "c-low_d-high_l-slow",
+    "c-base_d-low_l-base",
+    "c-base_d-low_l-slow",
+    "c-base_d-base_l-base",
+    "c-base_d-base_l-slow",
+    "c-base_d-high_l-base",
+    "c-base_d-high_l-slow",
+    "c-high_d-low_l-base",
+    "c-high_d-low_l-slow",
+    "c-high_d-base_l-base",
+    "c-high_d-base_l-slow",
+    "c-high_d-high_l-base",
+    "c-high_d-high_l-slow"
+  ],
+  "designs": {
+    "A0": {
+      "adaptive": false,
+      "pue_rules": false,
+      "phi": null,
+      "t_g": null,
+      "psi": null,
+      "subsidy": "none",
+      "floors": "paths",
+      "ppa_multiplier": null,
+      "theta": null,
+      "g": null,
+      "pstar": 0.0
+    },
+    "A": {
+      "adaptive": false,
+      "pue_rules": true,
+      "phi": null,
+      "t_g": null,
+      "psi": null,
+      "subsidy": "uniform",
+      "floors": "A",
+      "ppa_multiplier": null,
+      "theta": null,
+      "g": null,
+      "pstar": 0.0
+    },
+    "B": {
+      "adaptive": false,
+      "pue_rules": true,
+      "phi": 1.0,
+      "t_g": 2030,
+      "psi": 0.3,
+      "subsidy": "rule",
+      "floors": "paths",
+      "ppa_multiplier": 1.5,
+      "theta": null,
+      "g": null,
+      "pstar": 0.0
+    },
+    "C": {
+      "adaptive": true,
+      "pue_rules": true,
+      "phi": 1.0,
+      "t_g": 2030,
+      "psi": 0.3,
+      "subsidy": "rule",
+      "floors": "paths",
+      "ppa_multiplier": 1.5,
+      "theta": null,
+      "g": null,
+      "pstar": 0.0
+    },
+    "B-theta0": {
+      "adaptive": false,
+      "pue_rules": true,
+      "phi": 1.0,
+      "t_g": 2030,
+      "psi": 0.3,
+      "subsidy": "rule",
+      "floors": "paths",
+      "ppa_multiplier": 1.5,
+      "theta": 0.0,
+      "g": null,
+      "pstar": 0.0
+    },
+    "B-theta1": {
+      "adaptive": false,
+      "pue_rules": true,
+      "phi": 1.0,
+      "t_g": 2030,
+      "psi": 0.3,
+      "subsidy": "rule",
+      "floors": "paths",
+      "ppa_multiplier": 1.5,
+      "theta": 1.0,
+      "g": null,
+      "pstar": 0.0
+    },
+    "B-P10000": {
+      "adaptive": false,
+      "pue_rules": true,
+      "phi": 1.0,
+      "t_g": 2030,
+      "psi": 0.3,
+      "subsidy": "rule",
+      "floors": "paths",
+      "ppa_multiplier": 1.5,
+      "theta": null,
+      "g": null,
+      "pstar": 10000.0
+    },
+    "B-noPPAfloor": {
+      "adaptive": false,
+      "pue_rules": true,
+      "phi": 1.0,
+      "t_g": 2030,
+      "psi": null,
+      "subsidy": "rule",
+      "floors": "paths",
+      "ppa_multiplier": 1.5,
+      "theta": null,
+      "g": null,
+      "pstar": 0.0
+    },
+    "B-noReinfCost": {
+      "adaptive": false,
+      "pue_rules": true,
+      "phi": 1.0,
+      "t_g": 2030,
+      "psi": 0.3,
+      "subsidy": "rule",
+      "floors": "paths",
+      "ppa_multiplier": 1.5,
+      "theta": null,
+      "g": 0.0,
+      "pstar": 0.0
+    }
+  },
+  "n_runs": 162,
+  "failed": [],
+  "calibration": {
+    "social_cost_TJPY": 1.524676866,
+    "co2_Mt": 11.18569409,
+    "E_2024_Mt": 8.036972418
+  },
+  "tolerance_relative": 1e-06,
+  "B_vs_A": {
+    "n_paths": 18,
+    "social_cost_TJPY": {
+      "n_better": 18,
+      "n_equal": 0,
+      "n_worse": 0,
+      "mean_diff": -0.4497442505,
+      "min_diff": -0.9306438014,
+      "max_diff": -0.04636372348,
+      "worse_paths": []
+    },
+    "eq1_total_TJPY": {
+      "n_better": 18,
+      "n_equal": 0,
+      "n_worse": 0,
+      "mean_diff": -0.4497442498,
+      "min_diff": -0.9306438,
+      "max_diff": -0.04636372335,
+      "worse_paths": []
+    },
+    "operator_cost_TJPY": {
+      "n_better": 9,
+      "n_equal": 0,
+      "n_worse": 9,
+      "mean_diff": -0.1161672451,
+      "min_diff": -0.438895596,
+      "max_diff": 0.06903689687,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-base_l-base",
+        "c-low_d-high_l-base",
+        "c-base_d-low_l-base",
+        "c-base_d-base_l-base",
+        "c-base_d-high_l-base",
+        "c-high_d-low_l-base",
+        "c-high_d-base_l-base",
+        "c-high_d-high_l-base"
+      ]
+    },
+    "fiscal_burden_TJPY": {
+      "n_better": 18,
+      "n_equal": 0,
+      "n_worse": 0,
+      "mean_diff": -0.3969339363,
+      "min_diff": -0.5783694135,
+      "max_diff": -0.09347992887,
+      "worse_paths": []
+    },
+    "co2_cum_Mt": {
+      "n_better": 0,
+      "n_equal": 18,
+      "n_worse": 0,
+      "mean_diff": 1.960944157e-07,
+      "min_diff": -2.313574061e-07,
+      "max_diff": 6.447553105e-07,
+      "worse_paths": []
+    },
+    "co2_2040_Mt": {
+      "n_better": 6,
+      "n_equal": 0,
+      "n_worse": 12,
+      "mean_diff": -1.516426263e-09,
+      "min_diff": -3.379617516e-08,
+      "max_diff": 2.387379739e-08,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-low_l-slow",
+        "c-low_d-base_l-base",
+        "c-low_d-base_l-slow",
+        "c-base_d-low_l-base",
+        "c-base_d-low_l-slow",
+        "c-base_d-base_l-base",
+        "c-base_d-base_l-slow",
+        "c-high_d-low_l-base",
+        "c-high_d-low_l-slow",
+        "c-high_d-base_l-base",
+        "c-high_d-base_l-slow"
+      ]
+    },
+    "electricity_cum_TWh": {
+      "n_better": 18,
+      "n_equal": 0,
+      "n_worse": 0,
+      "mean_diff": -12.14206689,
+      "min_diff": -30.92326266,
+      "max_diff": -0.6214043054,
+      "worse_paths": []
+    },
+    "grid_received_cum_TWh": {
+      "n_better": 18,
+      "n_equal": 0,
+      "n_worse": 0,
+      "mean_diff": -25.78291162,
+      "min_diff": -52.495429,
+      "max_diff": -4.174557045,
+      "worse_paths": []
+    },
+    "conn_usage_2040_max": {
+      "n_better": 0,
+      "n_equal": 0,
+      "n_worse": 18,
+      "mean_diff": 0.1158283137,
+      "min_diff": 0.07912131088,
+      "max_diff": 0.1516470354,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-low_l-slow",
+        "c-low_d-base_l-base",
+        "c-low_d-base_l-slow",
+        "c-low_d-high_l-base",
+        "c-low_d-high_l-slow",
+        "c-base_d-low_l-base",
+        "c-base_d-low_l-slow",
+        "c-base_d-base_l-base",
+        "c-base_d-base_l-slow",
+        "c-base_d-high_l-base",
+        "c-base_d-high_l-slow",
+        "c-high_d-low_l-base",
+        "c-high_d-low_l-slow",
+        "c-high_d-base_l-base",
+        "c-high_d-base_l-slow",
+        "c-high_d-high_l-base",
+        "c-high_d-high_l-slow"
+      ]
+    },
+    "n_better_social_and_co2": 0
+  },
+  "C_vs_B": {
+    "n_paths": 18,
+    "social_cost_TJPY": {
+      "n_better": 0,
+      "n_equal": 18,
+      "n_worse": 0,
+      "mean_diff": 0.0,
+      "min_diff": 0.0,
+      "max_diff": 0.0,
+      "worse_paths": []
+    },
+    "eq1_total_TJPY": {
+      "n_better": 0,
+      "n_equal": 18,
+      "n_worse": 0,
+      "mean_diff": 0.0,
+      "min_diff": 0.0,
+      "max_diff": 0.0,
+      "worse_paths": []
+    },
+    "operator_cost_TJPY": {
+      "n_better": 0,
+      "n_equal": 18,
+      "n_worse": 0,
+      "mean_diff": 0.0,
+      "min_diff": 0.0,
+      "max_diff": 0.0,
+      "worse_paths": []
+    },
+    "fiscal_burden_TJPY": {
+      "n_better": 0,
+      "n_equal": 18,
+      "n_worse": 0,
+      "mean_diff": 0.0,
+      "min_diff": 0.0,
+      "max_diff": 0.0,
+      "worse_paths": []
+    },
+    "co2_cum_Mt": {
+      "n_better": 0,
+      "n_equal": 18,
+      "n_worse": 0,
+      "mean_diff": 0.0,
+      "min_diff": 0.0,
+      "max_diff": 0.0,
+      "worse_paths": []
+    },
+    "co2_2040_Mt": {
+      "n_better": 0,
+      "n_equal": 18,
+      "n_worse": 0,
+      "mean_diff": 0.0,
+      "min_diff": 0.0,
+      "max_diff": 0.0,
+      "worse_paths": []
+    },
+    "electricity_cum_TWh": {
+      "n_better": 0,
+      "n_equal": 18,
+      "n_worse": 0,
+      "mean_diff": 0.0,
+      "min_diff": 0.0,
+      "max_diff": 0.0,
+      "worse_paths": []
+    },
+    "grid_received_cum_TWh": {
+      "n_better": 0,
+      "n_equal": 18,
+      "n_worse": 0,
+      "mean_diff": 0.0,
+      "min_diff": 0.0,
+      "max_diff": 0.0,
+      "worse_paths": []
+    },
+    "conn_usage_2040_max": {
+      "n_better": 0,
+      "n_equal": 18,
+      "n_worse": 0,
+      "mean_diff": 0.0,
+      "min_diff": 0.0,
+      "max_diff": 0.0,
+      "worse_paths": []
+    },
+    "n_better_social_and_co2": 0
+  },
+  "C_vs_A": {
+    "n_paths": 18,
+    "social_cost_TJPY": {
+      "n_better": 18,
+      "n_equal": 0,
+      "n_worse": 0,
+      "mean_diff": -0.4497442505,
+      "min_diff": -0.9306438014,
+      "max_diff": -0.04636372348,
+      "worse_paths": []
+    },
+    "eq1_total_TJPY": {
+      "n_better": 18,
+      "n_equal": 0,
+      "n_worse": 0,
+      "mean_diff": -0.4497442498,
+      "min_diff": -0.9306438,
+      "max_diff": -0.04636372335,
+      "worse_paths": []
+    },
+    "operator_cost_TJPY": {
+      "n_better": 9,
+      "n_equal": 0,
+      "n_worse": 9,
+      "mean_diff": -0.1161672451,
+      "min_diff": -0.438895596,
+      "max_diff": 0.06903689687,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-base_l-base",
+        "c-low_d-high_l-base",
+        "c-base_d-low_l-base",
+        "c-base_d-base_l-base",
+        "c-base_d-high_l-base",
+        "c-high_d-low_l-base",
+        "c-high_d-base_l-base",
+        "c-high_d-high_l-base"
+      ]
+    },
+    "fiscal_burden_TJPY": {
+      "n_better": 18,
+      "n_equal": 0,
+      "n_worse": 0,
+      "mean_diff": -0.3969339363,
+      "min_diff": -0.5783694135,
+      "max_diff": -0.09347992887,
+      "worse_paths": []
+    },
+    "co2_cum_Mt": {
+      "n_better": 0,
+      "n_equal": 18,
+      "n_worse": 0,
+      "mean_diff": 1.960944157e-07,
+      "min_diff": -2.313574061e-07,
+      "max_diff": 6.447553105e-07,
+      "worse_paths": []
+    },
+    "co2_2040_Mt": {
+      "n_better": 6,
+      "n_equal": 0,
+      "n_worse": 12,
+      "mean_diff": -1.516426263e-09,
+      "min_diff": -3.379617516e-08,
+      "max_diff": 2.387379739e-08,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-low_l-slow",
+        "c-low_d-base_l-base",
+        "c-low_d-base_l-slow",
+        "c-base_d-low_l-base",
+        "c-base_d-low_l-slow",
+        "c-base_d-base_l-base",
+        "c-base_d-base_l-slow",
+        "c-high_d-low_l-base",
+        "c-high_d-low_l-slow",
+        "c-high_d-base_l-base",
+        "c-high_d-base_l-slow"
+      ]
+    },
+    "electricity_cum_TWh": {
+      "n_better": 18,
+      "n_equal": 0,
+      "n_worse": 0,
+      "mean_diff": -12.14206689,
+      "min_diff": -30.92326266,
+      "max_diff": -0.6214043054,
+      "worse_paths": []
+    },
+    "grid_received_cum_TWh": {
+      "n_better": 18,
+      "n_equal": 0,
+      "n_worse": 0,
+      "mean_diff": -25.78291162,
+      "min_diff": -52.495429,
+      "max_diff": -4.174557045,
+      "worse_paths": []
+    },
+    "conn_usage_2040_max": {
+      "n_better": 0,
+      "n_equal": 0,
+      "n_worse": 18,
+      "mean_diff": 0.1158283137,
+      "min_diff": 0.07912131088,
+      "max_diff": 0.1516470354,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-low_l-slow",
+        "c-low_d-base_l-base",
+        "c-low_d-base_l-slow",
+        "c-low_d-high_l-base",
+        "c-low_d-high_l-slow",
+        "c-base_d-low_l-base",
+        "c-base_d-low_l-slow",
+        "c-base_d-base_l-base",
+        "c-base_d-base_l-slow",
+        "c-base_d-high_l-base",
+        "c-base_d-high_l-slow",
+        "c-high_d-low_l-base",
+        "c-high_d-low_l-slow",
+        "c-high_d-base_l-base",
+        "c-high_d-base_l-slow",
+        "c-high_d-high_l-base",
+        "c-high_d-high_l-slow"
+      ]
+    },
+    "n_better_social_and_co2": 0
+  },
+  "A_vs_A0": {
+    "n_paths": 18,
+    "social_cost_TJPY": {
+      "n_better": 0,
+      "n_equal": 0,
+      "n_worse": 18,
+      "mean_diff": 0.5852919432,
+      "min_diff": 0.109575704,
+      "max_diff": 1.105167212,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-low_l-slow",
+        "c-low_d-base_l-base",
+        "c-low_d-base_l-slow",
+        "c-low_d-high_l-base",
+        "c-low_d-high_l-slow",
+        "c-base_d-low_l-base",
+        "c-base_d-low_l-slow",
+        "c-base_d-base_l-base",
+        "c-base_d-base_l-slow",
+        "c-base_d-high_l-base",
+        "c-base_d-high_l-slow",
+        "c-high_d-low_l-base",
+        "c-high_d-low_l-slow",
+        "c-high_d-base_l-base",
+        "c-high_d-base_l-slow",
+        "c-high_d-high_l-base",
+        "c-high_d-high_l-slow"
+      ]
+    },
+    "eq1_total_TJPY": {
+      "n_better": 0,
+      "n_equal": 0,
+      "n_worse": 18,
+      "mean_diff": 0.5852919428,
+      "min_diff": 0.1095757038,
+      "max_diff": 1.105167212,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-low_l-slow",
+        "c-low_d-base_l-base",
+        "c-low_d-base_l-slow",
+        "c-low_d-high_l-base",
+        "c-low_d-high_l-slow",
+        "c-base_d-low_l-base",
+        "c-base_d-low_l-slow",
+        "c-base_d-base_l-base",
+        "c-base_d-base_l-slow",
+        "c-base_d-high_l-base",
+        "c-base_d-high_l-slow",
+        "c-high_d-low_l-base",
+        "c-high_d-low_l-slow",
+        "c-high_d-base_l-base",
+        "c-high_d-base_l-slow",
+        "c-high_d-high_l-base",
+        "c-high_d-high_l-slow"
+      ]
+    },
+    "operator_cost_TJPY": {
+      "n_better": 0,
+      "n_equal": 0,
+      "n_worse": 18,
+      "mean_diff": 0.1883580065,
+      "min_diff": 0.01609577491,
+      "max_diff": 0.5267978042,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-low_l-slow",
+        "c-low_d-base_l-base",
+        "c-low_d-base_l-slow",
+        "c-low_d-high_l-base",
+        "c-low_d-high_l-slow",
+        "c-base_d-low_l-base",
+        "c-base_d-low_l-slow",
+        "c-base_d-base_l-base",
+        "c-base_d-base_l-slow",
+        "c-base_d-high_l-base",
+        "c-base_d-high_l-slow",
+        "c-high_d-low_l-base",
+        "c-high_d-low_l-slow",
+        "c-high_d-base_l-base",
+        "c-high_d-base_l-slow",
+        "c-high_d-high_l-base",
+        "c-high_d-high_l-slow"
+      ]
+    },
+    "fiscal_burden_TJPY": {
+      "n_better": 0,
+      "n_equal": 0,
+      "n_worse": 18,
+      "mean_diff": 0.3969339363,
+      "min_diff": 0.09347992887,
+      "max_diff": 0.5783694135,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-low_l-slow",
+        "c-low_d-base_l-base",
+        "c-low_d-base_l-slow",
+        "c-low_d-high_l-base",
+        "c-low_d-high_l-slow",
+        "c-base_d-low_l-base",
+        "c-base_d-low_l-slow",
+        "c-base_d-base_l-base",
+        "c-base_d-base_l-slow",
+        "c-base_d-high_l-base",
+        "c-base_d-high_l-slow",
+        "c-high_d-low_l-base",
+        "c-high_d-low_l-slow",
+        "c-high_d-base_l-base",
+        "c-high_d-base_l-slow",
+        "c-high_d-high_l-base",
+        "c-high_d-high_l-slow"
+      ]
+    },
+    "co2_cum_Mt": {
+      "n_better": 0,
+      "n_equal": 18,
+      "n_worse": 0,
+      "mean_diff": -1.565011661e-07,
+      "min_diff": -4.46079266e-07,
+      "max_diff": 2.416184799e-07,
+      "worse_paths": []
+    },
+    "co2_2040_Mt": {
+      "n_better": 9,
+      "n_equal": 0,
+      "n_worse": 9,
+      "mean_diff": 5.946728169e-09,
+      "min_diff": -1.039589889e-08,
+      "max_diff": 2.458982317e-08,
+      "worse_paths": [
+        "c-low_d-base_l-base",
+        "c-low_d-high_l-base",
+        "c-low_d-high_l-slow",
+        "c-base_d-base_l-base",
+        "c-base_d-high_l-base",
+        "c-base_d-high_l-slow",
+        "c-high_d-base_l-base",
+        "c-high_d-high_l-base",
+        "c-high_d-high_l-slow"
+      ]
+    },
+    "electricity_cum_TWh": {
+      "n_better": 0,
+      "n_equal": 0,
+      "n_worse": 18,
+      "mean_diff": 11.92646689,
+      "min_diff": 0.5860746642,
+      "max_diff": 30.05441197,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-low_l-slow",
+        "c-low_d-base_l-base",
+        "c-low_d-base_l-slow",
+        "c-low_d-high_l-base",
+        "c-low_d-high_l-slow",
+        "c-base_d-low_l-base",
+        "c-base_d-low_l-slow",
+        "c-base_d-base_l-base",
+        "c-base_d-base_l-slow",
+        "c-base_d-high_l-base",
+        "c-base_d-high_l-slow",
+        "c-high_d-low_l-base",
+        "c-high_d-low_l-slow",
+        "c-high_d-base_l-base",
+        "c-high_d-base_l-slow",
+        "c-high_d-high_l-base",
+        "c-high_d-high_l-slow"
+      ]
+    },
+    "grid_received_cum_TWh": {
+      "n_better": 0,
+      "n_equal": 0,
+      "n_worse": 18,
+      "mean_diff": 26.18523155,
+      "min_diff": 4.254344299,
+      "max_diff": 54.05019627,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-low_l-slow",
+        "c-low_d-base_l-base",
+        "c-low_d-base_l-slow",
+        "c-low_d-high_l-base",
+        "c-low_d-high_l-slow",
+        "c-base_d-low_l-base",
+        "c-base_d-low_l-slow",
+        "c-base_d-base_l-base",
+        "c-base_d-base_l-slow",
+        "c-base_d-high_l-base",
+        "c-base_d-high_l-slow",
+        "c-high_d-low_l-base",
+        "c-high_d-low_l-slow",
+        "c-high_d-base_l-base",
+        "c-high_d-base_l-slow",
+        "c-high_d-high_l-base",
+        "c-high_d-high_l-slow"
+      ]
+    },
+    "conn_usage_2040_max": {
+      "n_better": 18,
+      "n_equal": 0,
+      "n_worse": 0,
+      "mean_diff": -0.5923264572,
+      "min_diff": -0.7943112523,
+      "max_diff": -0.26543452,
+      "worse_paths": []
+    },
+    "n_better_social_and_co2": 0
+  },
+  "B_vs_A0": {
+    "n_paths": 18,
+    "social_cost_TJPY": {
+      "n_better": 0,
+      "n_equal": 0,
+      "n_worse": 18,
+      "mean_diff": 0.1355476927,
+      "min_diff": 0.06211195134,
+      "max_diff": 0.1821218378,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-low_l-slow",
+        "c-low_d-base_l-base",
+        "c-low_d-base_l-slow",
+        "c-low_d-high_l-base",
+        "c-low_d-high_l-slow",
+        "c-base_d-low_l-base",
+        "c-base_d-low_l-slow",
+        "c-base_d-base_l-base",
+        "c-base_d-base_l-slow",
+        "c-base_d-high_l-base",
+        "c-base_d-high_l-slow",
+        "c-high_d-low_l-base",
+        "c-high_d-low_l-slow",
+        "c-high_d-base_l-base",
+        "c-high_d-base_l-slow",
+        "c-high_d-high_l-base",
+        "c-high_d-high_l-slow"
+      ]
+    },
+    "eq1_total_TJPY": {
+      "n_better": 0,
+      "n_equal": 0,
+      "n_worse": 18,
+      "mean_diff": 0.135547693,
+      "min_diff": 0.06211195126,
+      "max_diff": 0.1821218379,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-low_l-slow",
+        "c-low_d-base_l-base",
+        "c-low_d-base_l-slow",
+        "c-low_d-high_l-base",
+        "c-low_d-high_l-slow",
+        "c-base_d-low_l-base",
+        "c-base_d-low_l-slow",
+        "c-base_d-base_l-base",
+        "c-base_d-base_l-slow",
+        "c-base_d-high_l-base",
+        "c-base_d-high_l-slow",
+        "c-high_d-low_l-base",
+        "c-high_d-low_l-slow",
+        "c-high_d-base_l-base",
+        "c-high_d-base_l-slow",
+        "c-high_d-high_l-base",
+        "c-high_d-high_l-slow"
+      ]
+    },
+    "operator_cost_TJPY": {
+      "n_better": 0,
+      "n_equal": 0,
+      "n_worse": 18,
+      "mean_diff": 0.07219076138,
+      "min_diff": 0.03427673898,
+      "max_diff": 0.09260438569,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-low_l-slow",
+        "c-low_d-base_l-base",
+        "c-low_d-base_l-slow",
+        "c-low_d-high_l-base",
+        "c-low_d-high_l-slow",
+        "c-base_d-low_l-base",
+        "c-base_d-low_l-slow",
+        "c-base_d-base_l-base",
+        "c-base_d-base_l-slow",
+        "c-base_d-high_l-base",
+        "c-base_d-high_l-slow",
+        "c-high_d-low_l-base",
+        "c-high_d-low_l-slow",
+        "c-high_d-base_l-base",
+        "c-high_d-base_l-slow",
+        "c-high_d-high_l-base",
+        "c-high_d-high_l-slow"
+      ]
+    },
+    "fiscal_burden_TJPY": {
+      "n_better": 0,
+      "n_equal": 18,
+      "n_worse": 0,
+      "mean_diff": 0.0,
+      "min_diff": 0.0,
+      "max_diff": 0.0,
+      "worse_paths": []
+    },
+    "co2_cum_Mt": {
+      "n_better": 0,
+      "n_equal": 18,
+      "n_worse": 0,
+      "mean_diff": 3.959324957e-08,
+      "min_diff": -3.155833816e-08,
+      "max_diff": 2.817581528e-07,
+      "worse_paths": []
+    },
+    "co2_2040_Mt": {
+      "n_better": 6,
+      "n_equal": 0,
+      "n_worse": 12,
+      "mean_diff": 4.430301907e-09,
+      "min_diff": -1.781163784e-08,
+      "max_diff": 3.661350699e-08,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-low_l-slow",
+        "c-low_d-base_l-base",
+        "c-low_d-base_l-slow",
+        "c-base_d-low_l-base",
+        "c-base_d-low_l-slow",
+        "c-base_d-base_l-base",
+        "c-base_d-base_l-slow",
+        "c-high_d-low_l-base",
+        "c-high_d-low_l-slow",
+        "c-high_d-base_l-base",
+        "c-high_d-base_l-slow"
+      ]
+    },
+    "electricity_cum_TWh": {
+      "n_better": 15,
+      "n_equal": 0,
+      "n_worse": 3,
+      "mean_diff": -0.2156000029,
+      "min_diff": -0.8688506851,
+      "max_diff": 0.08669629581,
+      "worse_paths": [
+        "c-low_d-base_l-base",
+        "c-base_d-base_l-base",
+        "c-high_d-base_l-base"
+      ]
+    },
+    "grid_received_cum_TWh": {
+      "n_better": 3,
+      "n_equal": 0,
+      "n_worse": 15,
+      "mean_diff": 0.4023199345,
+      "min_diff": -0.273361052,
+      "max_diff": 1.554767261,
+      "worse_paths": [
+        "c-low_d-low_l-base",
+        "c-low_d-low_l-slow",
+        "c-low_d-base_l-slow",
+        "c-low_d-high_l-base",
+        "c-low_d-high_l-slow",
+        "c-base_d-low_l-base",
+        "c-base_d-low_l-slow",
+        "c-base_d-base_l-slow",
+        "c-base_d-high_l-base",
+        "c-base_d-high_l-slow",
+        "c-high_d-low_l-base",
+        "c-high_d-low_l-slow",
+        "c-high_d-base_l-slow",
+        "c-high_d-high_l-base",
+        "c-high_d-high_l-slow"
+      ]
+    },
+    "conn_usage_2040_max": {
+      "n_better": 18,
+      "n_equal": 0,
+      "n_worse": 0,
+      "mean_diff": -0.4764981435,
+      "min_diff": -0.6670933158,
+      "max_diff": -0.1863132091,
+      "worse_paths": []
+    },
+    "n_better_social_and_co2": 0
+  },
+  "variants_vs_A": {
+    "B-theta0": {
+      "n_paths": 18,
+      "social_cost_TJPY": {
+        "n_better": 18,
+        "n_equal": 0,
+        "n_worse": 0,
+        "mean_diff": -0.419167661,
+        "min_diff": -0.8992663063,
+        "max_diff": -0.04267771446,
+        "worse_paths": []
+      },
+      "co2_cum_Mt": {
+        "n_better": 0,
+        "n_equal": 18,
+        "n_worse": 0,
+        "mean_diff": 1.689611094e-07,
+        "min_diff": -2.063244207e-07,
+        "max_diff": 4.104281519e-07,
+        "worse_paths": []
+      },
+      "operator_cost_TJPY": {
+        "n_better": 18,
+        "n_equal": 0,
+        "n_worse": 0,
+        "mean_diff": -0.1910661711,
+        "min_diff": -0.5267978036,
+        "max_diff": -0.01609577596,
+        "worse_paths": []
+      },
+      "n_better_social_and_co2": 0
+    },
+    "B-theta1": {
+      "n_paths": 18,
+      "social_cost_TJPY": {
+        "n_better": 18,
+        "n_equal": 0,
+        "n_worse": 0,
+        "mean_diff": -0.4515339413,
+        "min_diff": -0.9160627945,
+        "max_diff": -0.05353712865,
+        "worse_paths": []
+      },
+      "co2_cum_Mt": {
+        "n_better": 0,
+        "n_equal": 18,
+        "n_worse": 0,
+        "mean_diff": 1.303040946e-07,
+        "min_diff": -2.461759454e-07,
+        "max_diff": 4.22830384e-07,
+        "worse_paths": []
+      },
+      "operator_cost_TJPY": {
+        "n_better": 6,
+        "n_equal": 0,
+        "n_worse": 12,
+        "mean_diff": -0.05460000487,
+        "min_diff": -0.3376933867,
+        "max_diff": 0.1321160992,
+        "worse_paths": [
+          "c-low_d-low_l-base",
+          "c-low_d-low_l-slow",
+          "c-low_d-base_l-base",
+          "c-low_d-high_l-base",
+          "c-base_d-low_l-base",
+          "c-base_d-low_l-slow",
+          "c-base_d-base_l-base",
+          "c-base_d-high_l-base",
+          "c-high_d-low_l-base",
+          "c-high_d-low_l-slow",
+          "c-high_d-base_l-base",
+          "c-high_d-high_l-base"
+        ]
+      },
+      "n_better_social_and_co2": 0
+    },
+    "B-P10000": {
+      "n_paths": 18,
+      "social_cost_TJPY": {
+        "n_better": 18,
+        "n_equal": 0,
+        "n_worse": 0,
+        "mean_diff": -0.2260643076,
+        "min_diff": -0.4295983001,
+        "max_diff": -0.01133880465,
+        "worse_paths": []
+      },
+      "co2_cum_Mt": {
+        "n_better": 0,
+        "n_equal": 18,
+        "n_worse": 0,
+        "mean_diff": 1.510350047e-07,
+        "min_diff": -1.088509709e-07,
+        "max_diff": 4.606031609e-07,
+        "worse_paths": []
+      },
+      "operator_cost_TJPY": {
+        "n_better": 18,
+        "n_equal": 0,
+        "n_worse": 0,
+        "mean_diff": -0.5750857801,
+        "min_diff": -0.8737433723,
+        "max_diff": -0.1419812967,
+        "worse_paths": []
+      },
+      "n_better_social_and_co2": 0
+    },
+    "B-noPPAfloor": {
+      "n_paths": 18,
+      "social_cost_TJPY": {
+        "n_better": 18,
+        "n_equal": 0,
+        "n_worse": 0,
+        "mean_diff": -0.4497442505,
+        "min_diff": -0.9306438014,
+        "max_diff": -0.04636372348,
+        "worse_paths": []
+      },
+      "co2_cum_Mt": {
+        "n_better": 0,
+        "n_equal": 18,
+        "n_worse": 0,
+        "mean_diff": 1.960944157e-07,
+        "min_diff": -2.313574061e-07,
+        "max_diff": 6.447553105e-07,
+        "worse_paths": []
+      },
+      "operator_cost_TJPY": {
+        "n_better": 9,
+        "n_equal": 0,
+        "n_worse": 9,
+        "mean_diff": -0.1161672451,
+        "min_diff": -0.438895596,
+        "max_diff": 0.06903689687,
+        "worse_paths": [
+          "c-low_d-low_l-base",
+          "c-low_d-base_l-base",
+          "c-low_d-high_l-base",
+          "c-base_d-low_l-base",
+          "c-base_d-base_l-base",
+          "c-base_d-high_l-base",
+          "c-high_d-low_l-base",
+          "c-high_d-base_l-base",
+          "c-high_d-high_l-base"
+        ]
+      },
+      "n_better_social_and_co2": 0
+    },
+    "B-noReinfCost": {
+      "n_paths": 18,
+      "social_cost_TJPY": {
+        "n_better": 18,
+        "n_equal": 0,
+        "n_worse": 0,
+        "mean_diff": -0.5880001079,
+        "min_diff": -1.105167212,
+        "max_diff": -0.1095757053,
+        "worse_paths": []
+      },
+      "co2_cum_Mt": {
+        "n_better": 0,
+        "n_equal": 18,
+        "n_worse": 0,
+        "mean_diff": 1.689611094e-07,
+        "min_diff": -2.063244207e-07,
+        "max_diff": 4.104281519e-07,
+        "worse_paths": []
+      },
+      "operator_cost_TJPY": {
+        "n_better": 18,
+        "n_equal": 0,
+        "n_worse": 0,
+        "mean_diff": -0.1910661711,
+        "min_diff": -0.5267978036,
+        "max_diff": -0.01609577596,
+        "worse_paths": []
+      },
+      "n_better_social_and_co2": 0
+    }
+  },
+  "switches": {
+    "n_rows": 144,
+    "n_triggered": 57,
+    "n_setting_changes": 18,
+    "n_policy_changes": 0,
+    "by_rule": {
+      "R1": {
+        "triggered": 15,
+        "setting_changed": 0,
+        "policy_changed": 0
+      },
+      "R2": {
+        "triggered": 6,
+        "setting_changed": 0,
+        "policy_changed": 0
+      },
+      "R3": {
+        "triggered": 36,
+        "setting_changed": 18,
+        "policy_changed": 0
+      },
+      "R4": {
+        "triggered": 0,
+        "setting_changed": 0,
+        "policy_changed": 0
+      }
+    }
+  },
+  "C_equals_B_all_paths": true,
+  "share_meets_cap_path": {
+    "A0": 1.0,
+    "A": 1.0,
+    "B": 1.0,
+    "C": 1.0,
+    "B-theta0": 1.0,
+    "B-theta1": 1.0,
+    "B-P10000": 1.0,
+    "B-noPPAfloor": 1.0,
+    "B-noReinfCost": 1.0
+  },
+  "siting": {
+    "itr_rule": "target",
+    "floor_gap_min": -2.220446049e-16,
+    "itr_fall_max_GW": 0.0
+  },
+  "realization_rule_check": {
+    "itr_rule": "increment",
+    "designs": [
+      "A0",
+      "A",
+      "B"
+    ],
+    "failed": [],
+    "B_vs_A": {
+      "n_paths": 18,
+      "social_cost_TJPY": {
+        "n_better": 15,
+        "n_equal": 0,
+        "n_worse": 3,
+        "mean_diff": -0.4323191084,
+        "min_diff": -0.9147646822,
+        "max_diff": 0.008778305712,
+        "worse_paths": [
+          "c-low_d-low_l-base",
+          "c-base_d-low_l-base",
+          "c-high_d-low_l-base"
+        ]
+      },
+      "operator_cost_TJPY": {
+        "n_better": 6,
+        "n_equal": 0,
+        "n_worse": 12,
+        "mean_diff": -0.09329217093,
+        "min_diff": -0.4213958787,
+        "max_diff": 0.08711304246,
+        "worse_paths": [
+          "c-low_d-low_l-base",
+          "c-low_d-low_l-slow",
+          "c-low_d-base_l-base",
+          "c-low_d-high_l-base",
+          "c-base_d-low_l-base",
+          "c-base_d-low_l-slow",
+          "c-base_d-base_l-base",
+          "c-base_d-high_l-base",
+          "c-high_d-low_l-base",
+          "c-high_d-low_l-slow",
+          "c-high_d-base_l-base",
+          "c-high_d-high_l-base"
+        ]
+      },
+      "n_better_social_and_co2": 0
+    },
+    "B_vs_A0": {
+      "n_paths": 18,
+      "social_cost_TJPY": {
+        "n_better": 0,
+        "n_equal": 0,
+        "n_worse": 18,
+        "mean_diff": 0.1235482213,
+        "min_diff": 0.03817546496,
+        "max_diff": 0.1692192111,
+        "worse_paths": [
+          "c-low_d-low_l-base",
+          "c-low_d-low_l-slow",
+          "c-low_d-base_l-base",
+          "c-low_d-base_l-slow",
+          "c-low_d-high_l-base",
+          "c-low_d-high_l-slow",
+          "c-base_d-low_l-base",
+          "c-base_d-low_l-slow",
+          "c-base_d-base_l-base",
+          "c-base_d-base_l-slow",
+          "c-base_d-high_l-base",
+          "c-base_d-high_l-slow",
+          "c-high_d-low_l-base",
+          "c-high_d-low_l-slow",
+          "c-high_d-base_l-base",
+          "c-high_d-base_l-slow",
+          "c-high_d-high_l-base",
+          "c-high_d-high_l-slow"
+        ]
+      },
+      "operator_cost_TJPY": {
+        "n_better": 0,
+        "n_equal": 0,
+        "n_worse": 18,
+        "mean_diff": 0.05978902519,
+        "min_diff": 0.02303027242,
+        "max_diff": 0.0925927637,
+        "worse_paths": [
+          "c-low_d-low_l-base",
+          "c-low_d-low_l-slow",
+          "c-low_d-base_l-base",
+          "c-low_d-base_l-slow",
+          "c-low_d-high_l-base",
+          "c-low_d-high_l-slow",
+          "c-base_d-low_l-base",
+          "c-base_d-low_l-slow",
+          "c-base_d-base_l-base",
+          "c-base_d-base_l-slow",
+          "c-base_d-high_l-base",
+          "c-base_d-high_l-slow",
+          "c-high_d-low_l-base",
+          "c-high_d-low_l-slow",
+          "c-high_d-base_l-base",
+          "c-high_d-base_l-slow",
+          "c-high_d-high_l-base",
+          "c-high_d-high_l-slow"
+        ]
+      },
+      "n_better_social_and_co2": 0
+    },
+    "mean": {
+      "A0": {
+        "social_cost_TJPY": 8.140755103,
+        "operator_cost_TJPY": 8.140755103,
+        "reinforcement_TJPY": 0.0,
+        "nonmetro_share_2040": 0.4336515487,
+        "conn_usage_2040_max": 0.7026523599,
+        "siting_floor_gap_min": 0.01863940095,
+        "itr_fall_max_GW": 0.0
+      },
+      "A": {
+        "social_cost_TJPY": 8.696622432,
+        "operator_cost_TJPY": 8.293836299,
+        "reinforcement_TJPY": 0.0,
+        "nonmetro_share_2040": 0.1814692767,
+        "conn_usage_2040_max": 0.1617939723,
+        "siting_floor_gap_min": -0.01329590003,
+        "itr_fall_max_GW": 0.0
+      },
+      "B": {
+        "social_cost_TJPY": 8.264303324,
+        "operator_cost_TJPY": 8.200544128,
+        "reinforcement_TJPY": 0.1275183927,
+        "nonmetro_share_2040": 0.3853023953,
+        "conn_usage_2040_max": 0.2596372307,
+        "siting_floor_gap_min": 0.01347409106,
+        "itr_fall_max_GW": 0.0
+      }
+    },
+    "floor_gap_min": -0.0398876919,
+    "itr_fall_max_GW": 0.0
+  },
+  "base_path": {
+    "A0": {
+      "social_cost_TJPY": 8.821005527,
+      "eq1_total_TJPY": 8.821005528,
+      "operator_cost_TJPY": 8.821005528,
+      "fiscal_burden_TJPY": 0.0,
+      "co2_cum_Mt": 11.18569423,
+      "nonmetro_share_2040": 0.496391,
+      "electricity_cum_TWh": 679.4756382,
+      "grid_received_cum_TWh": 428.9085197,
+      "conn_usage_2040_max": 0.9951362135,
+      "reinforcement_TJPY": 0.0
+    },
+    "A": {
+      "social_cost_TJPY": 9.361312817,
+      "eq1_total_TJPY": 9.361312816,
+      "operator_cost_TJPY": 8.842360346,
+      "fiscal_burden_TJPY": 0.5189524694,
+      "co2_cum_Mt": 11.18569397,
+      "nonmetro_share_2040": 0.18,
+      "electricity_cum_TWh": 684.4775882,
+      "grid_received_cum_TWh": 450.4444374,
+      "conn_usage_2040_max": 0.2130422747,
+      "reinforcement_TJPY": 0.0
+    },
+    "B": {
+      "social_cost_TJPY": 8.98511786,
+      "eq1_total_TJPY": 8.98511786,
+      "operator_cost_TJPY": 8.911397242,
+      "fiscal_burden_TJPY": 0.0,
+      "co2_cum_Mt": 11.1856942,
+      "nonmetro_share_2040": 0.4211605881,
+      "electricity_cum_TWh": 679.5623345,
+      "grid_received_cum_TWh": 428.6351587,
+      "conn_usage_2040_max": 0.3280428976,
+      "reinforcement_TJPY": 0.1474412358
+    },
+    "C": {
+      "social_cost_TJPY": 8.98511786,
+      "eq1_total_TJPY": 8.98511786,
+      "operator_cost_TJPY": 8.911397242,
+      "fiscal_burden_TJPY": 0.0,
+      "co2_cum_Mt": 11.1856942,
+      "nonmetro_share_2040": 0.4211605881,
+      "electricity_cum_TWh": 679.5623345,
+      "grid_received_cum_TWh": 428.6351587,
+      "conn_usage_2040_max": 0.3280428976,
+      "reinforcement_TJPY": 0.1474412358
+    },
+    "B-theta0": {
+      "social_cost_TJPY": 9.035247807,
+      "eq1_total_TJPY": 9.035247808,
+      "operator_cost_TJPY": 8.82100553,
+      "fiscal_burden_TJPY": 0.0,
+      "co2_cum_Mt": 11.18569425,
+      "nonmetro_share_2040": 0.496391,
+      "electricity_cum_TWh": 679.4756392,
+      "grid_received_cum_TWh": 428.9085197,
+      "conn_usage_2040_max": 0.4034336001,
+      "reinforcement_TJPY": 0.2142422778
+    },
+    "B-theta1": {
+      "social_cost_TJPY": 8.974476445,
+      "eq1_total_TJPY": 8.974476445,
+      "operator_cost_TJPY": 8.974476445,
+      "fiscal_burden_TJPY": 0.0,
+      "co2_cum_Mt": 11.18569406,
+      "nonmetro_share_2040": 0.3413050474,
+      "electricity_cum_TWh": 679.7895715,
+      "grid_received_cum_TWh": 426.5003731,
+      "conn_usage_2040_max": 0.236946895,
+      "reinforcement_TJPY": 0.09977832744
+    },
+    "B-P10000": {
+      "social_cost_TJPY": 9.141181234,
+      "eq1_total_TJPY": 9.141181234,
+      "operator_cost_TJPY": 8.156532205,
+      "fiscal_burden_TJPY": 0.8833775528,
+      "co2_cum_Mt": 11.18569413,
+      "nonmetro_share_2040": 0.4211605881,
+      "electricity_cum_TWh": 681.7842147,
+      "grid_received_cum_TWh": 434.4321795,
+      "conn_usage_2040_max": 0.3280428968,
+      "reinforcement_TJPY": 0.2025429525
+    },
+    "B-noPPAfloor": {
+      "social_cost_TJPY": 8.98511786,
+      "eq1_total_TJPY": 8.98511786,
+      "operator_cost_TJPY": 8.911397242,
+      "fiscal_burden_TJPY": 0.0,
+      "co2_cum_Mt": 11.1856942,
+      "nonmetro_share_2040": 0.4211605881,
+      "electricity_cum_TWh": 679.5623345,
+      "grid_received_cum_TWh": 428.6351587,
+      "conn_usage_2040_max": 0.3280428976,
+      "reinforcement_TJPY": 0.1474412358
+    },
+    "B-noReinfCost": {
+      "social_cost_TJPY": 8.82100553,
+      "eq1_total_TJPY": 8.82100553,
+      "operator_cost_TJPY": 8.82100553,
+      "fiscal_burden_TJPY": 0.0,
+      "co2_cum_Mt": 11.18569425,
+      "nonmetro_share_2040": 0.496391,
+      "electricity_cum_TWh": 679.4756392,
+      "grid_received_cum_TWh": 428.9085197,
+      "conn_usage_2040_max": 0.4034336001,
+      "reinforcement_TJPY": 0.0
+    }
+  }
+}

@@ -1,0 +1,38 @@
+kind,quantity,unit,VV,VP,SV,SP,ext_paper,ext_v2,upd_spec,upd_v2,interaction,value,ok
+effect,advantage,fraction,0.05887437324,0.0861144064,0.03713183254,0.0353804338,0.0507339726,0.0217425407,0.001751398744,-0.02724003316,-0.0289914319,,
+effect,advantage_pt,percentage points,5.887437324,8.61144064,3.713183254,3.53804338,5.07339726,2.17425407,0.1751398744,-2.724003316,-2.89914319,,
+effect,total_REF_TJPY,TJPY,9.372824694,16.95362199,8.665259324,12.26337414,4.690247854,0.7075653701,-3.598114815,-7.580797299,-3.982682484,,
+effect,total_C-CN_TJPY,TJPY,9.372824694,16.95362199,8.665259324,12.26337413,4.690247862,0.7075653703,-3.598114807,-7.580797299,-3.982682492,,
+effect,total_R-CN_TJPY,TJPY,8.821005515,15.4936709,8.343502366,11.82949063,3.664180264,0.477503149,-3.485988269,-6.672665384,-3.186677115,,
+effect,diff_TJPY,TJPY,0.5518191794,1.459951094,0.3217569582,0.4338834966,1.026067598,0.2300622212,-0.1121265384,-0.9081319149,-0.7960053764,,
+effect,channel_cooling_TJPY,TJPY,0.06267955035,0.6225657769,0.01063071032,0.06341233456,0.5591534424,0.05204884002,-0.05278162424,-0.5598862266,-0.5071046024,,
+effect,channel_re_procurement_TJPY,TJPY,0.4891396312,0.837385317,0.3111262481,0.3704711621,0.4669141549,0.1780133831,-0.05934491395,-0.3482456858,-0.2889007719,,
+effect,channel_carbon_TJPY,TJPY,-2.131829364e-09,3.458588335e-10,-2.73814002e-10,-3.367383721e-11,3.795326707e-10,-1.858015362e-09,-2.401401648e-10,-2.477688198e-09,-2.237548033e-09,,
+effect,channel_siting_TJPY,TJPY,0,0,0,0,0,0,0,0,0,,
+effect,channel_curtailment_TJPY,TJPY,0,0,0,0,0,0,0,0,0,,
+effect,channel_total_TJPY,TJPY,0.5518191794,1.459951094,0.3217569582,0.4338834966,1.026067598,0.2300622212,-0.1121265384,-0.9081319149,-0.7960053764,,
+effect,share_cooling,share of C-CN - R-CN,0.1135871182,0.4264291998,0.03303956621,0.1461506028,0.2802785971,0.08054755198,-0.1131110366,-0.3128420817,-0.1997310451,,
+effect,share_re_procurement,share of C-CN - R-CN,0.8864128857,0.5735707999,0.9669604346,0.8538493973,-0.2802785974,-0.08054754897,0.1131110373,0.3128420858,0.1997310484,,
+effect,share_carbon,share of C-CN - R-CN,-3.863275225e-09,2.368975474e-10,-8.509963656e-10,-7.761032046e-11,3.145078678e-10,-3.012278859e-09,-7.733860452e-10,-4.100172772e-09,-3.326786727e-09,,
+effect,share_siting,share of C-CN - R-CN,0,0,0,0,0,0,0,0,0,,
+effect,share_curtailment,share of C-CN - R-CN,0,0,0,0,0,0,0,0,0,,
+reference,spec_paper_only_advantage,fraction,,,,,,,,,,0.04198735421,
+reference,spec_paper_only_ex_subsidy_advantage,fraction,,,,,,,,,,0.03579390257,
+reference,reimplementation_diff_pt (SP - spec paper_only),percentage points,,,,,,,,,,-0.6606920413,
+reference,reimplementation_diff_ex_subsidy_pt (SP - spec ex subsidy),percentage points,,,,,,,,,,-0.04134687679,
+reference,spec_paper_only_share_cooling,share,,,,,,,,,,0.1150407399,
+reference,reimplementation_diff_share_cooling (SP - spec),share,,,,,,,,,,0.03110986288,
+reference,spec_paper_only_share_re_procurement,share,,,,,,,,,,0.7374517256,
+reference,reimplementation_diff_share_re_procurement (SP - spec),share,,,,,,,,,,0.1163976717,
+reference,spec_paper_only_share_carbon,share,,,,,,,,,,0,
+reference,reimplementation_diff_share_carbon (SP - spec),share,,,,,,,,,,-7.761032046e-11,
+reference,spec_paper_only_share_siting,share,,,,,,,,,,0.1475075346,
+reference,reimplementation_diff_share_siting (SP - spec),share,,,,,,,,,,-0.1475075346,
+reference,spec_paper_only_share_curtailment,share,,,,,,,,,,0,
+reference,reimplementation_diff_share_curtailment (SP - spec),share,,,,,,,,,,0,
+check,VV_vs_bridge_B0_max_rel_diff,relative,,,,,,,,,,5.399689628e-11,True
+check,SP_vs_bridge_P11_max_rel_diff,relative,,,,,,,,,,3.951460454e-10,True
+check,channel_sum_error_VV,TJPY,,,,,,,,,,8.881784197e-16,True
+check,channel_sum_error_VP,TJPY,,,,,,,,,,8.881784197e-16,True
+check,channel_sum_error_SV,TJPY,,,,,,,,,,2.109423747e-15,True
+check,channel_sum_error_SP,TJPY,,,,,,,,,,5.162537065e-15,True

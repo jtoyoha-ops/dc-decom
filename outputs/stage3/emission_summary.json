@@ -1,0 +1,168 @@
+{
+  "levers": {
+    "L": "liquid cooling",
+    "R": "RE procurement",
+    "G": "geographic allocation",
+    "D": "grid decarbonization",
+    "N": "certificates",
+    "P": "carbon price"
+  },
+  "n_runs": 64,
+  "n_optimal": 64,
+  "efficiency_tol_Mt": 1e-09,
+  "worlds": {
+    "all": {
+      "2040": {
+        "E_empty_Mt": 38.81666801,
+        "E_full_Mt": -1.844388253e-08,
+        "reduction_Mt": 38.81666803,
+        "efficiency_error_Mt": 0.0,
+        "efficiency_ok": true,
+        "shapley_Mt": {
+          "L": 3.677033418,
+          "R": 10.86082102,
+          "G": 0.885510333,
+          "D": 15.40169403,
+          "N": 3.465694755,
+          "P": 4.525914472
+        },
+        "share": {
+          "L": 0.0947282084,
+          "R": 0.2797978696,
+          "G": 0.02281263122,
+          "D": 0.3967804248,
+          "N": 0.08928367453,
+          "P": 0.1165971914
+        }
+      },
+      "cum_2024_2040": {
+        "E_empty_Mt": 401.9977027,
+        "E_full_Mt": 11.18569421,
+        "reduction_Mt": 390.8120085,
+        "efficiency_error_Mt": 5.684341886e-14,
+        "efficiency_ok": true,
+        "shapley_Mt": {
+          "L": 41.96737892,
+          "R": 128.9250228,
+          "G": 9.616943722,
+          "D": 100.1477902,
+          "N": 45.56733731,
+          "P": 64.58753557
+        },
+        "share": {
+          "L": 0.1073850803,
+          "R": 0.3298901261,
+          "G": 0.02460759524,
+          "D": 0.2562556626,
+          "N": 0.1165965639,
+          "P": 0.1652649718
+        }
+      },
+      "cum_2026_2040": {
+        "E_empty_Mt": 383.147126,
+        "E_full_Mt": 1.207748282e-07,
+        "reduction_Mt": 383.1471259,
+        "efficiency_error_Mt": 5.684341886e-14,
+        "efficiency_ok": true,
+        "shapley_Mt": {
+          "L": 41.96737892,
+          "R": 121.7430761,
+          "G": 9.616943722,
+          "D": 99.66485429,
+          "N": 45.56733731,
+          "P": 64.58753557
+        },
+        "share": {
+          "L": 0.1095333257,
+          "R": 0.3177449806,
+          "G": 0.02509987175,
+          "D": 0.2601216284,
+          "N": 0.1189290855,
+          "P": 0.1685711081
+        }
+      }
+    },
+    "no_certificates": {
+      "2040": {
+        "E_empty_Mt": 38.81666801,
+        "E_full_Mt": 0.3263429641,
+        "reduction_Mt": 38.49032505,
+        "efficiency_error_Mt": 7.105427358e-15,
+        "efficiency_ok": true,
+        "shapley_Mt": {
+          "L": 4.227196597,
+          "R": 13.87050934,
+          "G": 1.252210175,
+          "D": 18.08018922,
+          "P": 1.060219718
+        },
+        "share": {
+          "L": 0.1098249129,
+          "R": 0.3603635282,
+          "G": 0.03253311509,
+          "D": 0.4697333472,
+          "P": 0.0275450965
+        }
+      },
+      "cum_2024_2040": {
+        "E_empty_Mt": 401.9977027,
+        "E_full_Mt": 15.64430961,
+        "reduction_Mt": 386.3533931,
+        "efficiency_error_Mt": 5.684341886e-14,
+        "efficiency_ok": true,
+        "shapley_Mt": {
+          "L": 52.62000425,
+          "R": 181.1780519,
+          "G": 15.70989941,
+          "D": 117.8252393,
+          "P": 19.02019826
+        },
+        "share": {
+          "L": 0.136196563,
+          "R": 0.4689438611,
+          "G": 0.04066199415,
+          "D": 0.3049675281,
+          "P": 0.04923005361
+        }
+      },
+      "cum_2026_2040": {
+        "E_empty_Mt": 383.147126,
+        "E_full_Mt": 4.458615512,
+        "reduction_Mt": 378.6885105,
+        "efficiency_error_Mt": 0.0,
+        "efficiency_ok": true,
+        "shapley_Mt": {
+          "L": 52.62000425,
+          "R": 173.9961052,
+          "G": 15.70989941,
+          "D": 117.3423034,
+          "P": 19.02019826
+        },
+        "share": {
+          "L": 0.1389532632,
+          "R": 0.4594702517,
+          "G": 0.04148501731,
+          "D": 0.3098649684,
+          "P": 0.05022649943
+        }
+      }
+    }
+  },
+  "cap_residual": {
+    "definition": "E(full) (= A0 with certificates) - base R-CN co2_cum (base_metrics.csv)",
+    "E_full_Mt": 11.18569421,
+    "R-CN_Mt": 11.18569421,
+    "value_Mt": 4.93450969e-09
+  },
+  "cap_effect_without_certificates": {
+    "definition": "E(full with N off) (= A0 without certificates) - no-certificate R-CN co2_cum (sens_certificates.csv)",
+    "E_full_N_off_Mt": 15.64430961,
+    "R-CN_no_certificates_Mt": 15.31796662,
+    "value_Mt": 0.3263429866
+  },
+  "efficiency_all_ok": true,
+  "lmdi_same_as_levers": {
+    "empty_cum_Mt_diff": 0.0,
+    "full_cum_Mt_diff": 0.0
+  }
+}

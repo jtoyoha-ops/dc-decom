@@ -1,0 +1,278 @@
+# Experiment definitions of DC-DECOM v2: (a) base, (b) bridge + conditions,
+# (c) sensitivity (tornado, certificates, carbon sweep) and P*. Written before
+# any run of these experiments with the fixed v2 parameters
+# (data/parameters_v2/FREEZE.md). Nothing here was chosen after seeing a v2
+# result; the one later change is listed under changes_after_registration.
+# The thesis reports the v2 results; the reported 18-23% of Energies (not
+# model output) is related to v2 by the computed bridge (b).
+
+version: 2
+date: "2026-11-06"
+# version 1 = the definitions as written before the runs. version 2 = change C1
+# below (decided by the author after the version-1 base run; logged with the
+# results before and after). Parameter values are unchanged.
+changes_after_registration:
+  - id: C1
+    date: "2026-11-06"
+    change: "base options: certificates = True (non-fossil certificates at the frozen
+      nfc_yen_per_kWh = 0.4, sourced range 0.4-1.3). Version 1 had certificates = False."
+    decided_by: "author, after the version-1 base run"
+    reasons:
+      - "non-fossil certificates are a procurement means Japanese DC operators use; they enter the
+        adjusted emission factor of the SHK system; ch06 treats them next to PPA"
+      - "Energies states that the optimum has zero curtailment; a base with curtailment contradicts
+        the model description"
+      - "in version 1, 63% of the C-CN - R-CN gap (1.479 of 2.332 TJPY) was the curtailment penalty
+        (500 yen/kWh), not a resource cost; it cannot be shown as the base advantage"
+    results_before: "version 1 base: REF 9.503, C-CN 11.210, R-CN 8.879 TJPY; advantage
+      20.8%, 8.8% without the curtailment penalty; C-CN curtailment 4.746 TWh (Kanto 2040)"
+    results_after: "probe before the change (same model, certificates on): REF 9.373, C-CN 9.373,
+      R-CN 8.821 TJPY; advantage 5.9%; no curtailment (the committed outputs are authoritative)"
+    version1_case: "kept as the sensitivity case 'no_certificates' (physical RE only) in
+      sens_certificates.csv; the advantage with the penalty is never read as a reproduction of 18-23%"
+    added_with_C1:
+      - "sensitivity 'certificates': nfc 0.4 (base) and 1.3 yen/kWh (sourced high), no certificates,
+        24/7 hourly matching without certificates (one case)"
+      - "bridge: step P11 'certificates not allowed' at the end of to_paper_only; T7 of to_unstated
+        becomes the certificate price 0.4 -> 5.0 (certificates already allowed); T8 'no grid connection
+        constraints' inserted before the demand step (now T9). The bridge had not been run yet."
+      - "conditions: item nfc_price high = 1.3 (sourced)"
+parameters:
+  dir: data/parameters_v2
+  fixed: "before these experiments were run (data/parameters_v2/FREEZE.md)"
+solver: {name: CBC (PuLP bundled), threads: 1, msg: 0, workers_max: 8}
+time_mode: rep96          # primary; annual vs rep96: config/experiments_v35.yaml (annual)
+options: default ModelOptions of src/dc_decom_v2/config.py (grid constraints on,
+  annual PPA matching, regional EF, N+1 'eq' with CGS + generators,
+  anchor_is_it, pass-through 1.0) with certificates = True (change C1; version 1 had none)
+
+metrics:
+  total: "Eq. 1 total = social resource cost + full carbon cost (accounting.eq1); the
+    R-CN subsidy is a transfer and is excluded"
+  advantage: "(C-CN total - R-CN total) / C-CN total"
+  co2: [co2_2040_Mt, co2_cum_Mt]
+  curtailment: curtail_TWh (any value > 1e-6 TWh in base C-CN or R-CN is reported before
+    further runs are interpreted)
+target_range: [0.18, 0.23]   # reported R-CN advantage of Energies (not model output); a comparison point, never a target
+
+# ---------------------------------------------------------------- (a) base
+base:
+  scenarios: [REF, C-CN, R-CN, R-CN-pub, A0]
+  channels: "dc_decom_analysis.decomposition.principled on accounting.analysis_frames
+    (basis eq1) for C-CN -> R-CN and C-CN -> R-CN-pub; five lines (cooling,
+    re_procurement, carbon, siting, curtailment) that sum to the total difference"
+  outputs: [base_metrics.csv, base_regional.csv, base_cooling.csv, base_channels.csv]
+
+# -------------------------------------------------------------- (b) bridge
+# Start from the v2 base and replace one assumption per step, cumulatively, in
+# the listed order. Each step solves REF, C-CN and R-CN (the scenario that
+# plays each role after the step is given). The advantage after every step is
+# reported; no step is tuned. 'energies' and 'source' classify each
+# assumption before any computation (E = Energies 19(10) 2485).
+# Assumption set S1 (to_paper_only, P1-P11): back to the assumptions stated in
+# the equations and tables of Energies, ending at the spec paper_only run.
+# Assumption set S2 (to_unstated, T1-T9): assumptions whose values are not
+# stated in Energies, added to the v2 base.
+bridge:
+  reference_points:
+    paper_only:
+      advantage: 0.04198735421           # outputs/stage2/paper_only.csv (spec paper_only)
+      totals_TJPY: {REF: 11.762, C-CN: 11.762, R-CN: 11.268}
+      note: "spec Eq. 1 total includes the E8 5% CAPEX subsidy for R-CN; the advantage
+        with the subsidy added back uses resource_cost_TJPY of outputs/stage2/paper_only.csv"
+  to_unstated:
+    - id: T1
+      name: "regional allocation fixed (C-CN growth split 73:27, R-CN 2040 shares)"
+      change: "C-CN -> C-CN-gs (growth after 2025 split Kanto 0.73 / Kansai 0.27, non-metro frozen
+        at 2025); R-CN -> R-CN-s2 (2040 shares Hokkaido 0.27, Tohoku 0.08, Kanto 0.35, Kansai 0.15,
+        Kyushu 0.15, linear from 2025); REF unchanged"
+      energies: "C-CN: Table 7 'new large-scale DCs in Kanto/Kansai only' (stated; contradicts
+        Section 3.11 item 1, same shares for REF and C-CN); the 73:27 split equals the 2024 ratio
+        60:22 (not stated as a rule). R-CN: Table 7 'model optimizes allocation' (contradicts fixed
+        shares); only Hokkaido 27% is stated, as a model result (Section 4.5)"
+      source: "none for the R-CN shares"
+    - id: T2
+      name: regional siting cost 4.0 / 1.5 billion yen per TWh-yr
+      change: "add per year, discounted: C-CN 4.0e9 yen x max(0, IT_TWh(r,t) - IT_TWh(r,2024)) for
+        Kanto and Kansai; R-CN 1.5e9 yen x the same for Hokkaido, Tohoku and Kyushu (Eq. 1 resource
+        line 'siting_s2'). Exact as a post-processed constant because the allocation is exogenous
+        from T1 on"
+      energies: "not stated (Section 4.1 mentions premium costs of RE procurement in
+        land-constrained metropolitan areas qualitatively, no siting cost value)"
+      source: none
+    - id: T3
+      name: C-CN non-metro liquid share <= 15%
+      change: "PolicySettings.liquid_fleet_max = 0.15 for Hokkaido, Tohoku, Kyushu in C-CN (years after 2025)"
+      energies: not stated
+      source: none
+    - id: T4
+      name: emission floor 95% of the cap
+      change: "ModelOptions.co2_floor_share = 0.95 for C-CN and R-CN (years after 2025)"
+      energies: "not stated (Table 7 states a cap, 'net-zero by 2040 (linear decline)')"
+      source: none
+    - id: T5
+      name: scenario-specific regional EF paths
+      change: "ef_grid_path[r]@t linear 2024 -> 2040 from (0.49, 0.52, 0.44, 0.36, 0.37) to CN
+        (0.05, 0.07, 0.11, 0.07, 0.06) for C-CN and R-CN, REF (0.09, 0.12, 0.16, 0.11, 0.10) for REF
+        (Hokkaido, Tohoku, Kanto, Kansai, Kyushu)"
+      energies: "contradicts Section 3.11 item 3 (one EF path to the 7th SEP target for all
+        scenarios); the 2024 values are Table 9"
+      source: "2024 values: Table 9 (MOE); 2040 values: none"
+    - id: T6
+      name: carbon price 1,500 -> 12,000 yen/t linear 2024-2040
+      change: "carbon_price(t) = 1500 + (t - 2024) / 16 x 10500 for every year"
+      energies: "partly: 2026 value 2,813 and 2035 value 8,719 lie in the Table 8 ranges
+        (1,700-4,300; 7,000-15,000); a price in 2024-2025 contradicts Section 1 (mandatory from FY2026)"
+      source: "GX-ETS / MRI ranges for 2026 and 2035; none for the linear form"
+    - id: T7
+      name: certificate price 5 yen/kWh (no volume limit)
+      change: "nfc_yen_per_kWh = 5.0 (certificates are allowed in the base since C1)"
+      energies: not stated
+      source: "none (v2 sourced range 0.4-1.3 yen/kWh, JEPX 2025)"
+    - id: T8
+      name: no grid connection constraints
+      change: "ModelOptions.grid_constraints = False"
+      energies: "stated by omission (no connection constraint in Section 3)"
+      source: "n/a (v2 extension removed)"
+    - id: T9
+      name: demand 12 TWh IT x 1.132^(t - 2024)
+      change: "paths.demand_TWh(t) = 12.0 x 1.132^(t - 2024)"
+      energies: "not stated (Section 3.4 / Eq. 7 and the Wood Mackenzie path)"
+      source: "none for 13.2%/yr; 12 TWh corresponds to Wood Mackenzie 19 TWh / PUE 1.58"
+  to_paper_only:
+    - id: P1
+      name: R-CN allocation fixed at the shares of the v1.0.1 code
+      change: "R-CN -> R-CN-pub (Kanto 0.375, Kansai 0.170, Hokkaido 0.275, Tohoku 0.070, Kyushu 0.110,
+        linear from 2025; no subsidy)"
+      energies: "contradicts Table 7 ('model optimizes allocation'); only Hokkaido 27% is stated"
+      source: "code constants of v1 scenarios.py"
+    - id: P2
+      name: no grid connection constraints
+      change: "ModelOptions.grid_constraints = False"
+      energies: "stated by omission (no connection constraint in Section 3)"
+      source: "n/a (v2 extension removed)"
+    - id: P3
+      name: paper demand path
+      change: "paths.demand_TWh = spec anchors 19 -> 70 TWh read as IT energy"
+      energies: "Section 3.4 / 3.11 (Wood Mackenzie; read as IT load by the code)"
+      source: "Wood Mackenzie (v2 reads 19 TWh as facility energy)"
+    - id: P4
+      name: paper carbon price path
+      change: "paths.carbon_price = 3,000 / 11,000 / 18,000 interpolation, 3,000 before 2026"
+      energies: "Table 8 mid-points; 2040 value and pre-2026 price are code-only"
+      source: "GX-ETS / MRI mid-points"
+    - id: P5
+      name: Table 9 regional tariff and EF, national EF 0.43 -> 0.10
+      change: "tariff_yen_per_kWh[r], grid_ef_base[r] = Table 9; ef_national@t = 0.43 -> 0.10 linear"
+      energies: "Table 9, Section 3.7 (2040 value 0.10 is code-only)"
+      source: "Table 9 (paper)"
+    - id: P6
+      name: all existing parameters at paper values
+      change: "parameter set compose(existing = data/parameters_spec, structural = data/parameters_v2):
+        paper PUE coefficients evaluated hourly with the repo temperature file, cooling CAPEX 195/225,
+        PV LCOE 9.9, Table 9 temperatures, demand/carbon/EF paths of the spec loader"
+      energies: "Tables 6, 8, 9"
+      source: paper
+    - id: P7
+      name: annual time mode
+      change: "ModelOptions.time_mode = annual (paper PUE at the Table 9 annual-mean temperature)"
+      energies: "contradicts Table 8 / Section 3.11 item 2 (96 representative hours); the v1 code is annual"
+      source: n/a
+    - id: P8
+      name: PPA without the supply curve
+      change: "ppa_tier1_share = 1000 (no volume limit), ppa_tier2_share = 0, ppa_volume_factor@t = 1
+        (Eq. 15 stays)"
+      energies: "stated by omission (Eq. 15 only)"
+      source: n/a
+    - id: P9
+      name: backup by CGS only
+      change: "ModelOptions.backup_techs = ('cgs',)"
+      energies: "Eq. 16 names CGS; Section 3.7 also names emergency generators"
+      source: n/a
+    - id: P10
+      name: v1 IT-energy definition
+      change: "ModelOptions.it_energy = legacy_util (facility energy x 0.8)"
+      energies: "not stated (code-only utilization 0.80)"
+      source: none
+    - id: P11
+      name: certificates not allowed
+      change: "ModelOptions.certificates = False (the spec model has no certificates)"
+      energies: "not stated (no certificates in Section 3)"
+      source: "n/a"
+
+# Conditions under which the advantage lies in 18-23% (analysis of conditions,
+# not calibration). Only assumptions stated in Energies (without contradiction
+# inside Energies is not required, but the classification is reported) or
+# values inside sourced ranges of data/parameters_v2 / ranges stated in
+# Energies are used. Values outside these ranges or without a source are never
+# used; if no evaluated case lies in the range, the report says so.
+conditions:
+  items:
+    carbon: {alternatives: {low: "carbon_price path low", high: "carbon_price path high",
+             flat20000: "flat 20,000 yen/t from 2026 (Energies Section 4.6 text)"},
+             basis: "Table 8 ranges; v2 sourced 2026-2035, extension after 2035 as in the base"}
+    hw_efficiency: {alternatives: {low: 0.20, high: 0.40}, basis: "Energies Section 4.6, Table 8 (paper)"}
+    tariff: {alternatives: {low: "all regions at low", high: "all regions at high"},
+             basis: "sourced (FY2025 monthly min/max)"}
+    grid_ef: {alternatives: {low: "grid_ef_base low (company-wide)", table9: "Table 9 values"},
+              basis: "sourced / paper"}
+    ef_national: {alternatives: {low: "ef_national path low", high: "ef_national path high"},
+                  basis: "sourced (7th SEP scenarios)"}
+    demand: {alternatives: {low: "demand_TWh path low", high: "demand_TWh path high"},
+             basis: "sourced (JST Modest / Wood Mackenzie high; after 2035 as in the base)"}
+    pv_lcoe: {alternatives: {low: 6.6, high: 10.9}, basis: "sourced (cost WG)"}
+    cooling_capex: {alternatives: {low: "dlc 180, immersion 210", high: "dlc 195, immersion 240"},
+                    basis: "Table 6 ranges (Energies)"}
+    nfc_price: {alternatives: {high: 1.3}, basis: "sourced (JEPX 2025 auction range 0.4-1.3)"}
+    subsidy: {alternatives: {high: 780000}, basis: "derived (METI); the low 100,000 is an assumption, excluded"}
+    ccn_allocation: {alternatives: {table7: "C-CN-gs (growth only in Kanto/Kansai, 2024 ratio)"},
+                     basis: "Energies Table 7 (contradicts Section 3.11 item 1)"}
+  excluded: "no certificates (version-1 base; its advantage is driven by the curtailment
+    penalty), PPA price +-2 (assumption), discount rate 2-4% (assumption), c0, theta, lambda inputs,
+    slow liquid deployment 0.25, and every T-step without a source (T2-T5, T7, T8, R-CN shares of T1)"
+  procedure:
+    - "OAT: each item at each alternative, C-CN and R-CN (REF not needed)"
+    - "favorable corner F: every item at the alternative with the largest OAT advantage if larger
+      than the base advantage (else base), jointly; unfavorable corner U: smallest"
+    - "if the base and a corner lie on different sides of the range, evaluate the path base +
+      s x (corner - base) for s in {0.25, 0.5, 0.75} (numeric settings interpolated; the C-CN
+      allocation switch as in the corner)"
+    - "report every evaluated case, the range [min, max] of the advantage, and 'reached' only if an
+      evaluated case lies in [0.18, 0.23]; otherwise 'not reached in this range'"
+
+# ------------------------------------------------------- (c) sensitivity
+tornado:
+  scenarios: [C-CN, R-CN]
+  metrics: [R-CN total change, advantage, R-CN co2_cum_Mt]
+  parameters:
+    carbon_price: {low: path low, high: path high}
+    hw_efficiency: {low: 0.20, high: 0.40, mapping: "demand(t) = D(t) x [(1 - a(t)) + a(t) x
+      (1.30 / (1 + eta))^(t - 2024)], D = demand_TWh, a = ai_share (value path); the base embeds
+      eta = 0.30 (Table 7); if the result decreases in a year, its running maximum is used (the
+      no-relocation rule needs a non-decreasing path) and the case is flagged"}
+    ppa_price: {low: "ppa_yen_per_kWh low (all regions)", high: "high (all regions)"}
+    discount_rate: {low: 0.02, high: 0.04}
+    reinforcement_cost: {low: 50000, high: 500000, note: "the base scenarios offer c0 without
+      reinforcement, so g has no effect there; supplementary rows 'with reinforcement' (non-metro c1
+      from reinforcement_year 2030, cost g, theta = operator_burden_share, c0 before) at g low / base / high"}
+    siting_cost_difference: {high: "shell_premium_yen_per_kW Kanto and Kansai = 100,000 (low = base 0)"}
+certificates:
+  cases: {base: "nfc 0.4", nfc_high: "nfc 1.3 (sourced high)", no_certificates: "physical RE only",
+          hourly_no_certificates: "ppa_matching hourly, no certificates (24/7; one case)"}
+  report: "totals, advantage with and without the curtailment penalty, curtailment TWh and cost,
+    Kanto 2040 curtailment, certificate volume, BESS 2040"
+carbon_sweep:
+  prices: "0 to 30,000 yen/t step 1,000, flat from 2026; 2024-2025 at the base value (0)"
+  scenarios: [C-CN, R-CN, A0]
+
+# ------------------------------------------------------------------ P*
+pstar:
+  definition: "minimum flat carbon price (from 2026) at which A0 (endogenous siting, no subsidy, no CO2
+    cap) reaches the 2040 non-metro IT share of the R-CN base"
+  search: "the sweep brackets the first crossing; bisection to 100 yen/t; 'not reached' if none in 0-30,000;
+    reached at 0 if A0 at 0 already reaches it"
+  also_report: "A0 2040 non-metro share at 10,000 yen/t (ch07 design assumption)"
+
+not_in_this_file: "composite uncertainty (Monte Carlo), 2x2 structure x parameters, breakeven of the
+  non-metro adders, ch03 s_train x s_inf_tol grid, annual vs rep96 and the emission decomposition are
+  defined in config/experiments_v35.yaml"

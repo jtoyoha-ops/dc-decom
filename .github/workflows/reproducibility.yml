@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  reproduce-headline-numbers:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,25 +17,22 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install CBC solver
-        run: sudo apt-get update && sudo apt-get install -y coinor-cbc
-
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Lint
-        run: ruff check src/
+        run: ruff check src/ tests/
 
       - name: Type-check
-        run: mypy src/dc_decom/
+        run: mypy src/dc_decom/ src/dc_decom_v2/ src/dc_decom_spec/ src/dc_decom_analysis/
 
-      - name: Run all three scenarios
-        run: |
-          python src/scripts/run_ref.py --out out/ref.json
-          python src/scripts/run_ccn.py --out out/ccn.json
-          python src/scripts/run_rcn.py --out out/rcn.json
+      - name: Solve the three v1 scenarios
+        run: python src/scripts/run_all.py
 
-      - name: Assert headline numbers
-        run: pytest tests/test_headline_numbers.py -v
+      - name: Spec version runs (outputs/stage2)
+        run: python src/scripts/run_spec.py
+
+      - name: Unit and integration tests
+        run: python -m pytest tests/ -q

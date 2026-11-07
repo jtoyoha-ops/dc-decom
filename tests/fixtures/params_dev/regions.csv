@@ -1,0 +1,9 @@
+id,region,group,value,unit,low,high,status,source_id,notes
+conn_capacity_GW_per_yr,Hokkaido,policy,0.6,GW/yr,,,dev,DEV,connection capacity offered per year to new non-metro facility peak
+conn_capacity_GW_per_yr,Tohoku,policy,0.6,GW/yr,,,dev,DEV,
+conn_capacity_GW_per_yr,Kyushu,policy,0.6,GW/yr,,,dev,DEV,
+shell_premium_yen_per_kW,Hokkaido,structural,0.0,yen/kW,,,dev,DEV,regional construction premium per kW of new IT nameplate
+shell_premium_yen_per_kW,Tohoku,structural,0.0,yen/kW,,,dev,DEV,
+shell_premium_yen_per_kW,Kanto,structural,20000.0,yen/kW,,,dev,DEV,
+shell_premium_yen_per_kW,Kansai,structural,10000.0,yen/kW,,,dev,DEV,
+shell_premium_yen_per_kW,Kyushu,structural,0.0,yen/kW,,,dev,DEV,

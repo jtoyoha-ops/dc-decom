@@ -1,0 +1,374 @@
+# Definitions of the additional analyses A-G of DC-DECOM v2 (thesis draft
+# v35). Written before the first run of any analysis below. A definition
+# changed after registration gets an entry in changes_after_registration
+# (date, reason, definition before and after); the results under the earlier
+# definition are kept.
+#
+# Status of a value: sourced (primary source), derived (computed from a
+# source), paper (Energies 19(10) 2485 = ENERGIES2026), assumption (仮定: no
+# source; the range is swept). Source ids refer to data/parameters_v2/sources.csv
+# unless a URL is given. No value below was chosen to reach the reported
+# 18-23% of Energies.
+
+version: 1
+date: "2026-11-07"
+purpose: >-
+  Additional analyses of the v2 model (compound uncertainty, breakeven of the
+  non-metro adders, Shapley decomposition of the emission reduction, training /
+  inference load ratio, annual vs 96 hours, structure x parameters 2x2 with the
+  four channels, carbon price x certificate rules). The A/B/C post-hoc sensitivity and the B - A0 breakdown are in
+  config/abc_posthoc.yaml.
+changes_after_registration:
+  - id: G1
+    date: "2026-11-07"
+    kind: "added descriptive output, decided after the carbon_cert results had been seen"
+    part: carbon_cert
+    before: "outputs: carbon_cert_sweep.csv, pstar_regimes.json, pstar_regimes_curve.csv,
+      run_log_carbon_cert.csv"
+    after: "the same outputs plus carbon_cert_regions.csv: A0 per rule, sweep price and region in 2040
+      (itr_GW, share of the national IT capacity, ef_grid in 2040 and its mean 2026-2040, grid received,
+      PPA volume, hourly PPA delivered, net grid energy and grid emissions), read from the same sweep solves"
+    reason: "the results show that under hourly (24/7) matching the A0 non-metro share falls with the
+      carbon price but not why; the regional movement and the regional grid factors are needed to
+      explain the direction"
+    effect: "no new solve, no change of the definitions (rules, prices, P*, siting effect) or of the
+      other outputs; the explanation of the direction is a hypothesis (the time profile of PV and the
+      matching are not separated)"
+
+parameters:
+  dir: data/parameters_v2
+  note: "values as fixed before the runs (data/parameters_v2/FREEZE.md), unchanged. Every variation
+    below is an override / addition of a copy in memory."
+base_options: >-
+  time_mode rep96; default ModelOptions of src/dc_decom_v2/config.py with
+  certificates = True (experiments_v2.yaml change C1); grid constraints on, annual
+  PPA matching, regional EF, N+1 'eq' with CGS + generators, anchor_is_it,
+  pass-through 1.0.
+code:
+  hook: "comm_cost_yen_per_kWh[r] (regional, default 0): operator objective term
+    dt x rate x itr x u_energy x 8.76 (1e9 yen) added only when the rate is non-zero; accounting
+    resource line comm_cost (last of RESOURCE_COLUMNS), metric comm_cost_yen, siting channel 'adder'.
+    With rate 0 every output is byte-identical to the outputs without the hook
+    (run_stage3.py --part all --check --no-cache)."
+  rule: "the analyses below do not change the top-level modules of src/dc_decom_v2/ (cache
+    fingerprint); their code is in src/dc_decom_v2/experiments/ and src/dc_decom_analysis/"
+solver: {name: CBC 2.10.3 (PuLP 2.8.0 bundled), threads: 1, msg: 0, workers: 8}
+target_range: [0.18, 0.23]   # reported R-CN advantage of Energies (not model output); a comparison point only, never a target
+target_range_label: "掲載論文の報告値の幅（比較のためだけ。目標ではない）"
+base_advantage_reference: "outputs/stage3/base_summary.json advantage_R-CN (5.89%)"
+metrics_common:
+  total: "Eq. 1 total = social resource cost + full carbon cost (accounting); subsidies are transfers"
+  advantage: "(C-CN total - R-CN total) / C-CN total"
+  advantage_ex_penalty: "same without the curtailment penalty line"
+regions: {metro: [Kanto, Kansai], nonmetro: [Hokkaido, Tohoku, Kyushu]}
+outputs_dir: outputs/stage3/
+
+# ===================================================================== A
+uncertainty:
+  part: mc
+  implementation: [src/dc_decom_v2/experiments/uncertainty.py, src/dc_decom_analysis/uncertainty.py]
+  purpose: "複合的な不確実性 (compound uncertainty): joint variation of the factors"
+  blocks:
+    M:
+      label: "seven factors (headline result)"
+      structure: "base (connection c0, no reinforcement). g has no effect here; it is kept in the design
+        to show that its PRCC is about 0"
+      factors: [carbon_q, demand_q, eta, ppa_offset, nfc, g, siting_diff]
+      n: 1000
+      seed: 20261107
+    R:
+      label: "same samples with the reinforcement structure"
+      structure: "non-metro c1 = conn_capacity_reinforced_GW_per_yr (0.6) from reinforcement_year (2030),
+        cost g = the sampled value, theta = operator_burden_share (0.5); common.Setting(reinforce_g=g)
+        as the tornado row with_reinforcement; c0 before 2030"
+      factors: "1-7, the same u matrix as M (paired samples)"
+      n: 1000
+      seed: 20261107
+    X:
+      label: "M plus the unsourced cost assumptions"
+      structure: base
+      factors: "1-28"
+      n: 1000
+      seed: 20261108
+  factors:
+    - {id: 1, name: carbon_q, mapping: "carbon_price(t) piecewise linear in q ~ U(0,1): q=0 low, 0.5 value,
+        1 high, every year (2024-2025 are 0 in all three)",
+       range: "2026: 1,700-4,300 yen/t; 2035: 7,000-15,000; 2040: 12,087-25,160",
+       status: "2026 sourced (METI_KOKUJI27_2026); 2027-2030 derived (+3%/yr); 2031-2034 derived (MRI2025);
+         2035 paper (ENERGIES2026 / MRI); 2036+ assumption (仮定, extension)"}
+    - {id: 2, name: demand_q, mapping: "demand_TWh(t) piecewise linear in q (low / value / high)",
+       range: "2040: 22.1 / 59.5 / 64.4 TWh IT",
+       status: "2024-2034 sourced/derived (WOODMAC2025, PUECAL_V2); low 2030 paper (JST Modest);
+         2035+ and low 2031+ assumption (仮定)"}
+    - {id: 3, name: eta, mapping: "U(0.20, 0.40); demand transformed by common.hw_demand (the tornado mapping
+        demand(t) = D(t) x [(1 - a(t)) + a(t) x (1.30 / (1 + eta))^(t - 2024)], base eta 0.30); a year with a
+        decrease uses the running maximum and the sample is flagged",
+       status: "paper (ENERGIES2026 Tables 7-8, Section 4.6)"}
+    - {id: 4, name: ppa_offset, mapping: "U(-2, +2) yen/kWh added to ppa_yen_per_kWh of all five regions",
+       status: "values paper (Table 9, REI 2024); range assumption (仮定)"}
+    - {id: 5, name: nfc, mapping: "nfc_yen_per_kWh ~ U(0.4, 1.3)", status: "sourced (ENEHUB_JEPX2025)"}
+    - {id: 6, name: g, mapping: "reinforcement_cost_yen_per_kW ~ U(50,000, 500,000) (acts only in R)",
+       status: "118,000 and 500,000 derived (OCCTO_MP2023, NIKKEI_MP2023); 50,000 assumption (仮定)"}
+    - {id: 7, name: siting_diff, mapping: "d ~ U(-100,000, +100,000) yen/kW of new IT nameplate (once).
+        d > 0: override shell_premium_yen_per_kW[Kanto], [Kansai] = d; d < 0: additions
+        shell_premium_yen_per_kW[Hokkaido], [Tohoku], [Kyushu] = |d|; applied to C-CN and R-CN",
+       status: "assumption (仮定): no regional cost index (SOURCES.md (16)); symmetric because the sign of the
+         difference is unknown and a one-sided range would bias the share with a positive advantage upward;
+         the frozen value 0 is unchanged"}
+    - {id: 8, name: tariff_q, mapping: "tariff_yen_per_kWh of the five regions jointly piecewise linear in q",
+       status: "sourced (EGC_TORIHIKI, FY2025 monthly min / max)"}
+    - {id: 9, name: grid_ef_q, mapping: "U(0,1): grid_ef_base linear from low (company-wide reference) at q=0 to
+        value at q=1 (high = value)", status: "sourced (MOE_EF_R6)"}
+    - {id: 10, name: ef_national_q, mapping: "ef_national(t) piecewise linear in q (2024 fixed at 0.423)",
+       status: "2040 derived (ANRE_SEP7_KANREN, 0 / 0.035 / 0.13); between assumption (仮定)"}
+    - {id: 11, name: pv_lcoe, mapping: "U(6.6, 10.9) yen/kWh", status: "sourced (COSTWG2025)"}
+    - {id: 12, name: cooling_air_capex, mapping: "U(100, 200) thousand yen/kW", status: "assumption (仮定)"}
+    - {id: 13, name: dlc_mult, mapping: "cooling_dlc_capex = air x U(1.20, 1.30) (premium always positive)",
+       status: "multiplier paper (Table 6: 180-195 / 150)"}
+    - {id: 14, name: imm_mult, mapping: "cooling_immersion_capex = air x U(1.40, 1.60)",
+       status: "multiplier paper (Table 6: 210-240 / 150)"}
+    - {id: 15, name: bess_duration_h, mapping: "U(2, 6) h", status: "assumption (仮定)"}
+    - {id: 16, name: cgs_fuel_yen_per_kWh_th, mapping: "U(5, 11)", status: "assumption (仮定)"}
+    - {id: 17, name: gen_capex, mapping: "U(40, 150) thousand yen/kW", status: "assumption (仮定)"}
+    - {id: 18, name: opex_om_rate, mapping: "U(0.01, 0.04)", status: "assumption (仮定)"}
+    - {id: 19, name: utilization, mapping: "U(0.6, 0.9)", status: "assumption (仮定)"}
+    - {id: 20, name: discount_rate, mapping: "U(0.02, 0.04)", status: "value paper; range assumption (仮定)"}
+    - {id: 21, name: ppa_tier1_share, mapping: "U(0.02, 0.10)", status: "assumption (仮定)"}
+    - {id: 22, name: ppa_tier2_share, mapping: "U(0.05, 0.30)", status: "assumption (仮定)"}
+    - {id: 23, name: ppa_tier2_premium_yen_per_kWh, mapping: "U(1, 6)", status: "assumption (仮定)"}
+    - {id: 24, name: conn_capacity_GW_per_yr, mapping: "c0 ~ U(0.05, 0.6), the same value for the three
+        non-metro regions", status: "assumption (仮定)"}
+    - {id: 25, name: pue_immersion_offset, mapping: "U(0, 0.04)", status: "assumption (仮定)"}
+    - {id: 26, name: s_train, mapping: "U(0.2, 0.6)", status: "value sourced (PATTERSON2022); range assumption (仮定)"}
+    - {id: 27, name: s_inf_tol, mapping: "U(0.1, 0.5)", status: "assumption (仮定)"}
+    - {id: 28, name: ai_share_q, mapping: "ai_share(t) piecewise linear in q. lambda_B(t) = 0.82 x [(1 - a(t)) +
+        a(t) (1 - s_train)(1 - s_inf_tol)] (t >= 2026), kappa = lambda x 60 / 82, overriding metro_floor@t and
+        kanto_floor@t; hw_demand uses this ai_share path (Setting.demand gets the transformed path and
+        eta = 0.30 is not applied a second time)",
+       status: "ai_share derived (IEA_EAI2025) to 2030, assumption (仮定) after; range assumption (仮定)"}
+  not_varied:
+    N_resilience: "discrete structure (a sensitivity case, not a continuous factor)"
+    carbon_pass_through: "operator behaviour assumption; Eq. 1 counts the full carbon cost"
+    pv_performance_ratio: "the 96-hour CF profiles are frozen files and would have to be rebuilt"
+    siting_subsidy_yen_per_kW: "a transfer; does not change the base allocation of C-CN / R-CN in Eq. 1"
+    policy_values: "theta, c1, T_g, psi, PPA multiplier are A/B/C policy values (frozen values in R)"
+    curtail_penalty: "constant of the paper (500 yen/kWh)"
+  distribution: "scalars U[low, high]; path factors q ~ U(0,1) mapped piecewise linearly to low (0),
+    value (0.5), high (1). As in config/experiments_v2.yaml (uniform on every parameter with low/high);
+    the sources do not give a distribution shape."
+  sampling: "scipy.stats.qmc.LatinHypercube(d, seed=seed) (default scramble, no optimization), random(n=1000)"
+  solves: "C-CN and R-CN (endogenous) per sample"
+  metrics: [eq1_total_TJPY C-CN and R-CN, advantage, advantage_ex_penalty, curtail_TWh,
+            R-CN co2_cum_Mt, R-CN nonmetro_share 2040, demand running-max flag]
+  summary_per_block: "mean, sd, p5, p25, p50, p75, p95, min, max; share with advantage > 0; share in
+    [0.18, 0.23] (reported as 'share in the reported range of Energies'); quantile of the base advantage 5.89% inside
+    the block; R: paired difference R - M"
+  ranking: "PRCC of the advantage and of the R-CN total (rank transform; correlation of the residuals of the
+    least-squares regressions on the ranks of the other factors; two-sided p from the t distribution);
+    bootstrap 1,000 resamples (seed 20261109) 95% interval; rank of |PRCC|; Spearman alongside. Per factor
+    quintile bins of u: mean, p5, p95 of the advantage, share > 0, share in range (figure data)"
+  failure: "a sample that is not Optimal is recorded with its factor values and excluded from the summary,
+    never replaced; a failure share above 1% is stated in the summary. In X, small c0 with high demand may make
+    C-CN (base shares) infeasible; reported as is"
+  procedure: "order M -> X -> R; run_many receives 100 samples (200 solves) per call in M and X and 50 samples
+    (100 solves) in R; N is never reduced"
+  outputs: [mc_samples.csv, mc_summary.json, mc_prcc.csv, mc_bins.csv, run_log_mc.csv]
+
+# ===================================================================== B
+breakeven:
+  part: breakeven
+  implementation: [src/dc_decom_v2/experiments/breakeven.py, src/dc_decom_v2/experiments/common.py]
+  purpose: "how much must be added in the non-metro regions for the R-CN advantage to vanish (thesis ch05)"
+  definition: "base (rep96, certificates) plus one kind of adder; the value at which the advantage (Eq. 1) is 0.
+    The adder applies to the non-metro regions (Hokkaido, Tohoku, Kyushu) in both C-CN and R-CN"
+  adders:
+    construction: {form: "once per kW of new non-metro IT nameplate", unit: yen/kW,
+                   mechanism: "additions shell_premium_yen_per_kW[r] (social resource line shell_premium)"}
+    communication: {form: "per kWh of non-metro IT energy, every year", unit: "yen/kWh (also yen/kW-yr = x 8,760)",
+                    mechanism: "additions comm_cost_yen_per_kWh[r] (the comm_cost hook)"}
+    grid: {form: "per kW of connected peak added in reinforced years", unit: yen/kW,
+           mechanism: "reinforcement structure (c1 from 2030, theta 0.5, Eq. 1 counts the full cost), g varied
+             (Setting(reinforce_g=g))"}
+  allocations:
+    R-CN-fix: "regional IT (2024-2040, all regions) of the base R-CN (rep96, certificates) fixed by
+      RunSpec.realization = Realization(itr=...); scenario R-CN (caps and subsidy unchanged; the subsidy is a
+      transfer). Check: the base R-CN re-solved with its own path gives the same total (rel 1e-6)"
+    R-CN-pub: "R-CN 2040 shares of the v1.0.1 code (dc_decom_spec.scenarios.R_CN_SHARES_2040)"
+    R-CN: "endogenous"
+  procedure:
+    fixed: "gap(a) = C-CN(a) - R-CN(a). Start at a = 0 and a_1 (1,000 yen/kW; 0.1 yen/kWh), double until
+      gap <= 0 is bracketed (cap 1e8 yen/kW, 1,000 yen/kWh; beyond: 'not found'), bisection to 100 yen/kW and
+      0.001 yen/kWh. The two-point closed form -gap(0) / slope is reported as a check (as the spec breakeven)"
+    endogenous: "grid of adders; advantage, 2040 non-metro share and R-CN total per point. If the advantage
+      falls to <= 1e-6 (relative) on the grid, bisection between that point and the previous one gives a_0;
+      otherwise 'does not vanish on the grid' with the minimum advantage and its adder"
+    grids:
+      construction: [0, 25000, 50000, 100000, 200000, 300000, 500000, 750000, 1000000, 1500000, 2000000]
+      communication: [0, 0.25, 0.5, 1, 1.5, 2, 3, 5, 7.5, 10, 15]
+      grid: [0, 50000, 118000, 250000, 500000, 750000, 1000000, 1500000, 2000000]
+  metrics: "breakeven value per unit; gap(0) (TJPY) and advantage; closed form; the quantity the adder applies
+    to (discounted non-metro new nameplate GW, discounted non-metro IT energy TWh, connection increment in the
+    reinforced years)"
+  reference_row: "spec breakeven paper_only 299,719 yen/kW (outputs/stage2/breakeven.csv)"
+  levels:
+    note: "comparison levels; never enter a computation. Sources accessed on 2026-11-07."
+    grid:
+      - {id: grid_occto_base, value: 118000, unit: yen/kW, status: derived, source: OCCTO_MP2023,
+         conversion: "(1.0 + 0.65) trillion yen / (6 + 8) GW = 117,857 -> 118,000 (data/parameters_v2/SOURCES.md)"}
+      - {id: grid_new_route, value: 500000, unit: yen/kW, status: derived, source: NIKKEI_MP2023,
+         conversion: "new Hokkaido-Tohoku-Tokyo route about 3 trillion yen / 6 GW"}
+    construction:
+      - {id: meti_subsidy_eligible_cost, value: 1200000, unit: "yen/kW (received power)", status: derived,
+         source: "METI_DC_CHIHO_R5, ASAHI_20231107, IMPRESS_20240109",
+         conversion: "subsidy 1/2 of eligible cost, cap 30e9 yen -> eligible cost 2 x 30e9 yen / 50,000 kW
+           = 1,200,000 yen/kW",
+         caveat: "total eligible cost of one project (land, power and communication infrastructure, buildings,
+           equipment); not a regional difference"}
+      - {id: tt_dccci_tokyo, value: 2734114, unit: "yen/W x 1000 = yen/kW", status: derived,
+         source: "Turner & Townsend, Data centre construction cost index 2026-27,
+           https://www.turnerandtownsend.com/insights/data-centre-construction-cost-index-2026-27/ (accessed
+           2026-11-07, section 'The most expensive data centre markets')",
+         conversion: "US$18.28/W x 149.5686 yen/US$ (Federal Reserve G.5A, 2025 annual average,
+           https://www.federalreserve.gov/releases/g5a/20260105/, accessed 2026-11-07) = 2,734 yen/W",
+         caveat: "index basis: a typical 60 MW design (cost per watt); metro market"}
+      - {id: tt_dccci_osaka, value: 2565101, unit: yen/kW, status: derived, source: "same as tt_dccci_tokyo",
+         conversion: "US$17.15/W x 149.5686"}
+      - {id: tt_dccci_tokyo_minus_osaka, value: 169013, unit: yen/kW, status: derived,
+         source: "same as tt_dccci_tokyo", conversion: "(18.28 - 17.15) x 149.5686 x 1000",
+         caveat: "difference between two metro markets; the public summary lists no non-metro Japanese market,
+           so no sourced metro / non-metro difference from this index"}
+      - {id: mlit_ict_building_cost_diff, status: derived,
+         source: "MLIT 建築着工統計調査 建築物着工統計 第7表-1 都道府県別、用途別（大分類） 令和6年計 (e-Stat
+           statInfId 000040247009, table 0003114510; https://www.e-stat.go.jp/stat-search/files?page=1&layout=datalist&toukei=00600120&tstat=000001016965&cycle=7&year=20240&tclass1val=0,
+           accessed 2026-11-07), column H 情報通信業用建築物 (床面積の合計, 工事費予定額)",
+         values_yen_per_m2: {Hokkaido: 1481139, Tohoku: 972761, Kanto: 980301, Kansai: 1027732, Kyushu: 588824,
+                             metro: 985356, nonmetro: 988137, metro_minus_nonmetro: -2781},
+         conversion: "工事費予定額 / 床面積 summed over the prefectures of each region (Hokkaido: 北海道; Tohoku:
+           青森 岩手 宮城 秋田 山形 福島 新潟; Kanto: 茨城 栃木 群馬 埼玉 千葉 東京 神奈川 山梨; Kansai: 滋賀 京都 大阪
+           兵庫 奈良 和歌山; Kyushu: 福岡 佐賀 長崎 熊本 大分 宮崎 鹿児島; the utility-area mapping is approximate),
+           cells with suppressed cost (＊ or 0 with a floor area) excluded. yen/kW = yen/m2 / IT density, IT density
+           1.0-3.0 kW/m2 (仮定, centre 2.0): metro - nonmetro = -2,781 to -927 yen/kW (centre -1,391)",
+         caveat: "all information-and-communication buildings (not only data centres), 13-81 buildings per region,
+           planned cost at the start of construction; the non-metro minus metro difference is about zero and its
+           sign is not robust"}
+    communication:
+      - {id: longhaul_circuit, status: "no sourced level found (出典のある水準なし)",
+         searched: "NTT East / West 広域イーサネット (Business Ether Wide) price page, NTT Com / Docomo Business
+           APN 専用線プラン (inter-prefecture; press release 2024-02-29 without a price), All-Photonics Connect
+           powered by IOWN (press release 2024-11-18 without a price)",
+         note: "public long-haul prices between Tokyo and Hokkaido / Tohoku / Kyushu were not found"}
+      - {id: apn_iown10_intra_prefecture, value: 1980000, unit: "yen/month per 100 Gbps circuit", status: sourced,
+         source: "APN IOWN1.0 (NTT East / West, 2023-03-16), Impress INTERNET Watch
+           https://internet.watch.impress.co.jp/docs/news/1482781.html and ITmedia
+           https://www.itmedia.co.jp/news/article/2303/03/1230303100/ (accessed 2026-11-07)",
+         conversion: "1.98e6 x 12 / 100 Gbps x traffic intensity X Gbps per MW of average IT load / 8.76e6 kWh per
+           MW-yr: X = 1 / 10 / 50 Gbps/MW (仮定) -> 0.027 / 0.271 / 1.356 yen/kWh",
+         caveat: "intra-prefecture price (提供単位は県内), not a long-haul price; the traffic intensity is an
+           assumption (仮定). A reference order of magnitude only"}
+  outputs: [breakeven.csv, breakeven_curve.csv, breakeven_levels.csv, run_log_breakeven.csv]
+
+# ===================================================================== C
+emissions:
+  part: emissions
+  implementation: [src/dc_decom_v2/experiments/emissions.py, src/dc_decom_analysis/shapley.py]
+  purpose: "exact Shapley values of six levers for the emission reduction"
+  levers:
+    L: {name: liquid cooling, off: "PolicySettings.liquid_fleet_max = 0.0 for every region (2026+)"}
+    R: {name: RE procurement, off: "override ppa_tier1_share = 0, ppa_tier2_share = 0, Deploy_max_PV = 0"}
+    G: {name: geographic allocation, off: "scenario REF (base shares, no cap)",
+        on: "A0 (endogenous, lambda_B / kappa_B, c0, no cap, no subsidy)"}
+    D: {name: grid decarbonization, off: "override ef_national@t = 0.423 (every year)"}
+    N: {name: certificates, off: "certificates = False"}
+    P: {name: carbon price, off: "0 every year", on: "base path"}
+  solves: "2^6 = 64 combinations, rep96, no CO2 cap, no subsidy, other values frozen, base demand"
+  metrics: [co2_2040_Mt, co2_cum_2024_2040_Mt, co2_cum_2026_2040_Mt, "eq1_total_TJPY (reference)"]
+  shapley: "phi_i = sum_{S in N minus i} |S|! (n - |S| - 1)! / n! x (E(S) - E(S + i)) (reduction).
+    Worlds: 'all' (six levers, 64 runs) and 'no_certificates' (N fixed off, 32 runs, five levers). One-sided
+    effects (add one to the empty set, remove one from the full set) and shares are reported"
+  checks: "sum phi = E(empty) - E(full) within 1e-9 Mt. E(full) (= A0) vs the base R-CN cumulative CO2 =
+    'remaining effect of the cap'; E(N off) vs the no-certificate R-CN of sens_certificates.csv = 'cap effect
+    with physical procurement only'"
+  lmdi_supplement: "dc_decom_analysis.lmdi: empty and full set re-solved with store_slices=True, yearly
+    between; base REF and R-CN vs_frozen_2024 and between (form of outputs/stage2/wedge.csv). Note: with zero
+    emissions after 2026 LMDI assigns the difference to the grid-share factor"
+  comparison: "the v1 model has no certificates; its setting corresponds to the 'no_certificates' world"
+  outputs: [emission_levers.csv, emission_shapley.csv, emission_lmdi.csv, emission_summary.json,
+            run_log_emissions.csv]
+
+# ===================================================================== D
+latency:
+  part: ch03
+  implementation: src/dc_decom_v2/experiments/latency.py
+  purpose: "sensitivity to the training / inference load ratio (thesis ch03)"
+  grid: {s_train: [0.2, 0.4, 0.6], s_inf_tol: [0.1, 0.3, 0.5]}
+  supplementary: "ai_share low and high paths at s_train 0.4, s_inf_tol 0.3 (two rows)"
+  ranges_status: "s_train value sourced (PATTERSON2022), range assumption (仮定); s_inf_tol assumption (仮定);
+    ai_share derived (IEA_EAI2025), range assumption (仮定)"
+  mapping: "lambda_B(t) = 0.82 x [(1 - a(t)) + a(t)(1 - s_train)(1 - s_inf_tol)] for 2026-2040,
+    kappa(t) = lambda(t) x 60 / 82, base shares in 2024-2025. The base point (0.4, 0.3) uses the frozen paths
+    without override; other points override metro_floor@t and kanto_floor@t. Test: the formula reproduces
+    metro_floor value / low / high of paths.csv"
+  solves: "C-CN once (independent of lambda) and R-CN per point"
+  metrics: [R-CN eq1_total_TJPY, advantage, nonmetro_share 2040, nonmetro_share mean 2026-2040,
+            lambda_B 2030, lambda_B 2040, R-CN co2_cum_Mt]
+  outputs: [ch03_latency.csv, run_log_ch03.csv]
+
+# ===================================================================== E
+annual:
+  part: annual
+  implementation: src/dc_decom_v2/experiments/annual.py
+  purpose: "difference between the annual and the 96-hour versions"
+  cases: "base (certificates) REF, C-CN, R-CN, R-CN-pub, A0; no certificates REF, C-CN, R-CN"
+  time: "rep96 (the RunSpecs of base and sens_certificates; cache hits) and annual
+    (ModelOptions(time_mode='annual', ...)); store_slices=True"
+  metrics: [eq1_total, social_cost, carbon_cost, co2_cum, co2_2040, curtail_TWh, nonmetro_share 2040,
+            facility_energy_cum, liquid_share_fleet 2040, peak_facility_nonmetro 2040,
+            advantage (R-CN, R-CN-pub), five channels C-CN - R-CN, regional annual PUE (air, DLC)]
+  note: "annual mode evaluates PUE at the JMA annual-mean temperature with coefficients calibrated on the
+    hourly evaluation (data/parameters_v2/pue_calibration.json); N+1 and peaks also follow the mean temperature"
+  outputs: [annual_vs_rep96.csv (case, scenario, metric, rep96, annual, diff, rel_diff; long), run_log_annual.csv]
+
+# ===================================================================== F
+twobytwo:
+  part: twobytwo
+  implementation: src/dc_decom_v2/experiments/twobytwo.py
+  purpose: "structure {spec, v2} x parameters {paper, v2}, the four channels in every corner"
+  corners:
+    VV: {structure: v2, parameters: v2, setting: "Setting() = base = bridge B0"}
+    VP: {structure: v2, parameters: paper, setting: "Setting(existing=data/parameters_spec,
+         structural=data/parameters_v2) (bridge P3-P6 only); R-CN endogenous"}
+    SV: {structure: spec, parameters: v2, setting: "R-CN -> R-CN-pub, grid_constraints False, time_mode annual,
+         PPA without the curve (ppa_tier1_share 1000, ppa_tier2_share 0, ppa_volume_factor@t 1),
+         backup_techs ('cgs',), it_energy legacy_util, certificates False (bridge P1, P2, P7-P11 only)"}
+    SP: {structure: spec, parameters: paper, setting: "bridge P11 (all steps)"}
+  solves: "REF, C-CN, R-CN (R-CN-pub in the S corners), store_slices=True"
+  effects: "extension effect (VP - SP with paper parameters, VV - SV with v2 parameters), parameter update effect
+    (SV - SP in the spec structure, VV - VP in the v2 structure), interaction VV - VP - SV + SP. Quantities:
+    advantage (points), C-CN and R-CN totals, five channels (cooling, re_procurement, carbon, siting,
+    curtailment; decomposition.principled, basis eq1) and shares"
+  reference: "spec paper_only (outputs/stage2/paper_only.csv: 4.20%, 3.58% with the subsidy added
+    back) vs SP = 'reimplementation difference'"
+  checks: "VV = bridge_steps.csv B0, SP = P11 (rel 1e-9); the five channels of each corner sum to C-CN - R-CN"
+  outputs: [decomposition_2x2.csv, decomposition_2x2_effects.csv, run_log_2x2.csv]
+
+# ===================================================================== G
+carbon_cert:
+  part: carbon_cert
+  implementation: src/dc_decom_v2/experiments/carbon_cert.py
+  purpose: "carbon price x certificate rule (thesis ch07, amplification)"
+  rules:
+    cert_on: "certificates = True (base)"
+    cert_off: "certificates = False (annual matching)"
+    hourly: "certificates = False, ppa_matching = 'hourly' (24/7)"
+  prices: "flat from 2026, 0 to 30,000 yen/t step 1,000 (31 points); 2024-2025 at 0"
+  solves: [C-CN, R-CN, A0]
+  metrics: [advantage (with / without penalty), C-CN curtail_TWh, A0 nonmetro_share 2040,
+            A0 nonmetro_share mean 2026-2040, A0 and R-CN co2_cum_Mt, certificate and PPA volumes,
+            A0 liquid_share_fleet]
+  pstar: "P*_2040(rule): minimum flat price at which A0 reaches the 2040 non-metro share of R-CN solved with the
+    same rule and the base carbon path. The sweep brackets the first crossing; bisection to 100 yen/t; 'reached
+    at 0' or 'not reached' (0-30,000). P*_mean(rule): the same with the mean share 2026-2040. The price reaching
+    the frozen target (49.64%, pstar.json) is also reported per rule"
+  siting_effect: "price range in which the A0 share (2040 and mean) moves by more than 0.001 from its value at 0"
+  checks: "cert_on equals carbon_sweep.csv (same RunSpec)"
+  outputs: [carbon_cert_sweep.csv, pstar_regimes.json, pstar_regimes_curve.csv, run_log_carbon_cert.csv]

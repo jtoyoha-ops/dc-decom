@@ -1,0 +1,97 @@
+# A/B/C rules and thresholds, fixed after the base runs (outputs/stage3) and
+# before any A/B/C run. The A/B/C runners stop if this file differs from the
+# fixed content (dc_decom_v2.experiments.abc.RULES_SHA256). Any later change
+# needs a reason and is reported separately; nothing here is chosen from an
+# A/B/C result. Designs follow thesis ch07 tab:abc-def; readings needed by the
+# LP are marked 'reading'.
+
+version: 1
+date: "2026-11-06"
+parameters: {dir: data/parameters_v2, fixed: "before the runs (data/parameters_v2/FREEZE.md)"}
+experiments: {file: config/experiments_v2.yaml, version: 2}
+base_options: "rep96, ModelOptions(certificates=True) = experiments_v2 change C1 (non-fossil
+  certificates at nfc_yen_per_kWh 0.4); every design and A0 use the same options"
+
+review_years: [2026, 2030, 2035]       # t_k; stage k runs from t_k to t_{k+1} - 1 (last to 2040)
+forecast: "planning uses the base (value) paths of data/parameters_v2 (median forecast)"
+rolling: "plan -> realize -> observe at each review year (src/dc_decom_v2/rolling.py): the plan of stage k
+  is solved from the realized state of t_k - 1 with the forecast paths; its decisions for stage k
+  are fixed and realized on the actual path (air cooling may be added to cover shortfalls;
+  connection overrun costed at g); the indicators are observed at the end of t_{k+1} - 1"
+
+realization_paths:   # 18 = 3 x 3 x 2
+  carbon_price: [low, value, high]
+  demand_TWh: [low, value, high]
+  liquid_deploy_cap: [value, low]      # 0.5 and 0.25 GW/yr/region
+
+designs:
+  A:
+    pue_fleet_max: {value: 1.4, from: 2030}     # pue_fleet_max, pue_fleet_max_from (ANRE 2026)
+    pue_new_max: {value: 1.3, from: 2029}       # pue_new_max, pue_new_max_from
+    connection: "c0 = conn_capacity_GW_per_yr (0.2 GW/yr per non-metro region), no reinforcement"
+    ppa: "base supply curve (no multiplier)"
+    siting_floors: {metro: metro_floor_A 0.82, kanto: kanto_floor_A 0.60}   # lambda_A, kappa_A
+    subsidy: "s0 = siting_subsidy_yen_per_kW 600,000 yen/kW of new non-metro IT nameplate,
+      every year from 2026, constant, independent of the connection"
+  B:
+    inherits: "A's PUE rules"
+    liquid_floor_new: "phi(t) = phi_0 for new capacity from 2026"
+    connection: "c0 before T_g; c1 = conn_capacity_reinforced_GW_per_yr (0.6) from T_g =
+      reinforcement_year 2030, reinforced (cost g = reinforcement_cost_yen_per_kW 118,000 per kW of
+      connected peak added), operator share theta = operator_burden_share 0.5"
+    subsidy: "class-III new builds in non-metro regions from T_g at s0; 0 in every year whose
+      base-path carbon price >= P*. Reading: the LP has no workload classes; the class-III volume
+      is the non-metro build that lambda_B allows beyond lambda_A, so the subsidy applies to new
+      non-metro IT nameplate (as in A) only while the rule says 'on'"
+    ppa: "tier volumes x ppa_tier_multiplier_induced 1.5 in non-metro regions (induced zones)"
+    ppa_floor_subsidized: "psi_0 = ppa_floor_subsidized 0.3 (PPA share required for subsidized build)"
+    siting_floors: "metro_floor / kanto_floor paths (lambda_B, kappa_B)"
+  C:
+    inherits: B
+    review: "switching rules below at each review year after the first stage"
+
+thresholds:
+  phi_0: {value: 1.0, source: "outputs/stage3/base_cooling.csv R-CN liquid_share_new 2026 = 1.0"}
+  liquid_review: {2030: 1.0, 2035: 1.0,
+                  source: "R-CN base liquid_share_new in 2029 and 2034 (base_cooling.csv) = 1.0 and 1.0"}
+  pstar: {value: 0.0, status: "reached at 0", source: "outputs/stage3/pstar.json",
+          consequence: "the B subsidy is 0 in every year (base-path price >= 0) and the C price rule
+            sets the subsidy to 0 at every review; the ch07 assumption 10,000 yen/t is the diagnostic
+            variant B-P10000"}
+  target_nonmetro_share: {2026: 0.289004, 2030: 0.348258, 2035: 0.422324,
+                          source: "R-CN base nonmetro_share at the review year (base_cooling.csv)",
+                          use: "reported next to the trigger; not a trigger"}
+  connection_usage: {value: 0.9, status: assumption,
+                     definition: "max over non-metro regions of cumulative used / offered connection"}
+  emissions: "national emissions of the stage above eq:co2cap-path E_2024 (2040 - t) / 16"
+
+switching_rules:   # C only; evaluated at t_k for stage k (k >= 2) from observations up to t_k - 1
+  - id: R1
+    if: "liquid share of new capacity in the observed stage < liquid_review[t_k]"
+    then: "phi += 0.2 (cap 1.0) from the next stage"
+  - id: R2
+    if: "connection usage >= 0.9 (ch07 tab:dpef-review rows 'non-metro share' and 'connection usage'
+      both lead here; the share condition is reported, the trigger is the usage)"
+    then: "T_g := min(T_g, t_k), i.e. reinforcement from the stage that starts at this review; the B/C
+      subsidy start moves with it"
+    reading: "with T_g = 2030 = second review year, R2 can change nothing at 2030 or 2035 on the base
+      T_g; it matters for variants with a later T_g. R2 never delays reinforcement"
+  - id: R3
+    if: "observed carbon price at t_k - 1 >= P*"
+    then: "subsidy 0 for the next stage, else continue"
+  - id: R4
+    if: "observed emissions above the cap path in any year of the stage"
+    then: "psi += 0.2 (cap 1.0) from the next stage"
+
+diagnostic_B_variants:   # 'conditions where B is not better'
+  B-theta0: {operator_burden_share: 0.0}
+  B-theta1: {operator_burden_share: 1.0}
+  B-P10000: {pstar: 10000.0, note: "ch07 design assumption; base-path price >= 10,000 from 2035"}
+  B-noPPAfloor: {ppa_floor_subsidized: null}
+  B-noReinfCost: {reinforcement_cost_yen_per_kW: 0.0}
+
+metrics:
+  M: "Eq. 1 total (social resource cost + carbon cost), discounted to 2024; also operator cost,
+    fiscal burden, CO2 cumulative and 2040"
+  regret: "ch07 eq:abc-regret over the realization paths"
+  four_type_test: {epsilon: "0.005 x |M(empty)|", robustness: [0.001, 0.01]}

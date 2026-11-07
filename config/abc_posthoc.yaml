@@ -1,0 +1,115 @@
+# 事後の感度：凍結した A・B・C の結果（outputs/abc）を見た後、2026-11-07 に定めた。計算の前に定めた比較ではなく、凍結の結果を置き換えない
+#
+# Post-hoc sensitivity of the A/B/C comparison (definition H) and the
+# breakdown of B - A0 (definition I). Both were defined after the frozen A/B/C
+# results had been seen; they are labelled 事後の感度 in every output and never
+# replace the frozen comparison. Written before any of these runs. A
+# definition changed after registration gets an entry in
+# changes_after_registration (date, reason, definition before and after); the
+# earlier results are kept.
+
+version: 1
+date: "2026-11-07"
+label: "事後の感度：凍結した A・B・C の結果（outputs/abc）を見た後、2026-11-07 に定めた。計算の前に定めた比較ではなく、凍結の結果を置き換えない"
+changes_after_registration:
+  - id: H1
+    date: "2026-11-07"
+    kind: "clarification of the policy-change count, decided after all 432 abc_posthoc runs had been
+      solved and their counts seen"
+    registered: "posthoc.report lists 'policy changes' and 'paths with a policy change' without saying
+      which comparison counts as a change"
+    before: "policy_changed = the flag of rolling.switch (as in abc_switches.csv): the policy forms from
+      t_k are compared as they are, so a subsidy map that has no year from t_k on counts as a map"
+    after: "policy_changed_effective = the same comparison with the subsidy map reduced to its non-zero
+      entries (abc_posthoc.effective_policy). The reported counts use it"
+    reason: "rolling.switch reports a change when R3 switches off a subsidy map at a review after the
+      last subsidy year of the B rule, although no payment changes. rolling.py is not changed (it is in
+      the solve-cache fingerprint), so the effective flag is computed in abc_posthoc.py"
+    effect: "no solve and no cost, CO2 or C' - B' value changes; only the counts. Variants with a policy
+      change: 8 (before) -> 6 (after). Per variant (before -> after): R3-P4300 18 -> 6, R3-P7000
+      12 -> 0, R3-P10000 6 -> 0, R4-nocert-P10000 8 -> 2 (its R3 6 -> 0; R4 2 unchanged). The frozen
+      run (P* = 0, no subsidy map) is unaffected"
+    results_before_kept: "posthoc_summary.csv columns R*_policy_changed, n_policy_changed,
+      n_paths_policy_changed, paths_policy_changed; posthoc_summary.json n_variants_with_policy_change;
+      posthoc_switches.csv column policy_changed"
+frozen_rules: {file: config/abc_rules.yaml,
+               check: "abc.rules_check() (sha256 of the fixed file) before reading; variants change only an in-memory copy of the rules
+                 dictionary; the file is never written"}
+parameters: {dir: data/parameters_v2, fixed: "before the runs (data/parameters_v2/FREEZE.md)"}
+experiments: {file: config/experiments_v35.yaml, version: 1}
+code: {rolling: "src/dc_decom_v2/rolling.py (unchanged by these analyses)"}
+frozen_facts_seen: "outputs/abc/abc_summary.json: 57 reviews, 0 policy changes (R1 15, R2 6, R3 36, R4 0);
+  C = B on every path; phi_0 = 1.0 is the cap; T_g = 2030 = the second review year; P* = 0; with certificates
+  emissions never exceed the cap path. With the frozen values no rule can change a policy, which is why the
+  variants below were defined"
+
+# ===================================================================== H
+posthoc:
+  part: abc_posthoc
+  implementation: src/dc_decom_v2/experiments/abc_posthoc.py
+  outputs_dir: outputs/abc/
+  common: "frozen rules (abc.rules_check()), the same 18 realization paths, review years 2026 / 2030 / 2035,
+    certificates on (only the R4 variant without certificates). Every variant solves B' (adaptive false) and
+    C' (adaptive true) with the same settings; the effect is C' - B' per path"
+  variants:
+    frozen: {change: none, reason: "reference; B' and C' must equal B and C of abc_metrics.csv (rel 1e-9)"}
+    R1-phi0.8: {change: {phi_0: 0.8},
+                reason: "R1 raises phi by 0.2; the frozen phi_0 = 1.0 is the cap and leaves no room. One step of room",
+                value_status: "assumption (仮定; one and two steps of the frozen rule increment 0.2)"}
+    R1-phi0.6: {change: {phi_0: 0.6}, reason: "two steps of room", value_status: "assumption (仮定)"}
+    R2-Tg2035-u0.9: {change: {reinforcement_year: 2035, connection_usage: 0.9},
+                     reason: "R2 moves T_g forward to the review year; the frozen T_g = 2030 equals the second
+                       review year, so it cannot move. 2035 = upper end of the reinforcement_year range (仮定 range
+                       2028-2035, OCCTO_MP2023 context); usage threshold frozen 0.9",
+                     value_status: "T_g 2035 assumption range end; 0.9 frozen (assumption)"}
+    R2-Tg2035-u0.7: {change: {reinforcement_year: 2035, connection_usage: 0.7}, value_status: "assumption (仮定)"}
+    R2-Tg2035-u0.5: {change: {reinforcement_year: 2035, connection_usage: 0.5}, value_status: "assumption (仮定)"}
+    R3-P1700: {change: {pstar: 1700}, value_status: "sourced (METI_KOKUJI27_2026, FY2026 lower bound)"}
+    R3-P4300: {change: {pstar: 4300}, value_status: "sourced (METI_KOKUJI27_2026, FY2026 upper bound)"}
+    R3-P7000: {change: {pstar: 7000}, value_status: "paper (ENERGIES2026 Table 8, 2035 lower bound)"}
+    R3-P10000: {change: {pstar: 10000}, value_status: "ch07 design assumption (B-P10000 of abc_rules.yaml)"}
+    R3-P15000: {change: {pstar: 15000}, value_status: "paper (ENERGIES2026 Table 8, 2035 upper bound)"}
+    R4-nocert-P10000: {change: {certificates: false, pstar: 10000},
+                       reason: "R4 fires only when emissions exceed the cap path, which never happens with
+                         certificates; psi acts only on subsidized builds, so P* > 0 is needed",
+                       value_status: "P* ch07 design assumption"}
+  rule_conditions:
+    R3: "R3 sets the subsidy of the next stage to 0 when the observed price >= P*. The B rule pays the subsidy
+      only in years whose base-path price < P*, so C' differs from B' only when the observed price at t_k - 1
+      is >= P* while the B rule still pays in the next stage"
+    R1: "changes policy only if phi_0 < 1 and the observed liquid share of new capacity < liquid_review[t_k]"
+    R2: "changes policy only if T_g > t_k and the observed connection usage >= the threshold"
+    R4: "changes policy only if emissions exceed the cap path and some build is subsidized"
+  report: "per variant and rule: threshold, range of the observed indicator, number of triggers, setting changes,
+    policy changes, paths with a policy change. C' - B' of the social resource cost, Eq. 1 total, operator cost,
+    fiscal burden, cumulative CO2: mean, min, max, and the number of better / worse paths (REL_TOL 1e-6).
+    Mean C' - A (frozen A) alongside. The condition of each rule (rule_conditions) in words"
+  outputs: [posthoc_metrics.csv, posthoc_switches.csv, posthoc_summary.csv, posthoc_summary.json,
+            run_log_posthoc.csv]
+
+# ===================================================================== I
+b_minus_a0:
+  part: b_minus_a0
+  implementation: src/dc_decom_v2/experiments/abc_posthoc.py (run_b_minus_a0)
+  outputs_dir: outputs/abc/
+  label: "結果を見た後に定めた内訳。判定には使わない"
+  value_note: "B - A0 of the social resource cost is +0.1355 TJPY (abc_summary.json
+    B_vs_A0.social_cost_TJPY.mean_diff; B lower on 0 of 18 paths)"
+  cost_lines: [cooling_capex, cooling_opex, bess_capex, bess_opex, cgs_capex, cgs_opex, gen_capex, gen_opex,
+               energy_grid, energy_ppa, energy_nfc, energy_pv, energy_cgs_fuel, curtailment, reinforcement,
+               over_cost, shell_premium, comm_cost]
+  cost_lines_note: "accounting resource lines per path and their mean for B, A0 and B - A0; operator cost and
+    fiscal burden too"
+  elements:
+    E1: "PUE rules (A's PUE rules inherited by B)"
+    E2: "liquid floor for new capacity phi_0 = 1.0"
+    E3: "reinforcement (c1 from T_g = 2030, cost g, theta)"
+    E4: "non-metro PPA tier volume multiplier 1.5"
+  excluded: "psi and the subsidy (B-noPPAfloor = B on all 18 paths; P* = 0 so B pays no subsidy). The
+    combinations are built from the B settings by removing elements (psi 0.3, subsidy 'rule', P* 0 kept;
+    they have no effect)"
+  method: "16 combinations of the four elements solved with the rolling procedure on the 18 paths; Shapley
+    values per path (social resource cost and operator cost) and their mean"
+  checks: "no element = A0 and all elements = B (social resource cost, rel 1e-9); per path sum phi = B - A0
+    and the sum of the line differences = B - A0"
+  outputs: [b_minus_a0_lines.csv, b_minus_a0_shapley.csv, b_minus_a0_summary.json, run_log_b_minus_a0.csv]

@@ -1,0 +1,111 @@
+# 2x2 factorial for the four interaction types (thesis ch07 eq:dpef-interaction,
+# tab:dpef-interaction, tab:dpef-interaction-metric). Written before any run of
+# this factorial. Policy values come only from the fixed parameters
+# (data/parameters_v2) and the fixed A/B/C thresholds (config/abc_rules.yaml).
+# Nothing here is chosen from a factorial result.
+
+version: 1
+date: "2026-11-06"
+common:
+  path: "single base path (value paths of data/parameters_v2)"
+  foresight: "perfect foresight: one solve 2024-2040 (no rolling)"
+  baseline: "A0: endogenous siting, no CO2 cap, default policy (c0, no reinforcement, no
+    subsidy, lambda_B / kappa_B floors), ModelOptions(certificates=True) as experiments_v2 C1"
+  runs: "for every pair and condition: empty, X, Y, X+Y (4 solves)"
+
+# Policy elements (applied on top of A0)
+elements:
+  liquid_floor: "liquid_floor_new phi = thresholds.phi_0 of abc_rules.yaml (1.0) for new capacity
+    from 2026"
+  cold_subsidy: "siting_subsidy_yen_per_kW (600,000 yen/kW of new IT nameplate) in Hokkaido and
+    Tohoku from 2026"
+  uniform_subsidy: "siting_subsidy_yen_per_kW in every non-metro region from 2026 (design A's s0)"
+  carbon_high: "carbon_price path 'high' from 2026 (2024-2025 at the base value 0)"
+  reinforcement: "conn_capacity_reinforced_GW_per_yr c1 from reinforcement_year T_g = 2030,
+    reinforcement cost g = reinforcement_cost_yen_per_kW, theta = operator_burden_share"
+  ef_low: "ef_national path 'low' (regional EF scaled as in the base)"
+  offgrid_re: "ppa_tier2_premium_yen_per_kWh at its low end (1.0 instead of 3.0)"
+
+# Conditions theta
+conditions:
+  liquid_cap: {base: "liquid_deploy_cap value path (0.5 GW/yr/region)",
+               slow: "liquid_deploy_cap low path (0.25) from 2026"}
+  connection: {c0: "default c0 (0.2 GW/yr per non-metro region), no reinforcement",
+               c1: "the element 'reinforcement'"}
+  carbon: {low: "carbon_price low path from 2026", base: "value path",
+           high: "carbon_price high path from 2026"}
+  certificates: {"off": "ModelOptions(certificates=False) (added 2026-11-07, pair P2s)",
+                 hourly: "ModelOptions(certificates=False, ppa_matching='hourly') (added 2026-11-07,
+                   pair P2s)"}
+
+# Metrics (smaller is better). M(empty) is the A0 run of the condition.
+metrics:
+  cooling_electricity_cum_TWh: "facility energy - IT energy, 2024-2040"
+  re_procurement_cost_TJPY: "PPA + certificates + own PV, discounted"
+  co2_cum_Mt: "2024-2040"
+  co2_2040_Mt: "2040"
+  peak_facility_nonmetro_2040_GW: "sum of the non-metro facility peaks in 2040 (grid load)"
+  conn_usage_2040_max: "max over non-metro regions of cumulative used / offered connection in 2040"
+  one_minus_nonmetro_share_2040: "1 - non-metro IT share in 2040 (M = 1 - share)"
+  one_minus_nonmetro_share_mean: "1 - mean non-metro IT share 2026-2040. Added because the A0 2040
+    share sits on the lambda_B floor (base and P*), so the 2040 share alone cannot show an
+    effect that only changes the timing"
+  fiscal_burden_TJPY: "siting subsidy, discounted"
+  social_cost_TJPY: "social resource cost (no carbon payments, no subsidy), discounted"
+
+pairs:
+  P1:
+    name: "液冷と寒冷地への立地"
+    X: liquid_floor
+    Y: cold_subsidy
+    metrics: [cooling_electricity_cum_TWh, re_procurement_cost_TJPY, co2_cum_Mt,
+              peak_facility_nonmetro_2040_GW, conn_usage_2040_max]
+    conditions: {liquid_cap: [base, slow], connection: [c0, c1]}
+  P2:
+    name: "炭素価格と立地補助"
+    X: carbon_high
+    Y: uniform_subsidy
+    metrics: [one_minus_nonmetro_share_2040, one_minus_nonmetro_share_mean, fiscal_burden_TJPY,
+              social_cost_TJPY, co2_cum_Mt]
+    conditions: {connection: [c0, c1]}
+  P3:
+    name: "系統の脱炭素化と系統外の再エネ調達"
+    X: ef_low
+    Y: offgrid_re
+    metrics: [co2_cum_Mt, co2_2040_Mt]
+    conditions: {carbon: [low, base, high]}
+  P4:
+    name: "系統増強と立地補助"
+    X: reinforcement
+    Y: uniform_subsidy
+    metrics: [social_cost_TJPY, one_minus_nonmetro_share_2040, one_minus_nonmetro_share_mean,
+              co2_cum_Mt]
+    conditions: {}
+    note: "tests 前提 (X prerequisite of Y); the condition is the base"
+  P2s:
+    name: "炭素価格と立地補助（補足：証書の規則）"
+    X: carbon_high
+    Y: uniform_subsidy
+    metrics: [one_minus_nonmetro_share_2040, one_minus_nonmetro_share_mean, fiscal_burden_TJPY,
+              social_cost_TJPY, co2_cum_Mt]
+    conditions: {certificates: ["off", hourly]}
+    added: "2026-11-07, after the A/B/C runs and before any run of this factorial. Reason: author
+      decision; P* = 0 under the certificate base (C1), so P2 cannot show
+      増幅 there; this checks whether it appears when certificates are not allowed (off) or under
+      24/7 hourly matching without certificates (hourly), the two sensitivity settings of
+      outputs/stage3/sens_certificates.csv. Supplementary, reported apart from P1-P4"
+  P5:
+    name: "時間シフトと時間単位の再エネ調達"
+    status: "対象外"
+    reason: "the model has no IT load shifting (no workload classes in time)"
+
+classification:
+  delta: "Delta_M(S) = M(empty) - M(S)"
+  interaction: "I_M = Delta_M(X+Y) - Delta_M(X) - Delta_M(Y)"
+  epsilon: {relative: 0.005, robustness: [0.001, 0.01], absolute_floor: 1.0e-6,
+            definition: "eps = max(relative x |M(empty)|, absolute_floor in the metric's unit)"}
+  order: "前提 (X->Y: Delta(Y) <= eps and Delta(X+Y) - Delta(X) > eps; also checked Y->X) ->
+    増幅 (I > eps) -> 代替 (I < -eps) -> 独立"
+  conflict: "相反 is a separate flag (ch07: it can hold with another type): Delta_M(X) < -eps or
+    Delta_M(Y) < -eps, i.e. one policy alone worsens the row's metric M (reading of M_Y: the
+    metric of the row)"

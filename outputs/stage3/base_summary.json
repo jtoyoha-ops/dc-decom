@@ -1,0 +1,59 @@
+{
+  "totals_TJPY": {
+    "REF": 9.372824694,
+    "C-CN": 9.372824694,
+    "R-CN": 8.821005515,
+    "R-CN-pub": 8.973347268,
+    "A0": 8.821005515
+  },
+  "status": {
+    "REF": "Optimal",
+    "C-CN": "Optimal",
+    "R-CN": "Optimal",
+    "R-CN-pub": "Optimal",
+    "A0": "Optimal"
+  },
+  "curtail_TWh": {
+    "REF": 0.0,
+    "C-CN": 0.0,
+    "R-CN": 0.0,
+    "R-CN-pub": 0.0,
+    "A0": 0.0
+  },
+  "channels_R-CN": {
+    "cooling": 0.06267955035,
+    "re_procurement": 0.4891396312,
+    "carbon": -2.131829364e-09,
+    "siting": 0.0,
+    "curtailment": 0.0,
+    "total": 0.5518191794,
+    "direct_total": 0.5518191794
+  },
+  "channel_shares_R-CN": {
+    "cooling": 0.1135871182,
+    "re_procurement": 0.8864128857,
+    "carbon": -3.863275225e-09,
+    "siting": 0.0,
+    "curtailment": 0.0
+  },
+  "advantage_R-CN": 0.05887437324,
+  "channel_check_R-CN": 8.544921875e-16,
+  "channels_R-CN-pub": {
+    "cooling": 0.03010727667,
+    "re_procurement": 0.3693701513,
+    "carbon": -2.014147659e-09,
+    "siting": 0.0,
+    "curtailment": 0.0,
+    "total": 0.3994774259,
+    "direct_total": 0.3994774259
+  },
+  "channel_shares_R-CN-pub": {
+    "cooling": 0.07536665331,
+    "re_procurement": 0.9246333517,
+    "carbon": -5.041956136e-09,
+    "siting": 0.0,
+    "curtailment": 0.0
+  },
+  "advantage_R-CN-pub": 0.04262081485,
+  "channel_check_R-CN-pub": 7.934570313e-16
+}

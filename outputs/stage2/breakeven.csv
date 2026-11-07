@@ -1,0 +1,3 @@
+config,status,gap_at_zero_TJPY,advantage_at_zero,C-CN_TJPY,R-CN_TJPY,curtail_TWh_C-CN,curtail_TWh_R-CN,gap_slope_TJPY_per_1000yen_per_kW,breakeven_lo_yen_per_kW,breakeven_hi_yen_per_kW,breakeven_yen_per_kW,closed_form_yen_per_kW,iterations,tolerance_yen_per_kW
+primary,found,9.995162975,0.08114638248,123.1744739,113.179311,308.0132765,279.5505754,-0.001647837837,6065562.5,6065625,6065593.75,6065622.934,29,100
+paper_only,found,0.4938461201,0.04198735421,11.76178231,11.26793619,0,0,-0.001647837837,299687.5,299750,299718.75,299693.3977,21,100

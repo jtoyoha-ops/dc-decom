@@ -1,0 +1,268 @@
+{
+  "label": "事後の感度",
+  "label_text": "結果を見た後に定めた内訳。判定には使わない",
+  "rules": {
+    "file": "config/abc_rules.yaml",
+    "sha256": "c718b5c7333af2dc9b8f7a23c2979c5781a4d61d5e98838edd6bcc92a956248d",
+    "unchanged_since_freeze": true
+  },
+  "config": "config/abc_posthoc.yaml (b_minus_a0)",
+  "value_note": "B - A0 of the social resource cost is +0.1355 TJPY (abc_summary.json B_vs_A0.social_cost_TJPY.mean_diff; B lower on 0 of 18 paths)",
+  "elements": {
+    "E1": "PUE rules",
+    "E2": "liquid floor phi_0 = 1.0",
+    "E3": "reinforcement (c1 from T_g = 2030, g, theta)",
+    "E4": "non-metro PPA tier multiplier 1.5"
+  },
+  "excluded": "psi and the subsidy (B-noPPAfloor = B on all 18 paths; P* = 0 so B pays no subsidy). The combinations are built from the B settings by removing elements (psi 0.3, subsidy 'rule', P* 0 kept; they have no effect)",
+  "n_paths": 18,
+  "n_subsets": 16,
+  "n_runs": 306,
+  "B_minus_A0_social_mean_TJPY": 0.1355476927,
+  "shapley": {
+    "social_cost_TJPY": {
+      "B_minus_A0_mean_TJPY": 0.1355476927,
+      "min_TJPY": 0.06211195134,
+      "max_TJPY": 0.1821218378,
+      "elements": {
+        "E1": {
+          "name": "PUE rules",
+          "shapley_mean_TJPY": 7.514382203e-10,
+          "share": 5.543718269e-09,
+          "shapley_min_TJPY": -6.250820602e-10,
+          "shapley_max_TJPY": 2.932798893e-09,
+          "oat_on_mean_TJPY": 2.402833488e-09,
+          "oat_off_mean_TJPY": -4.534612685e-10
+        },
+        "E2": {
+          "name": "liquid floor phi_0 = 1.0",
+          "shapley_mean_TJPY": -0.005517046273,
+          "share": -0.04070188259,
+          "shapley_min_TJPY": -0.02610184304,
+          "shapley_max_TJPY": 0.002721158151,
+          "oat_on_mean_TJPY": -6.202445964e-13,
+          "oat_off_mean_TJPY": -0.01103409208
+        },
+        "E3": {
+          "name": "reinforcement (c1 from T_g = 2030, g, theta)",
+          "shapley_mean_TJPY": 0.1410647393,
+          "share": 1.040701885,
+          "shapley_min_TJPY": 0.05939079106,
+          "shapley_max_TJPY": 0.1933064886,
+          "oat_on_mean_TJPY": 0.1465817857,
+          "oat_off_mean_TJPY": 0.1355476927
+        },
+        "E4": {
+          "name": "non-metro PPA tier multiplier 1.5",
+          "shapley_mean_TJPY": -1.030669648e-09,
+          "share": -7.603741737e-09,
+          "shapley_min_TJPY": -5.401368834e-09,
+          "shapley_max_TJPY": 9.223872777e-10,
+          "oat_on_mean_TJPY": 8.071617448e-10,
+          "oat_off_mean_TJPY": -3.840433453e-09
+        }
+      }
+    },
+    "operator_cost_TJPY": {
+      "B_minus_A0_mean_TJPY": 0.07219076138,
+      "min_TJPY": 0.03427673898,
+      "max_TJPY": 0.09260438569,
+      "elements": {
+        "E1": {
+          "name": "PUE rules",
+          "shapley_mean_TJPY": 6.788122369e-10,
+          "share": 9.403034736e-09,
+          "shapley_min_TJPY": -9.334562752e-10,
+          "shapley_max_TJPY": 2.776238794e-09,
+          "oat_on_mean_TJPY": 2.402558893e-09,
+          "oat_off_mean_TJPY": -5.415267247e-10
+        },
+        "E2": {
+          "name": "liquid floor phi_0 = 1.0",
+          "shapley_mean_TJPY": -0.00587896321,
+          "share": -0.08143650376,
+          "shapley_min_TJPY": -0.02462425276,
+          "shapley_max_TJPY": 0.00274987853,
+          "oat_on_mean_TJPY": -7.652150518e-13,
+          "oat_off_mean_TJPY": -0.01175792593
+        },
+        "E3": {
+          "name": "reinforcement (c1 from T_g = 2030, g, theta)",
+          "shapley_mean_TJPY": 0.07806972475,
+          "share": 1.081436506,
+          "shapley_min_TJPY": 0.03152685838,
+          "shapley_max_TJPY": 0.1172170061,
+          "oat_on_mean_TJPY": 0.0839486881,
+          "oat_off_mean_TJPY": 0.07219076138
+        },
+        "E4": {
+          "name": "non-metro PPA tier multiplier 1.5",
+          "shapley_mean_TJPY": -8.42919623e-10,
+          "share": -1.16762811e-08,
+          "shapley_min_TJPY": -4.318131778e-09,
+          "shapley_max_TJPY": 9.061296158e-10,
+          "oat_on_mean_TJPY": 8.071618435e-10,
+          "oat_off_mean_TJPY": -3.122130949e-09
+        }
+      }
+    }
+  },
+  "lines_mean": {
+    "cooling_capex": {
+      "B_TJPY": 0.247364945,
+      "A0_TJPY": 0.2475619432,
+      "diff_TJPY": -0.0001969981306,
+      "share_of_social_diff": -0.001453349199
+    },
+    "cooling_opex": {
+      "B_TJPY": 0.0422169301,
+      "A0_TJPY": 0.04228881957,
+      "diff_TJPY": -7.188946511e-05,
+      "share_of_social_diff": -0.0005303628832
+    },
+    "bess_capex": {
+      "B_TJPY": 0.0,
+      "A0_TJPY": 0.0,
+      "diff_TJPY": 0.0,
+      "share_of_social_diff": 0.0
+    },
+    "bess_opex": {
+      "B_TJPY": 0.0,
+      "A0_TJPY": 0.0,
+      "diff_TJPY": 0.0,
+      "share_of_social_diff": 0.0
+    },
+    "cgs_capex": {
+      "B_TJPY": 0.0,
+      "A0_TJPY": 0.0,
+      "diff_TJPY": 0.0,
+      "share_of_social_diff": 0.0
+    },
+    "cgs_opex": {
+      "B_TJPY": 0.0,
+      "A0_TJPY": 0.0,
+      "diff_TJPY": 0.0,
+      "share_of_social_diff": 0.0
+    },
+    "gen_capex": {
+      "B_TJPY": 1.395374299,
+      "A0_TJPY": 1.389343034,
+      "diff_TJPY": 0.006031264775,
+      "share_of_social_diff": 0.04449551781
+    },
+    "gen_opex": {
+      "B_TJPY": 0.2930407026,
+      "A0_TJPY": 0.2898576725,
+      "diff_TJPY": 0.003183030122,
+      "share_of_social_diff": 0.02348273186
+    },
+    "energy_grid": {
+      "B_TJPY": 1.990580571,
+      "A0_TJPY": 1.964087689,
+      "diff_TJPY": 0.02649288224,
+      "share_of_social_diff": 0.1954506323
+    },
+    "energy_ppa": {
+      "B_TJPY": 2.517635691,
+      "A0_TJPY": 2.539260732,
+      "diff_TJPY": -0.02162504064,
+      "share_of_social_diff": -0.1595382423
+    },
+    "energy_nfc": {
+      "B_TJPY": 0.03442827559,
+      "A0_TJPY": 0.03377186439,
+      "diff_TJPY": 0.0006564112003,
+      "share_of_social_diff": 0.004842658604
+    },
+    "energy_pv": {
+      "B_TJPY": 1.609758309,
+      "A0_TJPY": 1.615214904,
+      "diff_TJPY": -0.005456594387,
+      "share_of_social_diff": -0.04025590018
+    },
+    "energy_cgs_fuel": {
+      "B_TJPY": 0.0,
+      "A0_TJPY": 0.0,
+      "diff_TJPY": 0.0,
+      "share_of_social_diff": 0.0
+    },
+    "curtailment": {
+      "B_TJPY": 0.0,
+      "A0_TJPY": 0.0,
+      "diff_TJPY": 0.0,
+      "share_of_social_diff": 0.0
+    },
+    "reinforcement": {
+      "B_TJPY": 0.1267138632,
+      "A0_TJPY": 0.0,
+      "diff_TJPY": 0.1267138632,
+      "share_of_social_diff": 0.9348286254
+    },
+    "over_cost": {
+      "B_TJPY": 0.002528928473,
+      "A0_TJPY": 0.002708164732,
+      "diff_TJPY": -0.0001792362592,
+      "share_of_social_diff": -0.001322311399
+    },
+    "shell_premium": {
+      "B_TJPY": 0.0,
+      "A0_TJPY": 0.0,
+      "diff_TJPY": 0.0,
+      "share_of_social_diff": 0.0
+    },
+    "comm_cost": {
+      "B_TJPY": 0.0,
+      "A0_TJPY": 0.0,
+      "diff_TJPY": 0.0,
+      "share_of_social_diff": 0.0
+    },
+    "social_cost": {
+      "B_TJPY": 8.259642515,
+      "A0_TJPY": 8.124094822,
+      "diff_TJPY": 0.1355476927,
+      "share_of_social_diff": 1.0
+    },
+    "operator_cost": {
+      "B_TJPY": 8.196285584,
+      "A0_TJPY": 8.124094823,
+      "diff_TJPY": 0.07219076138,
+      "share_of_social_diff": 0.5325856895
+    },
+    "fiscal_burden": {
+      "B_TJPY": 0.0,
+      "A0_TJPY": 0.0,
+      "diff_TJPY": 0.0,
+      "share_of_social_diff": 0.0
+    },
+    "carbon_cost": {
+      "B_TJPY": 7.682303208e-10,
+      "A0_TJPY": 4.662915495e-10,
+      "diff_TJPY": 3.019387713e-10,
+      "share_of_social_diff": 2.227546374e-09
+    },
+    "eq1_total": {
+      "B_TJPY": 8.259642516,
+      "A0_TJPY": 8.124094823,
+      "diff_TJPY": 0.135547693,
+      "share_of_social_diff": 1.000000002
+    }
+  },
+  "checks": {
+    "tolerance_relative": 1e-09,
+    "tolerance_sum_TJPY": 1e-09,
+    "empty_vs_A0_max_rel": 0.0,
+    "full_vs_B_max_rel": 4.462479232e-10,
+    "A0_vs_abc_metrics_max_rel": 4.518242348e-10,
+    "full_settings_equal_B": true,
+    "shapley_efficiency_max_err_TJPY": {
+      "social_cost_TJPY": 2.775557562e-17,
+      "operator_cost_TJPY": 2.775557562e-17
+    },
+    "shapley_sum_vs_B_minus_A0_max_err_TJPY": {
+      "social_cost_TJPY": 2.775557562e-17,
+      "operator_cost_TJPY": 2.775557562e-17
+    },
+    "line_sum_vs_social_diff_max_err_TJPY": 4.884981308e-15,
+    "ok": true
+  }
+}

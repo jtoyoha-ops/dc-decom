@@ -1,0 +1,2783 @@
+{
+  "label": "事後の感度",
+  "label_text": "事後の感度：凍結した A・B・C の結果（outputs/abc）を見た後、2026-11-07 に定めた。計算の前に定めた比較ではなく、凍結の結果を置き換えない",
+  "rules": {
+    "file": "config/abc_rules.yaml",
+    "sha256": "c718b5c7333af2dc9b8f7a23c2979c5781a4d61d5e98838edd6bcc92a956248d",
+    "unchanged_since_freeze": true
+  },
+  "config": "config/abc_posthoc.yaml",
+  "changes_after_registration": [
+    {
+      "id": "H1",
+      "date": "2026-11-07",
+      "kind": "clarification of the policy-change count, decided after all 432 abc_posthoc runs had been solved and their counts seen",
+      "registered": "posthoc.report lists 'policy changes' and 'paths with a policy change' without saying which comparison counts as a change",
+      "before": "policy_changed = the flag of rolling.switch (as in abc_switches.csv): the policy forms from t_k are compared as they are, so a subsidy map that has no year from t_k on counts as a map",
+      "after": "policy_changed_effective = the same comparison with the subsidy map reduced to its non-zero entries (abc_posthoc.effective_policy). The reported counts use it",
+      "reason": "rolling.switch reports a change when R3 switches off a subsidy map at a review after the last subsidy year of the B rule, although no payment changes. rolling.py is not changed (it is in the solve-cache fingerprint), so the effective flag is computed in abc_posthoc.py",
+      "effect": "no solve and no cost, CO2 or C' - B' value changes; only the counts. Variants with a policy change: 8 (before) -> 6 (after). Per variant (before -> after): R3-P4300 18 -> 6, R3-P7000 12 -> 0, R3-P10000 6 -> 0, R4-nocert-P10000 8 -> 2 (its R3 6 -> 0; R4 2 unchanged). The frozen run (P* = 0, no subsidy map) is unaffected",
+      "results_before_kept": "posthoc_summary.csv columns R*_policy_changed, n_policy_changed, n_paths_policy_changed, paths_policy_changed; posthoc_summary.json n_variants_with_policy_change; posthoc_switches.csv column policy_changed"
+    }
+  ],
+  "common": "frozen rules (abc.rules_check()), the same 18 realization paths, review years 2026 / 2030 / 2035, certificates on (only the R4 variant without certificates). Every variant solves B' (adaptive false) and C' (adaptive true) with the same settings; the effect is C' - B' per path",
+  "rule_conditions": {
+    "R3": "R3 sets the subsidy of the next stage to 0 when the observed price >= P*. The B rule pays the subsidy only in years whose base-path price < P*, so C' differs from B' only when the observed price at t_k - 1 is >= P* while the B rule still pays in the next stage",
+    "R1": "changes policy only if phi_0 < 1 and the observed liquid share of new capacity < liquid_review[t_k]",
+    "R2": "changes policy only if T_g > t_k and the observed connection usage >= the threshold",
+    "R4": "changes policy only if emissions exceed the cap path and some build is subsidized"
+  },
+  "n_paths": 18,
+  "paths": [
+    "c-low_d-low_l-base",
+    "c-low_d-low_l-slow",
+    "c-low_d-base_l-base",
+    "c-low_d-base_l-slow",
+    "c-low_d-high_l-base",
+    "c-low_d-high_l-slow",
+    "c-base_d-low_l-base",
+    "c-base_d-low_l-slow",
+    "c-base_d-base_l-base",
+    "c-base_d-base_l-slow",
+    "c-base_d-high_l-base",
+    "c-base_d-high_l-slow",
+    "c-high_d-low_l-base",
+    "c-high_d-low_l-slow",
+    "c-high_d-base_l-base",
+    "c-high_d-base_l-slow",
+    "c-high_d-high_l-base",
+    "c-high_d-high_l-slow"
+  ],
+  "review_years": [
+    2026,
+    2030,
+    2035
+  ],
+  "tolerance_relative": 1e-06,
+  "variant_keys": "variant name with '.' replaced by '_' (token-safe)",
+  "A_reference": "frozen A of abc_metrics.csv (certificates on); C' - A is not reported for the variant without certificates",
+  "frozen_check": {
+    "tolerance_relative": 1e-09,
+    "reference": "outputs/abc/abc_metrics.csv",
+    "B_max_rel_diff": 4.520070957e-10,
+    "C_max_rel_diff": 4.520070957e-10,
+    "ok": true
+  },
+  "n_runs": 432,
+  "failed": [],
+  "policy_change_note": "policy_changed = the flag of rolling.switch (as in abc_switches.csv); policy_changed_effective = the same comparison with the subsidy map reduced to its non-zero entries (effective_policy). They differ only for R3 at a review after the last subsidy year of the B rule, where switching the subsidy off changes no payment; the results use the effective flag",
+  "n_variants_with_policy_change": 8,
+  "n_variants_with_policy_change_effective": 6,
+  "variants": {
+    "frozen": {
+      "name": "frozen",
+      "rule_focus": "none",
+      "changes": {},
+      "reason": "reference; B' and C' must equal B and C of abc_metrics.csv (rel 1e-9)",
+      "value_status": null,
+      "settings": {
+        "adaptive": false,
+        "pue_rules": true,
+        "phi": 1.0,
+        "t_g": 2030,
+        "psi": 0.3,
+        "subsidy": "rule",
+        "floors": "paths",
+        "ppa_multiplier": 1.5,
+        "theta": null,
+        "g": null,
+        "pstar": 0.0
+      },
+      "certificates": true,
+      "connection_usage": 0.9,
+      "counts": {
+        "R1_triggered": 15,
+        "R1_setting_changed": 0,
+        "R1_policy_changed": 0,
+        "R1_policy_changed_effective": 0,
+        "R1_value_min": 0.9488537298,
+        "R1_value_max": 1.0,
+        "R2_triggered": 6,
+        "R2_setting_changed": 0,
+        "R2_policy_changed": 0,
+        "R2_policy_changed_effective": 0,
+        "R2_value_min": 0.1287392365,
+        "R2_value_max": 0.9537880061,
+        "R3_triggered": 36,
+        "R3_setting_changed": 18,
+        "R3_policy_changed": 0,
+        "R3_policy_changed_effective": 0,
+        "R3_value_min": 1857.64,
+        "R3_value_max": 12967.94,
+        "R4_triggered": 0,
+        "R4_setting_changed": 0,
+        "R4_policy_changed": 0,
+        "R4_policy_changed_effective": 0,
+        "R4_value_min": -5.525418591,
+        "R4_value_max": -3.013864646,
+        "n_policy_changed": 0,
+        "n_paths_policy_changed": 0,
+        "paths_policy_changed": "none",
+        "n_policy_changed_effective": 0,
+        "n_paths_policy_changed_effective": 0,
+        "paths_policy_changed_effective": "none"
+      },
+      "indicators": {
+        "R1": {
+          "2030": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9488537298,
+            "value_max": 1.0,
+            "n_triggered": 9,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9951522638,
+            "value_max": 1.0,
+            "n_triggered": 6,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R2": {
+          "2030": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.1949169065,
+            "value_max": 0.9537880061,
+            "n_triggered": 6,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.1287392365,
+            "value_max": 0.4286355984,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R3": {
+          "2030": {
+            "indicator": "carbon_price_last",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": 1857.64,
+            "value_max": 4698.73,
+            "n_triggered": 18,
+            "n_setting_changed": 18,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "carbon_price_last",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": 5982.67,
+            "value_max": 12967.94,
+            "n_triggered": 18,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R4": {
+          "2030": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -5.525418591,
+            "value_max": -5.525418522,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -3.013864758,
+            "value_max": -3.013864646,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        }
+      },
+      "C_minus_B": {
+        "n_paths": 18,
+        "social_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "eq1_total_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "operator_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "fiscal_burden_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "co2_cum_Mt": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "n_better_social_and_co2": 0
+      },
+      "C_minus_A_social_cost_mean": -0.4497442499,
+      "C_minus_A_co2_cum_mean": 1.972292898e-07
+    },
+    "R1-phi0_8": {
+      "name": "R1-phi0.8",
+      "rule_focus": "R1",
+      "changes": {
+        "phi_0": 0.8
+      },
+      "reason": "R1 raises phi by 0.2; the frozen phi_0 = 1.0 is the cap and leaves no room. One step of room",
+      "value_status": "assumption (仮定; one and two steps of the frozen rule increment 0.2)",
+      "settings": {
+        "adaptive": false,
+        "pue_rules": true,
+        "phi": 0.8,
+        "t_g": 2030,
+        "psi": 0.3,
+        "subsidy": "rule",
+        "floors": "paths",
+        "ppa_multiplier": 1.5,
+        "theta": null,
+        "g": null,
+        "pstar": 0.0
+      },
+      "certificates": true,
+      "connection_usage": 0.9,
+      "counts": {
+        "R1_triggered": 15,
+        "R1_setting_changed": 12,
+        "R1_policy_changed": 12,
+        "R1_policy_changed_effective": 12,
+        "R1_value_min": 0.9042847291,
+        "R1_value_max": 1.0,
+        "R2_triggered": 12,
+        "R2_setting_changed": 0,
+        "R2_policy_changed": 0,
+        "R2_policy_changed_effective": 0,
+        "R2_value_min": 0.1290238409,
+        "R2_value_max": 1.000000006,
+        "R3_triggered": 36,
+        "R3_setting_changed": 18,
+        "R3_policy_changed": 0,
+        "R3_policy_changed_effective": 0,
+        "R3_value_min": 1857.64,
+        "R3_value_max": 12967.94,
+        "R4_triggered": 0,
+        "R4_setting_changed": 0,
+        "R4_policy_changed": 0,
+        "R4_policy_changed_effective": 0,
+        "R4_value_min": -5.525418605,
+        "R4_value_max": -3.013864642,
+        "n_policy_changed": 12,
+        "n_paths_policy_changed": 12,
+        "paths_policy_changed": "c-low_d-base_l-base; c-low_d-base_l-slow; c-low_d-high_l-base; c-low_d-high_l-slow; c-base_d-base_l-base; c-base_d-base_l-slow; c-base_d-high_l-base; c-base_d-high_l-slow; c-high_d-base_l-base; c-high_d-base_l-slow; c-high_d-high_l-base; c-high_d-high_l-slow",
+        "n_policy_changed_effective": 12,
+        "n_paths_policy_changed_effective": 12,
+        "paths_policy_changed_effective": "c-low_d-base_l-base; c-low_d-base_l-slow; c-low_d-high_l-base; c-low_d-high_l-slow; c-base_d-base_l-base; c-base_d-base_l-slow; c-base_d-high_l-base; c-base_d-high_l-slow; c-high_d-base_l-base; c-high_d-base_l-slow; c-high_d-high_l-base; c-high_d-high_l-slow"
+      },
+      "indicators": {
+        "R1": {
+          "2030": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9042847291,
+            "value_max": 1.0,
+            "n_triggered": 12,
+            "n_setting_changed": 12,
+            "n_policy_changed": 12,
+            "n_policy_changed_effective": 12,
+            "paths_policy_changed_effective": [
+              "c-low_d-base_l-base",
+              "c-low_d-base_l-slow",
+              "c-low_d-high_l-base",
+              "c-low_d-high_l-slow",
+              "c-base_d-base_l-base",
+              "c-base_d-base_l-slow",
+              "c-base_d-high_l-base",
+              "c-base_d-high_l-slow",
+              "c-high_d-base_l-base",
+              "c-high_d-base_l-slow",
+              "c-high_d-high_l-base",
+              "c-high_d-high_l-slow"
+            ]
+          },
+          "2035": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9968259104,
+            "value_max": 1.0,
+            "n_triggered": 3,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R2": {
+          "2030": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.1949169065,
+            "value_max": 1.000000006,
+            "n_triggered": 12,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.1290238409,
+            "value_max": 0.4432640659,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R3": {
+          "2030": {
+            "indicator": "carbon_price_last",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": 1857.64,
+            "value_max": 4698.73,
+            "n_triggered": 18,
+            "n_setting_changed": 18,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "carbon_price_last",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": 5982.67,
+            "value_max": 12967.94,
+            "n_triggered": 18,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R4": {
+          "2030": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -5.525418605,
+            "value_max": -5.525418524,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -3.01386477,
+            "value_max": -3.013864642,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        }
+      },
+      "C_minus_B": {
+        "n_paths": 18,
+        "social_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": -1.682177952e-09,
+          "min_diff": -8.941261953e-09,
+          "max_diff": 1.669302918e-09,
+          "worse_paths": []
+        },
+        "eq1_total_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": -1.608517171e-09,
+          "min_diff": -8.930905793e-09,
+          "max_diff": 1.277964401e-09,
+          "worse_paths": []
+        },
+        "operator_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": -1.766002751e-09,
+          "min_diff": -8.987271372e-09,
+          "max_diff": 4.744400428e-10,
+          "worse_paths": []
+        },
+        "fiscal_burden_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "co2_cum_Mt": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 1.655356208e-08,
+          "min_diff": -7.929764223e-08,
+          "max_diff": 1.637585427e-07,
+          "worse_paths": []
+        },
+        "n_better_social_and_co2": 0
+      },
+      "C_minus_A_social_cost_mean": -0.4387101577,
+      "C_minus_A_co2_cum_mean": 1.626388932e-07
+    },
+    "R1-phi0_6": {
+      "name": "R1-phi0.6",
+      "rule_focus": "R1",
+      "changes": {
+        "phi_0": 0.6
+      },
+      "reason": "two steps of room",
+      "value_status": "assumption (仮定)",
+      "settings": {
+        "adaptive": false,
+        "pue_rules": true,
+        "phi": 0.6,
+        "t_g": 2030,
+        "psi": 0.3,
+        "subsidy": "rule",
+        "floors": "paths",
+        "ppa_multiplier": 1.5,
+        "theta": null,
+        "g": null,
+        "pstar": 0.0
+      },
+      "certificates": true,
+      "connection_usage": 0.9,
+      "counts": {
+        "R1_triggered": 15,
+        "R1_setting_changed": 15,
+        "R1_policy_changed": 15,
+        "R1_policy_changed_effective": 15,
+        "R1_value_min": 0.9042847291,
+        "R1_value_max": 1.0,
+        "R2_triggered": 12,
+        "R2_setting_changed": 0,
+        "R2_policy_changed": 0,
+        "R2_policy_changed_effective": 0,
+        "R2_value_min": 0.1290238409,
+        "R2_value_max": 1.000000006,
+        "R3_triggered": 36,
+        "R3_setting_changed": 18,
+        "R3_policy_changed": 0,
+        "R3_policy_changed_effective": 0,
+        "R3_value_min": 1857.64,
+        "R3_value_max": 12967.94,
+        "R4_triggered": 0,
+        "R4_setting_changed": 0,
+        "R4_policy_changed": 0,
+        "R4_policy_changed_effective": 0,
+        "R4_value_min": -5.525418605,
+        "R4_value_max": -3.013864627,
+        "n_policy_changed": 15,
+        "n_paths_policy_changed": 12,
+        "paths_policy_changed": "c-low_d-base_l-base; c-low_d-base_l-slow; c-low_d-high_l-base; c-low_d-high_l-slow; c-base_d-base_l-base; c-base_d-base_l-slow; c-base_d-high_l-base; c-base_d-high_l-slow; c-high_d-base_l-base; c-high_d-base_l-slow; c-high_d-high_l-base; c-high_d-high_l-slow",
+        "n_policy_changed_effective": 15,
+        "n_paths_policy_changed_effective": 12,
+        "paths_policy_changed_effective": "c-low_d-base_l-base; c-low_d-base_l-slow; c-low_d-high_l-base; c-low_d-high_l-slow; c-base_d-base_l-base; c-base_d-base_l-slow; c-base_d-high_l-base; c-base_d-high_l-slow; c-high_d-base_l-base; c-high_d-base_l-slow; c-high_d-high_l-base; c-high_d-high_l-slow"
+      },
+      "indicators": {
+        "R1": {
+          "2030": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9042847291,
+            "value_max": 1.0,
+            "n_triggered": 12,
+            "n_setting_changed": 12,
+            "n_policy_changed": 12,
+            "n_policy_changed_effective": 12,
+            "paths_policy_changed_effective": [
+              "c-low_d-base_l-base",
+              "c-low_d-base_l-slow",
+              "c-low_d-high_l-base",
+              "c-low_d-high_l-slow",
+              "c-base_d-base_l-base",
+              "c-base_d-base_l-slow",
+              "c-base_d-high_l-base",
+              "c-base_d-high_l-slow",
+              "c-high_d-base_l-base",
+              "c-high_d-base_l-slow",
+              "c-high_d-high_l-base",
+              "c-high_d-high_l-slow"
+            ]
+          },
+          "2035": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9968259081,
+            "value_max": 1.0,
+            "n_triggered": 3,
+            "n_setting_changed": 3,
+            "n_policy_changed": 3,
+            "n_policy_changed_effective": 3,
+            "paths_policy_changed_effective": [
+              "c-low_d-high_l-slow",
+              "c-base_d-high_l-slow",
+              "c-high_d-high_l-slow"
+            ]
+          }
+        },
+        "R2": {
+          "2030": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.1949169065,
+            "value_max": 1.000000006,
+            "n_triggered": 12,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.1290238409,
+            "value_max": 0.4432640705,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R3": {
+          "2030": {
+            "indicator": "carbon_price_last",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": 1857.64,
+            "value_max": 4698.73,
+            "n_triggered": 18,
+            "n_setting_changed": 18,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "carbon_price_last",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": 5982.67,
+            "value_max": 12967.94,
+            "n_triggered": 18,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R4": {
+          "2030": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -5.525418605,
+            "value_max": -5.525418524,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -3.013864745,
+            "value_max": -3.013864627,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        }
+      },
+      "C_minus_B": {
+        "n_paths": 18,
+        "social_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 2.006185144e-09,
+          "min_diff": -9.130474155e-12,
+          "max_diff": 1.004233674e-08,
+          "worse_paths": []
+        },
+        "eq1_total_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 1.800656908e-09,
+          "min_diff": -1.363815727e-10,
+          "max_diff": 9.936790946e-09,
+          "worse_paths": []
+        },
+        "operator_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 1.76139498e-09,
+          "min_diff": -3.779199176e-11,
+          "max_diff": 9.552200808e-09,
+          "worse_paths": []
+        },
+        "fiscal_burden_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "co2_cum_Mt": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": -3.318231704e-08,
+          "min_diff": -1.637585427e-07,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "n_better_social_and_co2": 0
+      },
+      "C_minus_A_social_cost_mean": -0.4387101561,
+      "C_minus_A_co2_cum_mean": 1.470233541e-07
+    },
+    "R2-Tg2035-u0_9": {
+      "name": "R2-Tg2035-u0.9",
+      "rule_focus": "R2",
+      "changes": {
+        "reinforcement_year": 2035,
+        "connection_usage": 0.9
+      },
+      "reason": "R2 moves T_g forward to the review year; the frozen T_g = 2030 equals the second review year, so it cannot move. 2035 = upper end of the reinforcement_year range (仮定 range 2028-2035, OCCTO_MP2023 context); usage threshold frozen 0.9",
+      "value_status": "T_g 2035 assumption range end; 0.9 frozen (assumption)",
+      "settings": {
+        "adaptive": false,
+        "pue_rules": true,
+        "phi": 1.0,
+        "t_g": 2035,
+        "psi": 0.3,
+        "subsidy": "rule",
+        "floors": "paths",
+        "ppa_multiplier": 1.5,
+        "theta": null,
+        "g": null,
+        "pstar": 0.0
+      },
+      "certificates": true,
+      "connection_usage": 0.9,
+      "counts": {
+        "R1_triggered": 9,
+        "R1_setting_changed": 0,
+        "R1_policy_changed": 0,
+        "R1_policy_changed_effective": 0,
+        "R1_value_min": 0.9349362127,
+        "R1_value_max": 1.0,
+        "R2_triggered": 12,
+        "R2_setting_changed": 0,
+        "R2_policy_changed": 0,
+        "R2_policy_changed_effective": 0,
+        "R2_value_min": 0.1930546245,
+        "R2_value_max": 1.000000031,
+        "R3_triggered": 36,
+        "R3_setting_changed": 18,
+        "R3_policy_changed": 0,
+        "R3_policy_changed_effective": 0,
+        "R3_value_min": 1857.64,
+        "R3_value_max": 12967.94,
+        "R4_triggered": 0,
+        "R4_setting_changed": 0,
+        "R4_policy_changed": 0,
+        "R4_policy_changed_effective": 0,
+        "R4_value_min": -5.525418599,
+        "R4_value_max": -3.013864598,
+        "n_policy_changed": 0,
+        "n_paths_policy_changed": 0,
+        "paths_policy_changed": "none",
+        "n_policy_changed_effective": 0,
+        "n_paths_policy_changed_effective": 0,
+        "paths_policy_changed_effective": "none"
+      },
+      "indicators": {
+        "R1": {
+          "2030": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9995741896,
+            "value_max": 1.0,
+            "n_triggered": 3,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9349362127,
+            "value_max": 1.0,
+            "n_triggered": 6,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R2": {
+          "2030": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.1930546245,
+            "value_max": 0.8583238316,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.283111828,
+            "value_max": 1.000000031,
+            "n_triggered": 12,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R3": {
+          "2030": {
+            "indicator": "carbon_price_last",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": 1857.64,
+            "value_max": 4698.73,
+            "n_triggered": 18,
+            "n_setting_changed": 18,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "carbon_price_last",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": 5982.67,
+            "value_max": 12967.94,
+            "n_triggered": 18,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R4": {
+          "2030": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -5.525418599,
+            "value_max": -5.525418494,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -3.01386467,
+            "value_max": -3.013864598,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        }
+      },
+      "C_minus_B": {
+        "n_paths": 18,
+        "social_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "eq1_total_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "operator_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "fiscal_burden_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "co2_cum_Mt": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "n_better_social_and_co2": 0
+      },
+      "C_minus_A_social_cost_mean": -0.5211966047,
+      "C_minus_A_co2_cum_mean": 1.793864044e-07
+    },
+    "R2-Tg2035-u0_7": {
+      "name": "R2-Tg2035-u0.7",
+      "rule_focus": "R2",
+      "changes": {
+        "reinforcement_year": 2035,
+        "connection_usage": 0.7
+      },
+      "reason": null,
+      "value_status": "assumption (仮定)",
+      "settings": {
+        "adaptive": false,
+        "pue_rules": true,
+        "phi": 1.0,
+        "t_g": 2035,
+        "psi": 0.3,
+        "subsidy": "rule",
+        "floors": "paths",
+        "ppa_multiplier": 1.5,
+        "theta": null,
+        "g": null,
+        "pstar": 0.0
+      },
+      "certificates": true,
+      "connection_usage": 0.7,
+      "counts": {
+        "R1_triggered": 9,
+        "R1_setting_changed": 0,
+        "R1_policy_changed": 0,
+        "R1_policy_changed_effective": 0,
+        "R1_value_min": 0.9721618368,
+        "R1_value_max": 1.0,
+        "R2_triggered": 12,
+        "R2_setting_changed": 12,
+        "R2_policy_changed": 12,
+        "R2_policy_changed_effective": 12,
+        "R2_value_min": 0.1930546245,
+        "R2_value_max": 0.8583238316,
+        "R3_triggered": 36,
+        "R3_setting_changed": 18,
+        "R3_policy_changed": 0,
+        "R3_policy_changed_effective": 0,
+        "R3_value_min": 1857.64,
+        "R3_value_max": 12967.94,
+        "R4_triggered": 0,
+        "R4_setting_changed": 0,
+        "R4_policy_changed": 0,
+        "R4_policy_changed_effective": 0,
+        "R4_value_min": -5.525418599,
+        "R4_value_max": -3.013864643,
+        "n_policy_changed": 12,
+        "n_paths_policy_changed": 12,
+        "paths_policy_changed": "c-low_d-base_l-base; c-low_d-base_l-slow; c-low_d-high_l-base; c-low_d-high_l-slow; c-base_d-base_l-base; c-base_d-base_l-slow; c-base_d-high_l-base; c-base_d-high_l-slow; c-high_d-base_l-base; c-high_d-base_l-slow; c-high_d-high_l-base; c-high_d-high_l-slow",
+        "n_policy_changed_effective": 12,
+        "n_paths_policy_changed_effective": 12,
+        "paths_policy_changed_effective": "c-low_d-base_l-base; c-low_d-base_l-slow; c-low_d-high_l-base; c-low_d-high_l-slow; c-base_d-base_l-base; c-base_d-base_l-slow; c-base_d-high_l-base; c-base_d-high_l-slow; c-high_d-base_l-base; c-high_d-base_l-slow; c-high_d-high_l-base; c-high_d-high_l-slow"
+      },
+      "indicators": {
+        "R1": {
+          "2030": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9995741896,
+            "value_max": 1.0,
+            "n_triggered": 3,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9721618368,
+            "value_max": 1.0,
+            "n_triggered": 6,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R2": {
+          "2030": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.7",
+            "n": 18,
+            "value_min": 0.1930546245,
+            "value_max": 0.8583238316,
+            "n_triggered": 12,
+            "n_setting_changed": 12,
+            "n_policy_changed": 12,
+            "n_policy_changed_effective": 12,
+            "paths_policy_changed_effective": [
+              "c-low_d-base_l-base",
+              "c-low_d-base_l-slow",
+              "c-low_d-high_l-base",
+              "c-low_d-high_l-slow",
+              "c-base_d-base_l-base",
+              "c-base_d-base_l-slow",
+              "c-base_d-high_l-base",
+              "c-base_d-high_l-slow",
+              "c-high_d-base_l-base",
+              "c-high_d-base_l-slow",
+              "c-high_d-high_l-base",
+              "c-high_d-high_l-slow"
+            ]
+          },
+          "2035": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.7",
+            "n": 18,
+            "value_min": 0.283111828,
+            "value_max": 0.4231758476,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R3": {
+          "2030": {
+            "indicator": "carbon_price_last",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": 1857.64,
+            "value_max": 4698.73,
+            "n_triggered": 18,
+            "n_setting_changed": 18,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "carbon_price_last",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": 5982.67,
+            "value_max": 12967.94,
+            "n_triggered": 18,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R4": {
+          "2030": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -5.525418599,
+            "value_max": -5.525418494,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -3.013864756,
+            "value_max": -3.013864643,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        }
+      },
+      "C_minus_B": {
+        "n_paths": 18,
+        "social_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 6,
+          "n_worse": 12,
+          "mean_diff": 0.06574236606,
+          "min_diff": 0.0,
+          "max_diff": 0.1122850388,
+          "worse_paths": [
+            "c-low_d-base_l-base",
+            "c-low_d-base_l-slow",
+            "c-low_d-high_l-base",
+            "c-low_d-high_l-slow",
+            "c-base_d-base_l-base",
+            "c-base_d-base_l-slow",
+            "c-base_d-high_l-base",
+            "c-base_d-high_l-slow",
+            "c-high_d-base_l-base",
+            "c-high_d-base_l-slow",
+            "c-high_d-high_l-base",
+            "c-high_d-high_l-slow"
+          ]
+        },
+        "eq1_total_TJPY": {
+          "n_better": 0,
+          "n_equal": 6,
+          "n_worse": 12,
+          "mean_diff": 0.06574236605,
+          "min_diff": 0.0,
+          "max_diff": 0.1122850413,
+          "worse_paths": [
+            "c-low_d-base_l-base",
+            "c-low_d-base_l-slow",
+            "c-low_d-high_l-base",
+            "c-low_d-high_l-slow",
+            "c-base_d-base_l-base",
+            "c-base_d-base_l-slow",
+            "c-base_d-high_l-base",
+            "c-base_d-high_l-slow",
+            "c-high_d-base_l-base",
+            "c-high_d-base_l-slow",
+            "c-high_d-high_l-base",
+            "c-high_d-high_l-slow"
+          ]
+        },
+        "operator_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 6,
+          "n_worse": 12,
+          "mean_diff": 0.03237628523,
+          "min_diff": 0.0,
+          "max_diff": 0.05844843419,
+          "worse_paths": [
+            "c-low_d-base_l-base",
+            "c-low_d-base_l-slow",
+            "c-low_d-high_l-base",
+            "c-low_d-high_l-slow",
+            "c-base_d-base_l-base",
+            "c-base_d-base_l-slow",
+            "c-base_d-high_l-base",
+            "c-base_d-high_l-slow",
+            "c-high_d-base_l-base",
+            "c-high_d-base_l-slow",
+            "c-high_d-high_l-base",
+            "c-high_d-high_l-slow"
+          ]
+        },
+        "fiscal_burden_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "co2_cum_Mt": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": -1.010542909e-08,
+          "min_diff": -2.266045449e-07,
+          "max_diff": 1.340920104e-07,
+          "worse_paths": []
+        },
+        "n_better_social_and_co2": 0
+      },
+      "C_minus_A_social_cost_mean": -0.4554542387,
+      "C_minus_A_co2_cum_mean": 1.692809753e-07
+    },
+    "R2-Tg2035-u0_5": {
+      "name": "R2-Tg2035-u0.5",
+      "rule_focus": "R2",
+      "changes": {
+        "reinforcement_year": 2035,
+        "connection_usage": 0.5
+      },
+      "reason": null,
+      "value_status": "assumption (仮定)",
+      "settings": {
+        "adaptive": false,
+        "pue_rules": true,
+        "phi": 1.0,
+        "t_g": 2035,
+        "psi": 0.3,
+        "subsidy": "rule",
+        "floors": "paths",
+        "ppa_multiplier": 1.5,
+        "theta": null,
+        "g": null,
+        "pstar": 0.0
+      },
+      "certificates": true,
+      "connection_usage": 0.5,
+      "counts": {
+        "R1_triggered": 9,
+        "R1_setting_changed": 0,
+        "R1_policy_changed": 0,
+        "R1_policy_changed_effective": 0,
+        "R1_value_min": 0.9721618368,
+        "R1_value_max": 1.0,
+        "R2_triggered": 12,
+        "R2_setting_changed": 12,
+        "R2_policy_changed": 12,
+        "R2_policy_changed_effective": 12,
+        "R2_value_min": 0.1930546245,
+        "R2_value_max": 0.8583238316,
+        "R3_triggered": 36,
+        "R3_setting_changed": 18,
+        "R3_policy_changed": 0,
+        "R3_policy_changed_effective": 0,
+        "R3_value_min": 1857.64,
+        "R3_value_max": 12967.94,
+        "R4_triggered": 0,
+        "R4_setting_changed": 0,
+        "R4_policy_changed": 0,
+        "R4_policy_changed_effective": 0,
+        "R4_value_min": -5.525418599,
+        "R4_value_max": -3.013864643,
+        "n_policy_changed": 12,
+        "n_paths_policy_changed": 12,
+        "paths_policy_changed": "c-low_d-base_l-base; c-low_d-base_l-slow; c-low_d-high_l-base; c-low_d-high_l-slow; c-base_d-base_l-base; c-base_d-base_l-slow; c-base_d-high_l-base; c-base_d-high_l-slow; c-high_d-base_l-base; c-high_d-base_l-slow; c-high_d-high_l-base; c-high_d-high_l-slow",
+        "n_policy_changed_effective": 12,
+        "n_paths_policy_changed_effective": 12,
+        "paths_policy_changed_effective": "c-low_d-base_l-base; c-low_d-base_l-slow; c-low_d-high_l-base; c-low_d-high_l-slow; c-base_d-base_l-base; c-base_d-base_l-slow; c-base_d-high_l-base; c-base_d-high_l-slow; c-high_d-base_l-base; c-high_d-base_l-slow; c-high_d-high_l-base; c-high_d-high_l-slow"
+      },
+      "indicators": {
+        "R1": {
+          "2030": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9995741896,
+            "value_max": 1.0,
+            "n_triggered": 3,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9721618368,
+            "value_max": 1.0,
+            "n_triggered": 6,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R2": {
+          "2030": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.5",
+            "n": 18,
+            "value_min": 0.1930546245,
+            "value_max": 0.8583238316,
+            "n_triggered": 12,
+            "n_setting_changed": 12,
+            "n_policy_changed": 12,
+            "n_policy_changed_effective": 12,
+            "paths_policy_changed_effective": [
+              "c-low_d-base_l-base",
+              "c-low_d-base_l-slow",
+              "c-low_d-high_l-base",
+              "c-low_d-high_l-slow",
+              "c-base_d-base_l-base",
+              "c-base_d-base_l-slow",
+              "c-base_d-high_l-base",
+              "c-base_d-high_l-slow",
+              "c-high_d-base_l-base",
+              "c-high_d-base_l-slow",
+              "c-high_d-high_l-base",
+              "c-high_d-high_l-slow"
+            ]
+          },
+          "2035": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.5",
+            "n": 18,
+            "value_min": 0.283111828,
+            "value_max": 0.4231758476,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R3": {
+          "2030": {
+            "indicator": "carbon_price_last",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": 1857.64,
+            "value_max": 4698.73,
+            "n_triggered": 18,
+            "n_setting_changed": 18,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "carbon_price_last",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": 5982.67,
+            "value_max": 12967.94,
+            "n_triggered": 18,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R4": {
+          "2030": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -5.525418599,
+            "value_max": -5.525418494,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -3.013864756,
+            "value_max": -3.013864643,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        }
+      },
+      "C_minus_B": {
+        "n_paths": 18,
+        "social_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 6,
+          "n_worse": 12,
+          "mean_diff": 0.06574236606,
+          "min_diff": 0.0,
+          "max_diff": 0.1122850388,
+          "worse_paths": [
+            "c-low_d-base_l-base",
+            "c-low_d-base_l-slow",
+            "c-low_d-high_l-base",
+            "c-low_d-high_l-slow",
+            "c-base_d-base_l-base",
+            "c-base_d-base_l-slow",
+            "c-base_d-high_l-base",
+            "c-base_d-high_l-slow",
+            "c-high_d-base_l-base",
+            "c-high_d-base_l-slow",
+            "c-high_d-high_l-base",
+            "c-high_d-high_l-slow"
+          ]
+        },
+        "eq1_total_TJPY": {
+          "n_better": 0,
+          "n_equal": 6,
+          "n_worse": 12,
+          "mean_diff": 0.06574236605,
+          "min_diff": 0.0,
+          "max_diff": 0.1122850413,
+          "worse_paths": [
+            "c-low_d-base_l-base",
+            "c-low_d-base_l-slow",
+            "c-low_d-high_l-base",
+            "c-low_d-high_l-slow",
+            "c-base_d-base_l-base",
+            "c-base_d-base_l-slow",
+            "c-base_d-high_l-base",
+            "c-base_d-high_l-slow",
+            "c-high_d-base_l-base",
+            "c-high_d-base_l-slow",
+            "c-high_d-high_l-base",
+            "c-high_d-high_l-slow"
+          ]
+        },
+        "operator_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 6,
+          "n_worse": 12,
+          "mean_diff": 0.03237628523,
+          "min_diff": 0.0,
+          "max_diff": 0.05844843419,
+          "worse_paths": [
+            "c-low_d-base_l-base",
+            "c-low_d-base_l-slow",
+            "c-low_d-high_l-base",
+            "c-low_d-high_l-slow",
+            "c-base_d-base_l-base",
+            "c-base_d-base_l-slow",
+            "c-base_d-high_l-base",
+            "c-base_d-high_l-slow",
+            "c-high_d-base_l-base",
+            "c-high_d-base_l-slow",
+            "c-high_d-high_l-base",
+            "c-high_d-high_l-slow"
+          ]
+        },
+        "fiscal_burden_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "co2_cum_Mt": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": -1.010542909e-08,
+          "min_diff": -2.266045449e-07,
+          "max_diff": 1.340920104e-07,
+          "worse_paths": []
+        },
+        "n_better_social_and_co2": 0
+      },
+      "C_minus_A_social_cost_mean": -0.4554542387,
+      "C_minus_A_co2_cum_mean": 1.692809753e-07
+    },
+    "R3-P1700": {
+      "name": "R3-P1700",
+      "rule_focus": "R3",
+      "changes": {
+        "pstar": 1700
+      },
+      "reason": null,
+      "value_status": "sourced (METI_KOKUJI27_2026, FY2026 lower bound)",
+      "settings": {
+        "adaptive": false,
+        "pue_rules": true,
+        "phi": 1.0,
+        "t_g": 2030,
+        "psi": 0.3,
+        "subsidy": "rule",
+        "floors": "paths",
+        "ppa_multiplier": 1.5,
+        "theta": null,
+        "g": null,
+        "pstar": 1700.0
+      },
+      "certificates": true,
+      "connection_usage": 0.9,
+      "counts": {
+        "R1_triggered": 15,
+        "R1_setting_changed": 0,
+        "R1_policy_changed": 0,
+        "R1_policy_changed_effective": 0,
+        "R1_value_min": 0.9488537298,
+        "R1_value_max": 1.0,
+        "R2_triggered": 6,
+        "R2_setting_changed": 0,
+        "R2_policy_changed": 0,
+        "R2_policy_changed_effective": 0,
+        "R2_value_min": 0.1287392365,
+        "R2_value_max": 0.9537880061,
+        "R3_triggered": 36,
+        "R3_setting_changed": 18,
+        "R3_policy_changed": 0,
+        "R3_policy_changed_effective": 0,
+        "R3_value_min": 1857.64,
+        "R3_value_max": 12967.94,
+        "R4_triggered": 0,
+        "R4_setting_changed": 0,
+        "R4_policy_changed": 0,
+        "R4_policy_changed_effective": 0,
+        "R4_value_min": -5.525418591,
+        "R4_value_max": -3.013864646,
+        "n_policy_changed": 0,
+        "n_paths_policy_changed": 0,
+        "paths_policy_changed": "none",
+        "n_policy_changed_effective": 0,
+        "n_paths_policy_changed_effective": 0,
+        "paths_policy_changed_effective": "none"
+      },
+      "indicators": {
+        "R1": {
+          "2030": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9488537298,
+            "value_max": 1.0,
+            "n_triggered": 9,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9951522638,
+            "value_max": 1.0,
+            "n_triggered": 6,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R2": {
+          "2030": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.1949169065,
+            "value_max": 0.9537880061,
+            "n_triggered": 6,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.1287392365,
+            "value_max": 0.4286355984,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R3": {
+          "2030": {
+            "indicator": "carbon_price_last",
+            "threshold": "1700.0",
+            "n": 18,
+            "value_min": 1857.64,
+            "value_max": 4698.73,
+            "n_triggered": 18,
+            "n_setting_changed": 18,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "carbon_price_last",
+            "threshold": "1700.0",
+            "n": 18,
+            "value_min": 5982.67,
+            "value_max": 12967.94,
+            "n_triggered": 18,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R4": {
+          "2030": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -5.525418591,
+            "value_max": -5.525418522,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -3.013864758,
+            "value_max": -3.013864646,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        }
+      },
+      "C_minus_B": {
+        "n_paths": 18,
+        "social_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "eq1_total_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "operator_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "fiscal_burden_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "co2_cum_Mt": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "n_better_social_and_co2": 0
+      },
+      "C_minus_A_social_cost_mean": -0.4497442499,
+      "C_minus_A_co2_cum_mean": 1.972292898e-07
+    },
+    "R3-P4300": {
+      "name": "R3-P4300",
+      "rule_focus": "R3",
+      "changes": {
+        "pstar": 4300
+      },
+      "reason": null,
+      "value_status": "sourced (METI_KOKUJI27_2026, FY2026 upper bound)",
+      "settings": {
+        "adaptive": false,
+        "pue_rules": true,
+        "phi": 1.0,
+        "t_g": 2030,
+        "psi": 0.3,
+        "subsidy": "rule",
+        "floors": "paths",
+        "ppa_multiplier": 1.5,
+        "theta": null,
+        "g": null,
+        "pstar": 4300.0
+      },
+      "certificates": true,
+      "connection_usage": 0.9,
+      "counts": {
+        "R1_triggered": 12,
+        "R1_setting_changed": 0,
+        "R1_policy_changed": 0,
+        "R1_policy_changed_effective": 0,
+        "R1_value_min": 0.9730481706,
+        "R1_value_max": 1.0,
+        "R2_triggered": 0,
+        "R2_setting_changed": 0,
+        "R2_policy_changed": 0,
+        "R2_policy_changed_effective": 0,
+        "R2_value_min": 0.1271379008,
+        "R2_value_max": 0.6759815045,
+        "R3_triggered": 24,
+        "R3_setting_changed": 18,
+        "R3_policy_changed": 18,
+        "R3_policy_changed_effective": 6,
+        "R3_value_min": 1857.64,
+        "R3_value_max": 12967.94,
+        "R4_triggered": 0,
+        "R4_setting_changed": 0,
+        "R4_policy_changed": 0,
+        "R4_policy_changed_effective": 0,
+        "R4_value_min": -5.525418593,
+        "R4_value_max": -3.013864634,
+        "n_policy_changed": 18,
+        "n_paths_policy_changed": 18,
+        "paths_policy_changed": "c-low_d-low_l-base; c-low_d-low_l-slow; c-low_d-base_l-base; c-low_d-base_l-slow; c-low_d-high_l-base; c-low_d-high_l-slow; c-base_d-low_l-base; c-base_d-low_l-slow; c-base_d-base_l-base; c-base_d-base_l-slow; c-base_d-high_l-base; c-base_d-high_l-slow; c-high_d-low_l-base; c-high_d-low_l-slow; c-high_d-base_l-base; c-high_d-base_l-slow; c-high_d-high_l-base; c-high_d-high_l-slow",
+        "n_policy_changed_effective": 6,
+        "n_paths_policy_changed_effective": 6,
+        "paths_policy_changed_effective": "c-high_d-low_l-base; c-high_d-low_l-slow; c-high_d-base_l-base; c-high_d-base_l-slow; c-high_d-high_l-base; c-high_d-high_l-slow"
+      },
+      "indicators": {
+        "R1": {
+          "2030": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9765604782,
+            "value_max": 1.0,
+            "n_triggered": 6,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9730481706,
+            "value_max": 1.0,
+            "n_triggered": 6,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R2": {
+          "2030": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.1944091033,
+            "value_max": 0.6759815045,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.1271379008,
+            "value_max": 0.42113696,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R3": {
+          "2030": {
+            "indicator": "carbon_price_last",
+            "threshold": "4300.0",
+            "n": 18,
+            "value_min": 1857.64,
+            "value_max": 4698.73,
+            "n_triggered": 6,
+            "n_setting_changed": 6,
+            "n_policy_changed": 6,
+            "n_policy_changed_effective": 6,
+            "paths_policy_changed_effective": [
+              "c-high_d-low_l-base",
+              "c-high_d-low_l-slow",
+              "c-high_d-base_l-base",
+              "c-high_d-base_l-slow",
+              "c-high_d-high_l-base",
+              "c-high_d-high_l-slow"
+            ]
+          },
+          "2035": {
+            "indicator": "carbon_price_last",
+            "threshold": "4300.0",
+            "n": 18,
+            "value_min": 5982.67,
+            "value_max": 12967.94,
+            "n_triggered": 18,
+            "n_setting_changed": 12,
+            "n_policy_changed": 12,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R4": {
+          "2030": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -5.525418593,
+            "value_max": -5.525418483,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -3.013864742,
+            "value_max": -3.013864634,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        }
+      },
+      "C_minus_B": {
+        "n_paths": 18,
+        "social_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": -4.089543519e-11,
+          "min_diff": -3.492470313e-09,
+          "max_diff": 5.330544894e-09,
+          "worse_paths": []
+        },
+        "eq1_total_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": -7.611037726e-11,
+          "min_diff": -3.94632238e-09,
+          "max_diff": 5.021403737e-09,
+          "worse_paths": []
+        },
+        "operator_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 12,
+          "n_worse": 6,
+          "mean_diff": 0.04316377753,
+          "min_diff": 0.0,
+          "max_diff": 0.2083242098,
+          "worse_paths": [
+            "c-high_d-low_l-base",
+            "c-high_d-low_l-slow",
+            "c-high_d-base_l-base",
+            "c-high_d-base_l-slow",
+            "c-high_d-high_l-base",
+            "c-high_d-high_l-slow"
+          ]
+        },
+        "fiscal_burden_TJPY": {
+          "n_better": 6,
+          "n_equal": 12,
+          "n_worse": 0,
+          "mean_diff": -0.04316377753,
+          "min_diff": -0.2083242052,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "co2_cum_Mt": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": -4.334665071e-09,
+          "min_diff": -4.610170201e-08,
+          "max_diff": 3.806929882e-09,
+          "worse_paths": []
+        },
+        "n_better_social_and_co2": 0
+      },
+      "C_minus_A_social_cost_mean": -0.426860045,
+      "C_minus_A_co2_cum_mean": 2.008885026e-07
+    },
+    "R3-P7000": {
+      "name": "R3-P7000",
+      "rule_focus": "R3",
+      "changes": {
+        "pstar": 7000
+      },
+      "reason": null,
+      "value_status": "paper (ENERGIES2026 Table 8, 2035 lower bound)",
+      "settings": {
+        "adaptive": false,
+        "pue_rules": true,
+        "phi": 1.0,
+        "t_g": 2030,
+        "psi": 0.3,
+        "subsidy": "rule",
+        "floors": "paths",
+        "ppa_multiplier": 1.5,
+        "theta": null,
+        "g": null,
+        "pstar": 7000.0
+      },
+      "certificates": true,
+      "connection_usage": 0.9,
+      "counts": {
+        "R1_triggered": 15,
+        "R1_setting_changed": 0,
+        "R1_policy_changed": 0,
+        "R1_policy_changed_effective": 0,
+        "R1_value_min": 0.8821455774,
+        "R1_value_max": 1.0,
+        "R2_triggered": 0,
+        "R2_setting_changed": 0,
+        "R2_policy_changed": 0,
+        "R2_policy_changed_effective": 0,
+        "R2_value_min": 0.03203609365,
+        "R2_value_max": 0.4699581262,
+        "R3_triggered": 12,
+        "R3_setting_changed": 12,
+        "R3_policy_changed": 12,
+        "R3_policy_changed_effective": 0,
+        "R3_value_min": 1857.64,
+        "R3_value_max": 12967.94,
+        "R4_triggered": 0,
+        "R4_setting_changed": 0,
+        "R4_policy_changed": 0,
+        "R4_policy_changed_effective": 0,
+        "R4_value_min": -5.525418682,
+        "R4_value_max": -3.013864644,
+        "n_policy_changed": 12,
+        "n_paths_policy_changed": 12,
+        "paths_policy_changed": "c-base_d-low_l-base; c-base_d-low_l-slow; c-base_d-base_l-base; c-base_d-base_l-slow; c-base_d-high_l-base; c-base_d-high_l-slow; c-high_d-low_l-base; c-high_d-low_l-slow; c-high_d-base_l-base; c-high_d-base_l-slow; c-high_d-high_l-base; c-high_d-high_l-slow",
+        "n_policy_changed_effective": 0,
+        "n_paths_policy_changed_effective": 0,
+        "paths_policy_changed_effective": "none"
+      },
+      "indicators": {
+        "R1": {
+          "2030": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9287660605,
+            "value_max": 1.0,
+            "n_triggered": 6,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.8821455774,
+            "value_max": 1.0,
+            "n_triggered": 9,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R2": {
+          "2030": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.03203609365,
+            "value_max": 0.3220787788,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.09214114932,
+            "value_max": 0.4699581262,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R3": {
+          "2030": {
+            "indicator": "carbon_price_last",
+            "threshold": "7000.0",
+            "n": 18,
+            "value_min": 1857.64,
+            "value_max": 4698.73,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "carbon_price_last",
+            "threshold": "7000.0",
+            "n": 18,
+            "value_min": 5982.67,
+            "value_max": 12967.94,
+            "n_triggered": 12,
+            "n_setting_changed": 12,
+            "n_policy_changed": 12,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R4": {
+          "2030": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -5.525418682,
+            "value_max": -5.525418443,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -3.013864665,
+            "value_max": -3.013864644,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        }
+      },
+      "C_minus_B": {
+        "n_paths": 18,
+        "social_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "eq1_total_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "operator_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "fiscal_burden_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "co2_cum_Mt": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "n_better_social_and_co2": 0
+      },
+      "C_minus_A_social_cost_mean": -0.2815264184,
+      "C_minus_A_co2_cum_mean": 1.517996931e-07
+    },
+    "R3-P10000": {
+      "name": "R3-P10000",
+      "rule_focus": "R3",
+      "changes": {
+        "pstar": 10000
+      },
+      "reason": null,
+      "value_status": "ch07 design assumption (B-P10000 of abc_rules.yaml)",
+      "settings": {
+        "adaptive": false,
+        "pue_rules": true,
+        "phi": 1.0,
+        "t_g": 2030,
+        "psi": 0.3,
+        "subsidy": "rule",
+        "floors": "paths",
+        "ppa_multiplier": 1.5,
+        "theta": null,
+        "g": null,
+        "pstar": 10000.0
+      },
+      "certificates": true,
+      "connection_usage": 0.9,
+      "counts": {
+        "R1_triggered": 15,
+        "R1_setting_changed": 0,
+        "R1_policy_changed": 0,
+        "R1_policy_changed_effective": 0,
+        "R1_value_min": 0.8430690213,
+        "R1_value_max": 1.0,
+        "R2_triggered": 0,
+        "R2_setting_changed": 0,
+        "R2_policy_changed": 0,
+        "R2_policy_changed_effective": 0,
+        "R2_value_min": 0.0,
+        "R2_value_max": 0.4754560046,
+        "R3_triggered": 6,
+        "R3_setting_changed": 6,
+        "R3_policy_changed": 6,
+        "R3_policy_changed_effective": 0,
+        "R3_value_min": 1857.64,
+        "R3_value_max": 12967.94,
+        "R4_triggered": 0,
+        "R4_setting_changed": 0,
+        "R4_policy_changed": 0,
+        "R4_policy_changed_effective": 0,
+        "R4_value_min": -5.525418601,
+        "R4_value_max": -3.013864571,
+        "n_policy_changed": 6,
+        "n_paths_policy_changed": 6,
+        "paths_policy_changed": "c-high_d-low_l-base; c-high_d-low_l-slow; c-high_d-base_l-base; c-high_d-base_l-slow; c-high_d-high_l-base; c-high_d-high_l-slow",
+        "n_policy_changed_effective": 0,
+        "n_paths_policy_changed_effective": 0,
+        "paths_policy_changed_effective": "none"
+      },
+      "indicators": {
+        "R1": {
+          "2030": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9322528907,
+            "value_max": 1.0,
+            "n_triggered": 6,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.8430690213,
+            "value_max": 1.0,
+            "n_triggered": 9,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R2": {
+          "2030": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.0,
+            "value_max": 0.1775240547,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.08263424656,
+            "value_max": 0.4754560046,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R3": {
+          "2030": {
+            "indicator": "carbon_price_last",
+            "threshold": "10000.0",
+            "n": 18,
+            "value_min": 1857.64,
+            "value_max": 4698.73,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "carbon_price_last",
+            "threshold": "10000.0",
+            "n": 18,
+            "value_min": 5982.67,
+            "value_max": 12967.94,
+            "n_triggered": 6,
+            "n_setting_changed": 6,
+            "n_policy_changed": 6,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R4": {
+          "2030": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -5.525418601,
+            "value_max": -5.525418391,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -3.013864667,
+            "value_max": -3.013864571,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        }
+      },
+      "C_minus_B": {
+        "n_paths": 18,
+        "social_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "eq1_total_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "operator_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "fiscal_burden_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "co2_cum_Mt": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "n_better_social_and_co2": 0
+      },
+      "C_minus_A_social_cost_mean": -0.2260643069,
+      "C_minus_A_co2_cum_mean": 1.521698788e-07
+    },
+    "R3-P15000": {
+      "name": "R3-P15000",
+      "rule_focus": "R3",
+      "changes": {
+        "pstar": 15000
+      },
+      "reason": null,
+      "value_status": "paper (ENERGIES2026 Table 8, 2035 upper bound)",
+      "settings": {
+        "adaptive": false,
+        "pue_rules": true,
+        "phi": 1.0,
+        "t_g": 2030,
+        "psi": 0.3,
+        "subsidy": "rule",
+        "floors": "paths",
+        "ppa_multiplier": 1.5,
+        "theta": null,
+        "g": null,
+        "pstar": 15000.0
+      },
+      "certificates": true,
+      "connection_usage": 0.9,
+      "counts": {
+        "R1_triggered": 15,
+        "R1_setting_changed": 0,
+        "R1_policy_changed": 0,
+        "R1_policy_changed_effective": 0,
+        "R1_value_min": 0.848214535,
+        "R1_value_max": 1.0,
+        "R2_triggered": 0,
+        "R2_setting_changed": 0,
+        "R2_policy_changed": 0,
+        "R2_policy_changed_effective": 0,
+        "R2_value_min": 0.0,
+        "R2_value_max": 0.4451511417,
+        "R3_triggered": 0,
+        "R3_setting_changed": 0,
+        "R3_policy_changed": 0,
+        "R3_policy_changed_effective": 0,
+        "R3_value_min": 1857.64,
+        "R3_value_max": 12967.94,
+        "R4_triggered": 0,
+        "R4_setting_changed": 0,
+        "R4_policy_changed": 0,
+        "R4_policy_changed_effective": 0,
+        "R4_value_min": -5.525418618,
+        "R4_value_max": -3.013864645,
+        "n_policy_changed": 0,
+        "n_paths_policy_changed": 0,
+        "paths_policy_changed": "none",
+        "n_policy_changed_effective": 0,
+        "n_paths_policy_changed_effective": 0,
+        "paths_policy_changed_effective": "none"
+      },
+      "indicators": {
+        "R1": {
+          "2030": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.895542002,
+            "value_max": 1.0,
+            "n_triggered": 6,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.848214535,
+            "value_max": 1.0,
+            "n_triggered": 9,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R2": {
+          "2030": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.0,
+            "value_max": 0.04390107675,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.06896585034,
+            "value_max": 0.4451511417,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R3": {
+          "2030": {
+            "indicator": "carbon_price_last",
+            "threshold": "15000.0",
+            "n": 18,
+            "value_min": 1857.64,
+            "value_max": 4698.73,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "carbon_price_last",
+            "threshold": "15000.0",
+            "n": 18,
+            "value_min": 5982.67,
+            "value_max": 12967.94,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R4": {
+          "2030": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -5.525418618,
+            "value_max": -5.525418386,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -3.013864741,
+            "value_max": -3.013864645,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        }
+      },
+      "C_minus_B": {
+        "n_paths": 18,
+        "social_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "eq1_total_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "operator_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "fiscal_burden_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "co2_cum_Mt": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "n_better_social_and_co2": 0
+      },
+      "C_minus_A_social_cost_mean": -0.1946296878,
+      "C_minus_A_co2_cum_mean": 1.342804528e-07
+    },
+    "R4-nocert-P10000": {
+      "name": "R4-nocert-P10000",
+      "rule_focus": "R4",
+      "changes": {
+        "certificates": false,
+        "pstar": 10000
+      },
+      "reason": "R4 fires only when emissions exceed the cap path, which never happens with certificates; psi acts only on subsidized builds, so P* > 0 is needed",
+      "value_status": "P* ch07 design assumption",
+      "settings": {
+        "adaptive": false,
+        "pue_rules": true,
+        "phi": 1.0,
+        "t_g": 2030,
+        "psi": 0.3,
+        "subsidy": "rule",
+        "floors": "paths",
+        "ppa_multiplier": 1.5,
+        "theta": null,
+        "g": null,
+        "pstar": 10000.0
+      },
+      "certificates": false,
+      "connection_usage": 0.9,
+      "counts": {
+        "R1_triggered": 15,
+        "R1_setting_changed": 0,
+        "R1_policy_changed": 0,
+        "R1_policy_changed_effective": 0,
+        "R1_value_min": 0.8430690241,
+        "R1_value_max": 1.0,
+        "R2_triggered": 0,
+        "R2_setting_changed": 0,
+        "R2_policy_changed": 0,
+        "R2_policy_changed_effective": 0,
+        "R2_value_min": 0.0,
+        "R2_value_max": 0.4754560046,
+        "R3_triggered": 6,
+        "R3_setting_changed": 6,
+        "R3_policy_changed": 6,
+        "R3_policy_changed_effective": 0,
+        "R3_value_min": 1857.64,
+        "R3_value_max": 12967.94,
+        "R4_triggered": 2,
+        "R4_setting_changed": 2,
+        "R4_policy_changed": 2,
+        "R4_policy_changed_effective": 2,
+        "R4_value_min": -5.525418568,
+        "R4_value_max": 0.2304443897,
+        "n_policy_changed": 8,
+        "n_paths_policy_changed": 7,
+        "paths_policy_changed": "c-low_d-high_l-slow; c-high_d-low_l-base; c-high_d-low_l-slow; c-high_d-base_l-base; c-high_d-base_l-slow; c-high_d-high_l-base; c-high_d-high_l-slow",
+        "n_policy_changed_effective": 2,
+        "n_paths_policy_changed_effective": 1,
+        "paths_policy_changed_effective": "c-low_d-high_l-slow"
+      },
+      "indicators": {
+        "R1": {
+          "2030": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.9322528907,
+            "value_max": 1.0,
+            "n_triggered": 6,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "liquid_share_new_stage",
+            "threshold": "1.0",
+            "n": 18,
+            "value_min": 0.8430690241,
+            "value_max": 1.0,
+            "n_triggered": 9,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R2": {
+          "2030": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.0,
+            "value_max": 0.1775240547,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "conn_usage_last",
+            "threshold": "0.9",
+            "n": 18,
+            "value_min": 0.08263424943,
+            "value_max": 0.4754560046,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R3": {
+          "2030": {
+            "indicator": "carbon_price_last",
+            "threshold": "10000.0",
+            "n": 18,
+            "value_min": 1857.64,
+            "value_max": 4698.73,
+            "n_triggered": 0,
+            "n_setting_changed": 0,
+            "n_policy_changed": 0,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          },
+          "2035": {
+            "indicator": "carbon_price_last",
+            "threshold": "10000.0",
+            "n": 18,
+            "value_min": 5982.67,
+            "value_max": 12967.94,
+            "n_triggered": 6,
+            "n_setting_changed": 6,
+            "n_policy_changed": 6,
+            "n_policy_changed_effective": 0,
+            "paths_policy_changed_effective": []
+          }
+        },
+        "R4": {
+          "2030": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -5.525418568,
+            "value_max": 0.2304443897,
+            "n_triggered": 1,
+            "n_setting_changed": 1,
+            "n_policy_changed": 1,
+            "n_policy_changed_effective": 1,
+            "paths_policy_changed_effective": [
+              "c-low_d-high_l-slow"
+            ]
+          },
+          "2035": {
+            "indicator": "co2_cap_excess_max_Mt",
+            "threshold": "0.0",
+            "n": 18,
+            "value_min": -3.013864657,
+            "value_max": 0.04460517622,
+            "n_triggered": 1,
+            "n_setting_changed": 1,
+            "n_policy_changed": 1,
+            "n_policy_changed_effective": 1,
+            "paths_policy_changed_effective": [
+              "c-low_d-high_l-slow"
+            ]
+          }
+        }
+      },
+      "C_minus_B": {
+        "n_paths": 18,
+        "social_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "eq1_total_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "operator_cost_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "fiscal_burden_TJPY": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "co2_cum_Mt": {
+          "n_better": 0,
+          "n_equal": 18,
+          "n_worse": 0,
+          "mean_diff": 0.0,
+          "min_diff": 0.0,
+          "max_diff": 0.0,
+          "worse_paths": []
+        },
+        "n_better_social_and_co2": 0
+      },
+      "C_minus_A_social_cost_mean": null,
+      "C_minus_A_co2_cum_mean": null
+    }
+  }
+}

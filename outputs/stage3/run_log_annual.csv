@@ -1,0 +1,17 @@
+part,label,scenario,config_hash,status,n_vars,n_cons,build_s,solve_s
+annual,base:REF,REF,d3f2c8b39cbf6f81,Optimal,55533,55273,0.34,2.25
+annual,annual:base:REF:annual,REF,2045a05d6e72ae71,Optimal,2340,2080,0.02,0.04
+annual,base:C-CN,C-CN,8d515b0bb0095937,Optimal,55533,55290,0.36,2.13
+annual,annual:base:C-CN:annual,C-CN,6f2ca44137b9a797,Optimal,2340,2097,0.02,0.05
+annual,base:R-CN,R-CN,256c8e2ff4cdf956,Optimal,55608,55410,0.34,3.88
+annual,annual:base:R-CN:annual,R-CN,6fc4787d327ae6a8,Optimal,2415,2217,0.02,0.06
+annual,base:R-CN-pub,R-CN-pub,089990133ebf4262,Optimal,55533,55290,0.36,2.3
+annual,annual:base:R-CN-pub:annual,R-CN-pub,44cd9f77d029da87,Optimal,2340,2097,0.02,0.04
+annual,base:A0,A0,c40b17e5674c52cd,Optimal,55608,55393,0.34,4.05
+annual,annual:base:A0:annual,A0,71c24df6c7581a74,Optimal,2415,2200,0.03,0.05
+annual,annual:no_certificates:REF:rep96,REF,38a7a3bde5b8c984,Optimal,55448,55188,0.39,1.77
+annual,annual:no_certificates:C-CN:rep96,C-CN,c5d84a046ddb4fa5,Optimal,55448,55205,0.4,1.84
+annual,annual:no_certificates:R-CN:rep96,R-CN,9145790d0ea80d21,Optimal,55523,55325,0.39,3.55
+annual,annual:no_certificates:REF:annual,REF,9e5cb1b18c9f3634,Optimal,2255,1995,0.02,0.05
+annual,annual:no_certificates:C-CN:annual,C-CN,1bac977c2af052ff,Optimal,2255,2012,0.01,0.07
+annual,annual:no_certificates:R-CN:annual,R-CN,0fe4ccfe61d84f24,Optimal,2330,2132,0.01,0.07

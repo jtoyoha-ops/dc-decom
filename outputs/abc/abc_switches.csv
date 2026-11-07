@@ -1,0 +1,217 @@
+design,path,review_year,rule,indicator,value,threshold,triggered,action,setting,before,after,changed,policy_changed
+C,c-low_d-low_l-base,2030,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-low_d-low_l-base,2030,R2,conn_usage_last,0.1949169065,0.9,False,keep,t_g,2030,2030,False,False
+C,c-low_d-low_l-base,2030,R3,carbon_price_last,1857.64,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-low_d-low_l-base,2030,R4,co2_cap_excess_max_Mt,-5.525418544,0,False,keep,psi,0.3,0.3,False,False
+C,c-low_d-low_l-base,2030,report,nonmetro_share_last,0.2684912201,0.348258,False,reported (not a trigger),,,,False,False
+C,c-low_d-low_l-base,2030,report,demand_last_TWh,15.8373,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-low_d-low_l-base,2035,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-low_d-low_l-base,2035,R2,conn_usage_last,0.1287392365,0.9,False,keep,t_g,2030,2030,False,False
+C,c-low_d-low_l-base,2035,R3,carbon_price_last,5982.67,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-low_d-low_l-base,2035,R4,co2_cap_excess_max_Mt,-3.013864655,0,False,keep,psi,0.3,0.3,False,False
+C,c-low_d-low_l-base,2035,report,nonmetro_share_last,0.3800005352,0.422324,False,reported (not a trigger),,,,False,False
+C,c-low_d-low_l-base,2035,report,demand_last_TWh,18.6857,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-low_d-low_l-slow,2030,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-low_d-low_l-slow,2030,R2,conn_usage_last,0.1949169065,0.9,False,keep,t_g,2030,2030,False,False
+C,c-low_d-low_l-slow,2030,R3,carbon_price_last,1857.64,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-low_d-low_l-slow,2030,R4,co2_cap_excess_max_Mt,-5.525418526,0,False,keep,psi,0.3,0.3,False,False
+C,c-low_d-low_l-slow,2030,report,nonmetro_share_last,0.2684912201,0.348258,False,reported (not a trigger),,,,False,False
+C,c-low_d-low_l-slow,2030,report,demand_last_TWh,15.8373,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-low_d-low_l-slow,2035,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-low_d-low_l-slow,2035,R2,conn_usage_last,0.1287392365,0.9,False,keep,t_g,2030,2030,False,False
+C,c-low_d-low_l-slow,2035,R3,carbon_price_last,5982.67,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-low_d-low_l-slow,2035,R4,co2_cap_excess_max_Mt,-3.013864653,0,False,keep,psi,0.3,0.3,False,False
+C,c-low_d-low_l-slow,2035,report,nonmetro_share_last,0.3800005352,0.422324,False,reported (not a trigger),,,,False,False
+C,c-low_d-low_l-slow,2035,report,demand_last_TWh,18.6857,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-low_d-base_l-base,2030,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-low_d-base_l-base,2030,R2,conn_usage_last,0.8816928293,0.9,False,keep,t_g,2030,2030,False,False
+C,c-low_d-base_l-base,2030,R3,carbon_price_last,1857.64,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-low_d-base_l-base,2030,R4,co2_cap_excess_max_Mt,-5.525418544,0,False,keep,psi,0.3,0.3,False,False
+C,c-low_d-base_l-base,2030,report,nonmetro_share_last,0.333444,0.348258,False,reported (not a trigger),,,,False,False
+C,c-low_d-base_l-base,2030,report,demand_last_TWh,27.5158,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-low_d-base_l-base,2035,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-low_d-base_l-base,2035,R2,conn_usage_last,0.379087905,0.9,False,keep,t_g,2030,2030,False,False
+C,c-low_d-base_l-base,2035,R3,carbon_price_last,5982.67,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-low_d-base_l-base,2035,R4,co2_cap_excess_max_Mt,-3.013864651,0,False,keep,psi,0.3,0.3,False,False
+C,c-low_d-base_l-base,2035,report,nonmetro_share_last,0.4075109926,0.422324,False,reported (not a trigger),,,,False,False
+C,c-low_d-base_l-base,2035,report,demand_last_TWh,42.0428,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-low_d-base_l-slow,2030,R1,liquid_share_new_stage,0.9660914011,1,True,phi += 0.2 (cap 1.0),phi,1.0,1.0,False,False
+C,c-low_d-base_l-slow,2030,R2,conn_usage_last,0.8889236536,0.9,False,keep,t_g,2030,2030,False,False
+C,c-low_d-base_l-slow,2030,R3,carbon_price_last,1857.64,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-low_d-base_l-slow,2030,R4,co2_cap_excess_max_Mt,-5.525418557,0,False,keep,psi,0.3,0.3,False,False
+C,c-low_d-base_l-slow,2030,report,nonmetro_share_last,0.333444,0.348258,False,reported (not a trigger),,,,False,False
+C,c-low_d-base_l-slow,2030,report,demand_last_TWh,27.5158,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-low_d-base_l-slow,2035,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-low_d-base_l-slow,2035,R2,conn_usage_last,0.3761896018,0.9,False,keep,t_g,2030,2030,False,False
+C,c-low_d-base_l-slow,2035,R3,carbon_price_last,5982.67,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-low_d-base_l-slow,2035,R4,co2_cap_excess_max_Mt,-3.013864687,0,False,keep,psi,0.3,0.3,False,False
+C,c-low_d-base_l-slow,2035,report,nonmetro_share_last,0.4075109914,0.422324,False,reported (not a trigger),,,,False,False
+C,c-low_d-base_l-slow,2035,report,demand_last_TWh,42.0428,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-low_d-high_l-base,2030,R1,liquid_share_new_stage,0.9874772485,1,True,phi += 0.2 (cap 1.0),phi,1.0,1.0,False,False
+C,c-low_d-high_l-base,2030,R2,conn_usage_last,0.9508391668,0.9,True,"T_g := min(T_g, t_k)",t_g,2030,2030,False,False
+C,c-low_d-high_l-base,2030,R3,carbon_price_last,1857.64,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-low_d-high_l-base,2030,R4,co2_cap_excess_max_Mt,-5.525418522,0,False,keep,psi,0.3,0.3,False,False
+C,c-low_d-high_l-base,2030,report,nonmetro_share_last,0.333444,0.348258,False,reported (not a trigger),,,,False,False
+C,c-low_d-high_l-base,2030,report,demand_last_TWh,29.054,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-low_d-high_l-base,2035,R1,liquid_share_new_stage,0.9951522638,1,True,phi += 0.2 (cap 1.0),phi,1.0,1.0,False,False
+C,c-low_d-high_l-base,2035,R2,conn_usage_last,0.4211369553,0.9,False,keep,t_g,2030,2030,False,False
+C,c-low_d-high_l-base,2035,R3,carbon_price_last,5982.67,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-low_d-high_l-base,2035,R4,co2_cap_excess_max_Mt,-3.013864646,0,False,keep,psi,0.3,0.3,False,False
+C,c-low_d-high_l-base,2035,report,nonmetro_share_last,0.4075109963,0.422324,False,reported (not a trigger),,,,False,False
+C,c-low_d-high_l-base,2035,report,demand_last_TWh,45.1191,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-low_d-high_l-slow,2030,R1,liquid_share_new_stage,0.9488537298,1,True,phi += 0.2 (cap 1.0),phi,1.0,1.0,False,False
+C,c-low_d-high_l-slow,2030,R2,conn_usage_last,0.9537880061,0.9,True,"T_g := min(T_g, t_k)",t_g,2030,2030,False,False
+C,c-low_d-high_l-slow,2030,R3,carbon_price_last,1857.64,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-low_d-high_l-slow,2030,R4,co2_cap_excess_max_Mt,-5.525418591,0,False,keep,psi,0.3,0.3,False,False
+C,c-low_d-high_l-slow,2030,report,nonmetro_share_last,0.333444,0.348258,False,reported (not a trigger),,,,False,False
+C,c-low_d-high_l-slow,2030,report,demand_last_TWh,29.054,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-low_d-high_l-slow,2035,R1,liquid_share_new_stage,0.9968259106,1,True,phi += 0.2 (cap 1.0),phi,1.0,1.0,False,False
+C,c-low_d-high_l-slow,2035,R2,conn_usage_last,0.4286355984,0.9,False,keep,t_g,2030,2030,False,False
+C,c-low_d-high_l-slow,2035,R3,carbon_price_last,5982.67,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-low_d-high_l-slow,2035,R4,co2_cap_excess_max_Mt,-3.013864758,0,False,keep,psi,0.3,0.3,False,False
+C,c-low_d-high_l-slow,2035,report,nonmetro_share_last,0.4075109963,0.422324,False,reported (not a trigger),,,,False,False
+C,c-low_d-high_l-slow,2035,report,demand_last_TWh,45.1191,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-base_d-low_l-base,2030,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-base_d-low_l-base,2030,R2,conn_usage_last,0.1949169065,0.9,False,keep,t_g,2030,2030,False,False
+C,c-base_d-low_l-base,2030,R3,carbon_price_last,3278.18,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-base_d-low_l-base,2030,R4,co2_cap_excess_max_Mt,-5.525418544,0,False,keep,psi,0.3,0.3,False,False
+C,c-base_d-low_l-base,2030,report,nonmetro_share_last,0.2684912201,0.348258,False,reported (not a trigger),,,,False,False
+C,c-base_d-low_l-base,2030,report,demand_last_TWh,15.8373,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-base_d-low_l-base,2035,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-base_d-low_l-base,2035,R2,conn_usage_last,0.1287392365,0.9,False,keep,t_g,2030,2030,False,False
+C,c-base_d-low_l-base,2035,R3,carbon_price_last,9475.31,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-base_d-low_l-base,2035,R4,co2_cap_excess_max_Mt,-3.013864655,0,False,keep,psi,0.3,0.3,False,False
+C,c-base_d-low_l-base,2035,report,nonmetro_share_last,0.3800005352,0.422324,False,reported (not a trigger),,,,False,False
+C,c-base_d-low_l-base,2035,report,demand_last_TWh,18.6857,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-base_d-low_l-slow,2030,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-base_d-low_l-slow,2030,R2,conn_usage_last,0.1949169065,0.9,False,keep,t_g,2030,2030,False,False
+C,c-base_d-low_l-slow,2030,R3,carbon_price_last,3278.18,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-base_d-low_l-slow,2030,R4,co2_cap_excess_max_Mt,-5.525418526,0,False,keep,psi,0.3,0.3,False,False
+C,c-base_d-low_l-slow,2030,report,nonmetro_share_last,0.2684912201,0.348258,False,reported (not a trigger),,,,False,False
+C,c-base_d-low_l-slow,2030,report,demand_last_TWh,15.8373,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-base_d-low_l-slow,2035,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-base_d-low_l-slow,2035,R2,conn_usage_last,0.1287392365,0.9,False,keep,t_g,2030,2030,False,False
+C,c-base_d-low_l-slow,2035,R3,carbon_price_last,9475.31,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-base_d-low_l-slow,2035,R4,co2_cap_excess_max_Mt,-3.013864653,0,False,keep,psi,0.3,0.3,False,False
+C,c-base_d-low_l-slow,2035,report,nonmetro_share_last,0.3800005352,0.422324,False,reported (not a trigger),,,,False,False
+C,c-base_d-low_l-slow,2035,report,demand_last_TWh,18.6857,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-base_d-base_l-base,2030,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-base_d-base_l-base,2030,R2,conn_usage_last,0.8816928293,0.9,False,keep,t_g,2030,2030,False,False
+C,c-base_d-base_l-base,2030,R3,carbon_price_last,3278.18,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-base_d-base_l-base,2030,R4,co2_cap_excess_max_Mt,-5.525418544,0,False,keep,psi,0.3,0.3,False,False
+C,c-base_d-base_l-base,2030,report,nonmetro_share_last,0.333444,0.348258,False,reported (not a trigger),,,,False,False
+C,c-base_d-base_l-base,2030,report,demand_last_TWh,27.5158,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-base_d-base_l-base,2035,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-base_d-base_l-base,2035,R2,conn_usage_last,0.379087905,0.9,False,keep,t_g,2030,2030,False,False
+C,c-base_d-base_l-base,2035,R3,carbon_price_last,9475.31,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-base_d-base_l-base,2035,R4,co2_cap_excess_max_Mt,-3.013864651,0,False,keep,psi,0.3,0.3,False,False
+C,c-base_d-base_l-base,2035,report,nonmetro_share_last,0.4075109926,0.422324,False,reported (not a trigger),,,,False,False
+C,c-base_d-base_l-base,2035,report,demand_last_TWh,42.0428,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-base_d-base_l-slow,2030,R1,liquid_share_new_stage,0.9660914011,1,True,phi += 0.2 (cap 1.0),phi,1.0,1.0,False,False
+C,c-base_d-base_l-slow,2030,R2,conn_usage_last,0.8889236536,0.9,False,keep,t_g,2030,2030,False,False
+C,c-base_d-base_l-slow,2030,R3,carbon_price_last,3278.18,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-base_d-base_l-slow,2030,R4,co2_cap_excess_max_Mt,-5.525418557,0,False,keep,psi,0.3,0.3,False,False
+C,c-base_d-base_l-slow,2030,report,nonmetro_share_last,0.333444,0.348258,False,reported (not a trigger),,,,False,False
+C,c-base_d-base_l-slow,2030,report,demand_last_TWh,27.5158,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-base_d-base_l-slow,2035,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-base_d-base_l-slow,2035,R2,conn_usage_last,0.3761896018,0.9,False,keep,t_g,2030,2030,False,False
+C,c-base_d-base_l-slow,2035,R3,carbon_price_last,9475.31,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-base_d-base_l-slow,2035,R4,co2_cap_excess_max_Mt,-3.013864687,0,False,keep,psi,0.3,0.3,False,False
+C,c-base_d-base_l-slow,2035,report,nonmetro_share_last,0.4075109914,0.422324,False,reported (not a trigger),,,,False,False
+C,c-base_d-base_l-slow,2035,report,demand_last_TWh,42.0428,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-base_d-high_l-base,2030,R1,liquid_share_new_stage,0.9874772485,1,True,phi += 0.2 (cap 1.0),phi,1.0,1.0,False,False
+C,c-base_d-high_l-base,2030,R2,conn_usage_last,0.9508391668,0.9,True,"T_g := min(T_g, t_k)",t_g,2030,2030,False,False
+C,c-base_d-high_l-base,2030,R3,carbon_price_last,3278.18,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-base_d-high_l-base,2030,R4,co2_cap_excess_max_Mt,-5.525418522,0,False,keep,psi,0.3,0.3,False,False
+C,c-base_d-high_l-base,2030,report,nonmetro_share_last,0.333444,0.348258,False,reported (not a trigger),,,,False,False
+C,c-base_d-high_l-base,2030,report,demand_last_TWh,29.054,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-base_d-high_l-base,2035,R1,liquid_share_new_stage,0.9951522638,1,True,phi += 0.2 (cap 1.0),phi,1.0,1.0,False,False
+C,c-base_d-high_l-base,2035,R2,conn_usage_last,0.4211369553,0.9,False,keep,t_g,2030,2030,False,False
+C,c-base_d-high_l-base,2035,R3,carbon_price_last,9475.31,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-base_d-high_l-base,2035,R4,co2_cap_excess_max_Mt,-3.013864646,0,False,keep,psi,0.3,0.3,False,False
+C,c-base_d-high_l-base,2035,report,nonmetro_share_last,0.4075109963,0.422324,False,reported (not a trigger),,,,False,False
+C,c-base_d-high_l-base,2035,report,demand_last_TWh,45.1191,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-base_d-high_l-slow,2030,R1,liquid_share_new_stage,0.9488537298,1,True,phi += 0.2 (cap 1.0),phi,1.0,1.0,False,False
+C,c-base_d-high_l-slow,2030,R2,conn_usage_last,0.9537880061,0.9,True,"T_g := min(T_g, t_k)",t_g,2030,2030,False,False
+C,c-base_d-high_l-slow,2030,R3,carbon_price_last,3278.18,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-base_d-high_l-slow,2030,R4,co2_cap_excess_max_Mt,-5.525418591,0,False,keep,psi,0.3,0.3,False,False
+C,c-base_d-high_l-slow,2030,report,nonmetro_share_last,0.333444,0.348258,False,reported (not a trigger),,,,False,False
+C,c-base_d-high_l-slow,2030,report,demand_last_TWh,29.054,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-base_d-high_l-slow,2035,R1,liquid_share_new_stage,0.9968259106,1,True,phi += 0.2 (cap 1.0),phi,1.0,1.0,False,False
+C,c-base_d-high_l-slow,2035,R2,conn_usage_last,0.4286355984,0.9,False,keep,t_g,2030,2030,False,False
+C,c-base_d-high_l-slow,2035,R3,carbon_price_last,9475.31,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-base_d-high_l-slow,2035,R4,co2_cap_excess_max_Mt,-3.013864758,0,False,keep,psi,0.3,0.3,False,False
+C,c-base_d-high_l-slow,2035,report,nonmetro_share_last,0.4075109963,0.422324,False,reported (not a trigger),,,,False,False
+C,c-base_d-high_l-slow,2035,report,demand_last_TWh,45.1191,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-high_d-low_l-base,2030,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-high_d-low_l-base,2030,R2,conn_usage_last,0.1949169065,0.9,False,keep,t_g,2030,2030,False,False
+C,c-high_d-low_l-base,2030,R3,carbon_price_last,4698.73,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-high_d-low_l-base,2030,R4,co2_cap_excess_max_Mt,-5.525418544,0,False,keep,psi,0.3,0.3,False,False
+C,c-high_d-low_l-base,2030,report,nonmetro_share_last,0.2684912201,0.348258,False,reported (not a trigger),,,,False,False
+C,c-high_d-low_l-base,2030,report,demand_last_TWh,15.8373,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-high_d-low_l-base,2035,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-high_d-low_l-base,2035,R2,conn_usage_last,0.1287392365,0.9,False,keep,t_g,2030,2030,False,False
+C,c-high_d-low_l-base,2035,R3,carbon_price_last,12967.94,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-high_d-low_l-base,2035,R4,co2_cap_excess_max_Mt,-3.013864655,0,False,keep,psi,0.3,0.3,False,False
+C,c-high_d-low_l-base,2035,report,nonmetro_share_last,0.3800005352,0.422324,False,reported (not a trigger),,,,False,False
+C,c-high_d-low_l-base,2035,report,demand_last_TWh,18.6857,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-high_d-low_l-slow,2030,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-high_d-low_l-slow,2030,R2,conn_usage_last,0.1949169065,0.9,False,keep,t_g,2030,2030,False,False
+C,c-high_d-low_l-slow,2030,R3,carbon_price_last,4698.73,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-high_d-low_l-slow,2030,R4,co2_cap_excess_max_Mt,-5.525418526,0,False,keep,psi,0.3,0.3,False,False
+C,c-high_d-low_l-slow,2030,report,nonmetro_share_last,0.2684912201,0.348258,False,reported (not a trigger),,,,False,False
+C,c-high_d-low_l-slow,2030,report,demand_last_TWh,15.8373,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-high_d-low_l-slow,2035,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-high_d-low_l-slow,2035,R2,conn_usage_last,0.1287392365,0.9,False,keep,t_g,2030,2030,False,False
+C,c-high_d-low_l-slow,2035,R3,carbon_price_last,12967.94,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-high_d-low_l-slow,2035,R4,co2_cap_excess_max_Mt,-3.013864653,0,False,keep,psi,0.3,0.3,False,False
+C,c-high_d-low_l-slow,2035,report,nonmetro_share_last,0.3800005352,0.422324,False,reported (not a trigger),,,,False,False
+C,c-high_d-low_l-slow,2035,report,demand_last_TWh,18.6857,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-high_d-base_l-base,2030,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-high_d-base_l-base,2030,R2,conn_usage_last,0.8816928293,0.9,False,keep,t_g,2030,2030,False,False
+C,c-high_d-base_l-base,2030,R3,carbon_price_last,4698.73,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-high_d-base_l-base,2030,R4,co2_cap_excess_max_Mt,-5.525418544,0,False,keep,psi,0.3,0.3,False,False
+C,c-high_d-base_l-base,2030,report,nonmetro_share_last,0.333444,0.348258,False,reported (not a trigger),,,,False,False
+C,c-high_d-base_l-base,2030,report,demand_last_TWh,27.5158,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-high_d-base_l-base,2035,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-high_d-base_l-base,2035,R2,conn_usage_last,0.379087905,0.9,False,keep,t_g,2030,2030,False,False
+C,c-high_d-base_l-base,2035,R3,carbon_price_last,12967.94,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-high_d-base_l-base,2035,R4,co2_cap_excess_max_Mt,-3.013864651,0,False,keep,psi,0.3,0.3,False,False
+C,c-high_d-base_l-base,2035,report,nonmetro_share_last,0.4075109926,0.422324,False,reported (not a trigger),,,,False,False
+C,c-high_d-base_l-base,2035,report,demand_last_TWh,42.0428,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-high_d-base_l-slow,2030,R1,liquid_share_new_stage,0.9660914011,1,True,phi += 0.2 (cap 1.0),phi,1.0,1.0,False,False
+C,c-high_d-base_l-slow,2030,R2,conn_usage_last,0.8889236536,0.9,False,keep,t_g,2030,2030,False,False
+C,c-high_d-base_l-slow,2030,R3,carbon_price_last,4698.73,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-high_d-base_l-slow,2030,R4,co2_cap_excess_max_Mt,-5.525418557,0,False,keep,psi,0.3,0.3,False,False
+C,c-high_d-base_l-slow,2030,report,nonmetro_share_last,0.333444,0.348258,False,reported (not a trigger),,,,False,False
+C,c-high_d-base_l-slow,2030,report,demand_last_TWh,27.5158,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-high_d-base_l-slow,2035,R1,liquid_share_new_stage,1,1,False,keep,phi,1.0,1.0,False,False
+C,c-high_d-base_l-slow,2035,R2,conn_usage_last,0.3761896018,0.9,False,keep,t_g,2030,2030,False,False
+C,c-high_d-base_l-slow,2035,R3,carbon_price_last,12967.94,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-high_d-base_l-slow,2035,R4,co2_cap_excess_max_Mt,-3.013864687,0,False,keep,psi,0.3,0.3,False,False
+C,c-high_d-base_l-slow,2035,report,nonmetro_share_last,0.4075109914,0.422324,False,reported (not a trigger),,,,False,False
+C,c-high_d-base_l-slow,2035,report,demand_last_TWh,42.0428,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-high_d-high_l-base,2030,R1,liquid_share_new_stage,0.9874772485,1,True,phi += 0.2 (cap 1.0),phi,1.0,1.0,False,False
+C,c-high_d-high_l-base,2030,R2,conn_usage_last,0.9508391668,0.9,True,"T_g := min(T_g, t_k)",t_g,2030,2030,False,False
+C,c-high_d-high_l-base,2030,R3,carbon_price_last,4698.73,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-high_d-high_l-base,2030,R4,co2_cap_excess_max_Mt,-5.525418522,0,False,keep,psi,0.3,0.3,False,False
+C,c-high_d-high_l-base,2030,report,nonmetro_share_last,0.333444,0.348258,False,reported (not a trigger),,,,False,False
+C,c-high_d-high_l-base,2030,report,demand_last_TWh,29.054,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-high_d-high_l-base,2035,R1,liquid_share_new_stage,0.9951522638,1,True,phi += 0.2 (cap 1.0),phi,1.0,1.0,False,False
+C,c-high_d-high_l-base,2035,R2,conn_usage_last,0.4211369553,0.9,False,keep,t_g,2030,2030,False,False
+C,c-high_d-high_l-base,2035,R3,carbon_price_last,12967.94,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-high_d-high_l-base,2035,R4,co2_cap_excess_max_Mt,-3.013864646,0,False,keep,psi,0.3,0.3,False,False
+C,c-high_d-high_l-base,2035,report,nonmetro_share_last,0.4075109963,0.422324,False,reported (not a trigger),,,,False,False
+C,c-high_d-high_l-base,2035,report,demand_last_TWh,45.1191,42.0428,False,reported (demand vs forecast),,,,False,False
+C,c-high_d-high_l-slow,2030,R1,liquid_share_new_stage,0.9488537298,1,True,phi += 0.2 (cap 1.0),phi,1.0,1.0,False,False
+C,c-high_d-high_l-slow,2030,R2,conn_usage_last,0.9537880061,0.9,True,"T_g := min(T_g, t_k)",t_g,2030,2030,False,False
+C,c-high_d-high_l-slow,2030,R3,carbon_price_last,4698.73,0,True,subsidy 0 for the next stage,subsidy,rule,off,True,False
+C,c-high_d-high_l-slow,2030,R4,co2_cap_excess_max_Mt,-5.525418591,0,False,keep,psi,0.3,0.3,False,False
+C,c-high_d-high_l-slow,2030,report,nonmetro_share_last,0.333444,0.348258,False,reported (not a trigger),,,,False,False
+C,c-high_d-high_l-slow,2030,report,demand_last_TWh,29.054,27.5158,False,reported (demand vs forecast),,,,False,False
+C,c-high_d-high_l-slow,2035,R1,liquid_share_new_stage,0.9968259106,1,True,phi += 0.2 (cap 1.0),phi,1.0,1.0,False,False
+C,c-high_d-high_l-slow,2035,R2,conn_usage_last,0.4286355984,0.9,False,keep,t_g,2030,2030,False,False
+C,c-high_d-high_l-slow,2035,R3,carbon_price_last,12967.94,0,True,subsidy 0 for the next stage,subsidy,off,off,False,False
+C,c-high_d-high_l-slow,2035,R4,co2_cap_excess_max_Mt,-3.013864758,0,False,keep,psi,0.3,0.3,False,False
+C,c-high_d-high_l-slow,2035,report,nonmetro_share_last,0.4075109963,0.422324,False,reported (not a trigger),,,,False,False
+C,c-high_d-high_l-slow,2035,report,demand_last_TWh,45.1191,42.0428,False,reported (demand vs forecast),,,,False,False

@@ -1,0 +1,44 @@
+{
+  "target_range": [
+    0.18,
+    0.23
+  ],
+  "base_advantage": 0.05887437324,
+  "min": 0.007319749866,
+  "max": 0.2473948431,
+  "reached": true,
+  "cases_in_range": [
+    "path:F@0.75"
+  ],
+  "corner_choice": {
+    "F": {
+      "carbon": "low",
+      "ccn_allocation": "table7",
+      "cooling_capex": "low",
+      "demand": "high",
+      "grid_ef": "low",
+      "hw_efficiency": "low",
+      "nfc_price": "high",
+      "pv_lcoe": "low",
+      "tariff": "high"
+    },
+    "U": {
+      "carbon": "flat20000",
+      "cooling_capex": "high",
+      "demand": "low",
+      "ef_national": "low",
+      "hw_efficiency": "high",
+      "pv_lcoe": "high",
+      "tariff": "low"
+    }
+  },
+  "corner_advantage": {
+    "F": 0.2473948431,
+    "U": 0.007319749866
+  },
+  "any_curtailment": false,
+  "calibration_years": [
+    2024,
+    2025
+  ]
+}

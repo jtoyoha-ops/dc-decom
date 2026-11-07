@@ -1,0 +1,13 @@
+corner,structure,parameters,role,scenario,status,total_TJPY,co2_cum_Mt,nonmetro_share_2040,curtail_TWh
+VV,v2,v2,REF,REF,Optimal,9.372824694,11.18569389,0.18,0
+VV,v2,v2,C-CN,C-CN,Optimal,9.372824694,11.18569389,0.18,0
+VV,v2,v2,R-CN,R-CN,Optimal,8.821005515,11.18569421,0.4963910034,0
+VP,v2,paper,REF,REF,Optimal,16.95362199,1.669293915e-07,0.18,0
+VP,v2,paper,C-CN,C-CN,Optimal,16.95362199,1.669293915e-07,0.18,0
+VP,v2,paper,R-CN,R-CN,Optimal,15.4936709,4.816892947e-08,0.4773415066,0
+SV,spec,v2,REF,REF,Optimal,8.665259324,-1.1866061e-08,0.18,0
+SV,spec,v2,C-CN,C-CN,Optimal,8.665259324,-4.93101898e-08,0.18,0
+SV,spec,v2,R-CN,R-CN-pub,Optimal,8.343502366,2.893065013e-08,0.455,0
+SP,spec,paper,REF,REF,Optimal,12.26337414,-9.333481615e-08,0.18,0
+SP,spec,paper,C-CN,C-CN,Optimal,12.26337413,-4.780653162e-07,0.18,0
+SP,spec,paper,R-CN,R-CN-pub,Optimal,11.82949063,-2.939576977e-07,0.455,0

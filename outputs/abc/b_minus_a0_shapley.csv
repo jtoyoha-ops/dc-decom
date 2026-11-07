@@ -1,0 +1,153 @@
+analysis,path,metric,element,name,shapley_TJPY,share,oat_on_TJPY,oat_off_TJPY,B_minus_A0_TJPY
+事後の感度,c-low_d-low_l-base,social_cost_TJPY,E1,PUE rules,8.204442311e-10,1.29792521e-08,4.493294625e-09,-8.287157627e-10,0.06321198053
+事後の感度,c-low_d-low_l-base,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.0007245667688,-0.01146249117,1.026734253e-12,-0.001449132602,0.06321198053
+事後の感度,c-low_d-low_l-base,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.0639365469,1.011462485,0.06466111338,0.06321198051,0.06321198053
+事後の感度,c-low_d-low_l-base,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.160426818e-10,-6.581706162e-09,9.687362024e-12,-6.073719305e-10,0.06321198053
+事後の感度,c-low_d-low_l-base,operator_cost_TJPY,E1,PUE rules,8.111082176e-10,2.292770818e-08,4.49329729e-09,-8.670602014e-10,0.0353767682
+事後の感度,c-low_d-low_l-base,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.0006958463742,-0.01966958571,1.02851061e-12,-0.001391691789,0.0353767682
+事後の感度,c-low_d-low_l-base,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.03607261418,1.019669574,0.03676846018,0.03537676818,0.0353767682
+事後の感度,c-low_d-low_l-base,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.110371303e-10,-1.161884342e-08,9.689138381e-12,-6.186402501e-10,0.0353767682
+事後の感度,c-low_d-low_l-slow,social_cost_TJPY,E1,PUE rules,1.210260114e-09,1.948514075e-08,4.785055907e-09,2.176658853e-11,0.06211195134
+事後の感度,c-low_d-low_l-slow,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,0.002721158151,0.04381054035,-2.001954158e-11,0.005442318113,0.06211195134
+事後の感度,c-low_d-low_l-slow,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.05939079106,0.9561894253,0.05666963357,0.06211195137,0.06211195134
+事後の感度,c-low_d-low_l-slow,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,9.223872777e-10,1.485039928e-08,4.833283107e-09,-8.267644347e-10,0.06211195134
+事後の感度,c-low_d-low_l-slow,operator_cost_TJPY,E1,PUE rules,1.211316603e-09,3.533931865e-08,4.785063901e-09,2.176747671e-11,0.03427673902
+事後の感度,c-low_d-low_l-slow,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,0.00274987853,0.08022579183,-2.000977162e-11,0.005499758818,0.03427673902
+事後の感度,c-low_d-low_l-slow,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.03152685838,0.9197741464,0.02877698057,0.03427673905,0.03427673902
+事後の感度,c-low_d-low_l-slow,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,9.061296158e-10,2.643570076e-08,4.833283107e-09,-8.534462026e-10,0.03427673902
+事後の感度,c-low_d-base_l-base,social_cost_TJPY,E1,PUE rules,-6.250820602e-10,-3.808867076e-09,4.601345083e-09,-2.767121643e-09,0.1641123326
+事後の感度,c-low_d-base_l-base,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,0.001974942793,0.0120340913,2.66737743e-11,0.003949887076,0.1641123326
+事後の感度,c-low_d-base_l-base,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1621373908,0.9879659153,0.1601624505,0.1641123326,0.1641123326
+事後の感度,c-low_d-base_l-base,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.531253891e-10,-2.761068483e-09,0,0,0.1641123326
+事後の感度,c-low_d-base_l-base,operator_cost_TJPY,E1,PUE rules,-7.901331441e-10,-8.741212028e-09,4.597671577e-09,-3.46384077e-09,0.09039171473
+事後の感度,c-low_d-base_l-base,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,0.0003211897836,0.003553309997,2.667555066e-11,0.000642380669,0.09039171473
+事後の感度,c-low_d-base_l-base,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.09007052619,0.9964467037,0.08974933867,0.09039171473,0.09039171473
+事後の感度,c-low_d-base_l-base,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.478774388e-10,-4.954850565e-09,0,0,0.09039171473
+事後の感度,c-low_d-base_l-slow,social_cost_TJPY,E1,PUE rules,2.932798893e-09,1.754017615e-08,5.373053114e-10,2.156774315e-09,0.1672046431
+事後の感度,c-low_d-base_l-slow,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.02610184304,-0.1561071664,5.151434834e-13,-0.05220368925,0.1672046431
+事後の感度,c-low_d-base_l-slow,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1933064886,1.156107181,0.2194083309,0.1672046431,0.1672046431
+事後の感度,c-low_d-base_l-slow,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-5.401368834e-09,-3.230394046e-08,0,-2.160846435e-08,0.1672046431
+事後の感度,c-low_d-base_l-slow,operator_cost_TJPY,E1,PUE rules,2.764926214e-09,2.986115176e-08,5.402558401e-10,2.770786267e-09,0.09259275182
+事後の感度,c-low_d-base_l-slow,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.02462425276,-0.2659414724,5.169198403e-13,-0.04924850773,0.09259275182
+事後の感度,c-low_d-base_l-slow,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1172170061,1.265941489,0.1418412582,0.09259275182,0.09259275182
+事後の感度,c-low_d-base_l-slow,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.318131778e-09,-4.6635743e-08,0,-1.727454979e-08,0.09259275182
+事後の感度,c-low_d-high_l-base,social_cost_TJPY,E1,PUE rules,6.543849906e-10,3.593116556e-09,0,0,0.1821218378
+事後の感度,c-low_d-high_l-base,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,0.0009076984976,0.004984017888,-1.243272152e-11,0.001815399042,0.1821218378
+事後の感度,c-low_d-high_l-base,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1812141395,0.9950159831,0.1803064399,0.1821218378,0.1821218378
+事後の感度,c-low_d-high_l-base,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-8.358253349e-10,-4.58937459e-09,0,0,0.1821218378
+事後の感度,c-low_d-high_l-base,operator_cost_TJPY,E1,PUE rules,7.029394844e-10,7.590779631e-09,0,0,0.09260438566
+事後の感度,c-low_d-high_l-base,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.000782696685,-0.008452047701,-1.293187779e-11,-0.001565391583,0.09260438566
+事後の感度,c-low_d-high_l-base,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.09338708244,1.008452049,0.09416977781,0.09260438566,0.09260438566
+事後の感度,c-low_d-high_l-base,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-7.949390775e-10,-8.584248703e-09,0,0,0.09260438566
+事後の感度,c-low_d-high_l-slow,social_cost_TJPY,E1,PUE rules,-4.841768468e-10,-2.77428022e-09,0,-1.303471109e-09,0.1745234109
+事後の感度,c-low_d-high_l-slow,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.01187966727,-0.06806919033,5.151434834e-13,-0.02375933488,0.1745234109
+事後の感度,c-low_d-high_l-slow,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1864030786,1.068069193,0.1982827461,0.1745234109,0.1745234109
+事後の感度,c-low_d-high_l-slow,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.292862362e-14,-2.459763043e-13,0,0,0.1745234109
+事後の感度,c-low_d-high_l-slow,operator_cost_TJPY,E1,PUE rules,-5.403787047e-10,-6.147498636e-09,0,-1.470802147e-09,0.08790220816
+事後の感度,c-low_d-high_l-slow,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.01224205206,-0.1392689935,5.151434834e-13,-0.0244841045,0.08790220816
+事後の感度,c-low_d-high_l-slow,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1001442608,1.139269,0.112386313,0.08790220816,0.08790220816
+事後の感度,c-low_d-high_l-slow,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.292862362e-14,-4.883679775e-13,0,0,0.08790220816
+事後の感度,c-base_d-low_l-base,social_cost_TJPY,E1,PUE rules,8.204442311e-10,1.29792521e-08,4.493294625e-09,-8.287157627e-10,0.06321198053
+事後の感度,c-base_d-low_l-base,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.0007245667688,-0.01146249117,1.026734253e-12,-0.001449132602,0.06321198053
+事後の感度,c-base_d-low_l-base,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.0639365469,1.011462485,0.06466111338,0.06321198051,0.06321198053
+事後の感度,c-base_d-low_l-base,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.160426818e-10,-6.581706162e-09,9.687362024e-12,-6.073719305e-10,0.06321198053
+事後の感度,c-base_d-low_l-base,operator_cost_TJPY,E1,PUE rules,8.119641996e-10,2.295190436e-08,4.493298178e-09,-8.716387612e-10,0.03537676817
+事後の感度,c-base_d-low_l-base,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.0006958464169,-0.01966958693,1.027622432e-12,-0.001391691865,0.03537676817
+事後の感度,c-base_d-low_l-base,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.03607261418,1.019669576,0.03676846019,0.03537676815,0.03537676817
+事後の感度,c-base_d-low_l-base,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.076741167e-10,-1.152378066e-08,9.688250202e-12,-6.25255403e-10,0.03537676817
+事後の感度,c-base_d-low_l-slow,social_cost_TJPY,E1,PUE rules,1.210260114e-09,1.948514075e-08,4.785055907e-09,2.176658853e-11,0.06211195134
+事後の感度,c-base_d-low_l-slow,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,0.002721158151,0.04381054035,-2.001954158e-11,0.005442318113,0.06211195134
+事後の感度,c-base_d-low_l-slow,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.05939079106,0.9561894253,0.05666963357,0.06211195137,0.06211195134
+事後の感度,c-base_d-low_l-slow,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,9.223872777e-10,1.485039928e-08,4.833283107e-09,-8.267644347e-10,0.06211195134
+事後の感度,c-base_d-low_l-slow,operator_cost_TJPY,E1,PUE rules,1.212374941e-09,3.537019496e-08,4.785068342e-09,2.176747671e-11,0.034276739
+事後の感度,c-base_d-low_l-slow,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,0.002749878482,0.0802257905,-2.000710708e-11,0.005499758707,0.034276739
+事後の感度,c-base_d-low_l-slow,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.0315268584,0.9197741478,0.02877698068,0.03427673902,0.034276739
+事後の感度,c-base_d-low_l-slow,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,9.020889221e-10,2.631781635e-08,4.833283107e-09,-8.511946703e-10,0.034276739
+事後の感度,c-base_d-base_l-base,social_cost_TJPY,E1,PUE rules,-6.250820602e-10,-3.808867076e-09,4.601345083e-09,-2.767121643e-09,0.1641123326
+事後の感度,c-base_d-base_l-base,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,0.001974942793,0.0120340913,2.66737743e-11,0.003949887076,0.1641123326
+事後の感度,c-base_d-base_l-base,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1621373908,0.9879659153,0.1601624505,0.1641123326,0.1641123326
+事後の感度,c-base_d-base_l-base,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.531253891e-10,-2.761068483e-09,0,0,0.1641123326
+事後の感度,c-base_d-base_l-base,operator_cost_TJPY,E1,PUE rules,-8.617946357e-10,-9.5340003e-09,4.595097636e-09,-3.662190551e-09,0.09039171476
+事後の感度,c-base_d-base_l-base,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,0.0003211897208,0.003553309301,2.66737743e-11,0.0006423804877,0.09039171476
+事後の感度,c-base_d-base_l-base,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.09007052635,0.9964467052,0.0897493389,0.09039171476,0.09039171476
+事後の感度,c-base_d-base_l-base,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.478724058e-10,-4.954794884e-09,0,0,0.09039171476
+事後の感度,c-base_d-base_l-slow,social_cost_TJPY,E1,PUE rules,2.932798893e-09,1.754017615e-08,5.373053114e-10,2.156774315e-09,0.1672046431
+事後の感度,c-base_d-base_l-slow,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.02610184304,-0.1561071664,5.151434834e-13,-0.05220368925,0.1672046431
+事後の感度,c-base_d-base_l-slow,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1933064886,1.156107181,0.2194083309,0.1672046431,0.1672046431
+事後の感度,c-base_d-base_l-slow,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-5.401368834e-09,-3.230394046e-08,0,-2.160846435e-08,0.1672046431
+事後の感度,c-base_d-base_l-slow,operator_cost_TJPY,E1,PUE rules,2.77058243e-09,2.992223879e-08,5.41888312e-10,2.814052991e-09,0.09259275182
+事後の感度,c-base_d-base_l-slow,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.02462425257,-0.2659414704,5.133671266e-13,-0.04924850732,0.09259275182
+事後の感度,c-base_d-base_l-slow,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1172170059,1.265941487,0.1418412579,0.09259275182,0.09259275182
+事後の感度,c-base_d-base_l-slow,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.313711314e-09,-4.658800208e-08,0,-1.725633503e-08,0.09259275182
+事後の感度,c-base_d-high_l-base,social_cost_TJPY,E1,PUE rules,6.543849906e-10,3.593116556e-09,0,0,0.1821218378
+事後の感度,c-base_d-high_l-base,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,0.0009076984976,0.004984017888,-1.243272152e-11,0.001815399042,0.1821218378
+事後の感度,c-base_d-high_l-base,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1812141395,0.9950159831,0.1803064399,0.1821218378,0.1821218378
+事後の感度,c-base_d-high_l-base,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-8.358253349e-10,-4.58937459e-09,0,0,0.1821218378
+事後の感度,c-base_d-high_l-base,operator_cost_TJPY,E1,PUE rules,7.071444171e-10,7.636187119e-09,0,0,0.09260438568
+事後の感度,c-base_d-high_l-base,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.0007826966833,-0.008452047682,-1.331379451e-11,-0.001565391606,0.09260438568
+事後の感度,c-base_d-high_l-base,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.09338708244,1.008452049,0.09416977779,0.09260438568,0.09260438568
+事後の感度,c-base_d-high_l-base,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-7.903057468e-10,-8.534215102e-09,0,0,0.09260438568
+事後の感度,c-base_d-high_l-slow,social_cost_TJPY,E1,PUE rules,-4.841768468e-10,-2.77428022e-09,0,-1.303471109e-09,0.1745234109
+事後の感度,c-base_d-high_l-slow,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.01187966727,-0.06806919033,5.151434834e-13,-0.02375933488,0.1745234109
+事後の感度,c-base_d-high_l-slow,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1864030786,1.068069193,0.1982827461,0.1745234109,0.1745234109
+事後の感度,c-base_d-high_l-slow,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.292862362e-14,-2.459763043e-13,0,0,0.1745234109
+事後の感度,c-base_d-high_l-slow,operator_cost_TJPY,E1,PUE rules,-5.673978324e-10,-6.454875706e-09,0,-1.551150319e-09,0.08790220885
+事後の感度,c-base_d-high_l-slow,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.0122420518,-0.1392689895,5.133671266e-13,-0.02448410401,0.08790220885
+事後の感度,c-base_d-high_l-slow,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1001442612,1.139268996,0.1123863132,0.08790220885,0.08790220885
+事後の感度,c-base_d-high_l-slow,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.278059388e-14,-4.866839462e-13,0,0,0.08790220885
+事後の感度,c-high_d-low_l-base,social_cost_TJPY,E1,PUE rules,8.204442311e-10,1.29792521e-08,4.493294625e-09,-8.287157627e-10,0.06321198053
+事後の感度,c-high_d-low_l-base,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.0007245667688,-0.01146249117,1.026734253e-12,-0.001449132602,0.06321198053
+事後の感度,c-high_d-low_l-base,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.0639365469,1.011462485,0.06466111338,0.06321198051,0.06321198053
+事後の感度,c-high_d-low_l-base,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.160426818e-10,-6.581706162e-09,9.687362024e-12,-6.073719305e-10,0.06321198053
+事後の感度,c-high_d-low_l-base,operator_cost_TJPY,E1,PUE rules,8.128187752e-10,2.297606079e-08,4.493296402e-09,-8.762190973e-10,0.03537676814
+事後の感度,c-high_d-low_l-base,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.0006958464596,-0.01966958816,1.025846075e-12,-0.00139169194,0.03537676814
+事後の感度,c-high_d-low_l-base,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.03607261419,1.019669577,0.0367684602,0.03537676811,0.03537676814
+事後の感度,c-high_d-low_l-base,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.043114732e-10,-1.142872836e-08,9.687362024e-12,-6.318732204e-10,0.03537676814
+事後の感度,c-high_d-low_l-slow,social_cost_TJPY,E1,PUE rules,1.210260114e-09,1.948514075e-08,4.785055907e-09,2.176658853e-11,0.06211195134
+事後の感度,c-high_d-low_l-slow,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,0.002721158151,0.04381054035,-2.001954158e-11,0.005442318113,0.06211195134
+事後の感度,c-high_d-low_l-slow,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.05939079106,0.9561894253,0.05666963357,0.06211195137,0.06211195134
+事後の感度,c-high_d-low_l-slow,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,9.223872777e-10,1.485039928e-08,4.833283107e-09,-8.267644347e-10,0.06211195134
+事後の感度,c-high_d-low_l-slow,operator_cost_TJPY,E1,PUE rules,1.21343291e-09,3.540106048e-08,4.785071006e-09,2.176747671e-11,0.03427673898
+事後の感度,c-high_d-low_l-slow,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,0.002749878435,0.08022578918,-2.000266619e-11,0.005499758596,0.03427673898
+事後の感度,c-high_d-low_l-slow,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.03152685843,0.9197741492,0.02877698079,0.034276739,0.03427673898
+事後の感度,c-high_d-low_l-slow,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,8.980488945e-10,2.619995138e-08,4.833282219e-09,-8.489386971e-10,0.03427673898
+事後の感度,c-high_d-base_l-base,social_cost_TJPY,E1,PUE rules,-6.250820602e-10,-3.808867076e-09,4.601345083e-09,-2.767121643e-09,0.1641123326
+事後の感度,c-high_d-base_l-base,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,0.001974942793,0.0120340913,2.66737743e-11,0.003949887076,0.1641123326
+事後の感度,c-high_d-base_l-base,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1621373908,0.9879659153,0.1601624505,0.1641123326,0.1641123326
+事後の感度,c-high_d-base_l-base,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.531253891e-10,-2.761068483e-09,0,0,0.1641123326
+事後の感度,c-high_d-base_l-base,operator_cost_TJPY,E1,PUE rules,-9.334562752e-10,-1.032679021e-08,4.592525471e-09,-3.860542108e-09,0.09039171478
+事後の感度,c-high_d-base_l-base,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,0.0003211896579,0.003553308605,2.66737743e-11,0.0006423803064,0.09039171478
+事後の感度,c-high_d-base_l-base,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.0900705265,0.9964467067,0.08974933914,0.09039171478,0.09039171478
+事後の感度,c-high_d-base_l-base,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.478675208e-10,-4.95474084e-09,0,0,0.09039171478
+事後の感度,c-high_d-base_l-slow,social_cost_TJPY,E1,PUE rules,2.932798893e-09,1.754017615e-08,5.373053114e-10,2.156774315e-09,0.1672046431
+事後の感度,c-high_d-base_l-slow,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.02610184304,-0.1561071664,5.151434834e-13,-0.05220368925,0.1672046431
+事後の感度,c-high_d-base_l-slow,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1933064886,1.156107181,0.2194083309,0.1672046431,0.1672046431
+事後の感度,c-high_d-base_l-slow,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-5.401368834e-09,-3.230394046e-08,0,-2.160846435e-08,0.1672046431
+事後の感度,c-high_d-base_l-slow,operator_cost_TJPY,E1,PUE rules,2.776238794e-09,2.998332742e-08,5.43526113e-10,2.857316161e-09,0.09259275181
+事後の感度,c-high_d-base_l-slow,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.02462425238,-0.2659414684,5.151434834e-13,-0.0492485069,0.09259275181
+事後の感度,c-high_d-base_l-slow,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1172170057,1.265941485,0.1418412575,0.09259275181,0.09259275181
+事後の感度,c-high_d-base_l-slow,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.309292182e-09,-4.654027554e-08,0,-1.723812382e-08,0.09259275181
+事後の感度,c-high_d-high_l-base,social_cost_TJPY,E1,PUE rules,6.543849906e-10,3.593116556e-09,0,0,0.1821218378
+事後の感度,c-high_d-high_l-base,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,0.0009076984976,0.004984017888,-1.243272152e-11,0.001815399042,0.1821218378
+事後の感度,c-high_d-high_l-base,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1812141395,0.9950159831,0.1803064399,0.1821218378,0.1821218378
+事後の感度,c-high_d-high_l-base,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-8.358253349e-10,-4.58937459e-09,0,0,0.1821218378
+事後の感度,c-high_d-high_l-base,operator_cost_TJPY,E1,PUE rules,7.113494978e-10,7.681596207e-09,0,0,0.09260438569
+事後の感度,c-high_d-high_l-base,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.0007826966816,-0.008452047663,-1.37010403e-11,-0.00156539163,0.09260438569
+事後の感度,c-high_d-high_l-base,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.09338708244,1.008452048,0.09416977778,0.09260438569,0.09260438569
+事後の感度,c-high_d-high_l-base,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-7.856719719e-10,-8.484176706e-09,0,0,0.09260438569
+事後の感度,c-high_d-high_l-slow,social_cost_TJPY,E1,PUE rules,-4.841768468e-10,-2.77428022e-09,0,-1.303471109e-09,0.1745234109
+事後の感度,c-high_d-high_l-slow,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.01187966727,-0.06806919033,5.151434834e-13,-0.02375933488,0.1745234109
+事後の感度,c-high_d-high_l-slow,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1864030786,1.068069193,0.1982827461,0.1745234109,0.1745234109
+事後の感度,c-high_d-high_l-slow,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.292862362e-14,-2.459763043e-13,0,0,0.1745234109
+事後の感度,c-high_d-high_l-slow,operator_cost_TJPY,E1,PUE rules,-5.944156278e-10,-6.762237616e-09,0,-1.631494939e-09,0.08790220953
+事後の感度,c-high_d-high_l-slow,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.01224205154,-0.1392689854,5.133671266e-13,-0.02448410352,0.08790220953
+事後の感度,c-high_d-high_l-slow,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1001442617,1.139268992,0.1123863134,0.08790220953,0.08790220953
+事後の感度,c-high_d-high_l-slow,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-4.278059388e-14,-4.866839424e-13,0,0,0.08790220953
+事後の感度,mean,social_cost_TJPY,E1,PUE rules,7.514382203e-10,5.543718269e-09,2.402833488e-09,-4.534612685e-10,0.1355476927
+事後の感度,mean,social_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.005517046273,-0.04070188259,-6.202445964e-13,-0.01103409208,0.1355476927
+事後の感度,mean,social_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.1410647393,1.040701885,0.1465817857,0.1355476927,0.1355476927
+事後の感度,mean,social_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-1.030669648e-09,-7.603741737e-09,8.071617448e-10,-3.840433453e-09,0.1355476927
+事後の感度,mean,operator_cost_TJPY,E1,PUE rules,6.788122369e-10,9.403034736e-09,2.402558893e-09,-5.415267247e-10,0.07219076138
+事後の感度,mean,operator_cost_TJPY,E2,liquid floor phi_0 = 1.0,-0.00587896321,-0.08143650376,-7.652150518e-13,-0.01175792593,0.07219076138
+事後の感度,mean,operator_cost_TJPY,E3,"reinforcement (c1 from T_g = 2030, g, theta)",0.07806972475,1.081436506,0.0839486881,0.07219076138,0.07219076138
+事後の感度,mean,operator_cost_TJPY,E4,non-metro PPA tier multiplier 1.5,-8.42919623e-10,-1.16762811e-08,8.071618435e-10,-3.122130949e-09,0.07219076138

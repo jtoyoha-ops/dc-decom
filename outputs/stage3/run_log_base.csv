@@ -1,6 +1,6 @@
 part,label,scenario,config_hash,status,n_vars,n_cons,build_s,solve_s
-base,base:REF,REF,d3f2c8b39cbf6f81,Optimal,55533,55273,0.34,2.25
-base,base:C-CN,C-CN,8d515b0bb0095937,Optimal,55533,55290,0.36,2.13
-base,base:R-CN,R-CN,256c8e2ff4cdf956,Optimal,55608,55410,0.34,3.88
-base,base:R-CN-pub,R-CN-pub,089990133ebf4262,Optimal,55533,55290,0.36,2.3
-base,base:A0,A0,c40b17e5674c52cd,Optimal,55608,55393,0.34,4.05
+base,base:REF,REF,2fd97146187febb9,Optimal,55533,55273,0.34,2.25
+base,base:C-CN,C-CN,856d8f91ab187e06,Optimal,55533,55290,0.36,2.13
+base,base:R-CN,R-CN,a126a91c1f213e00,Optimal,55608,55410,0.34,3.88
+base,base:R-CN-pub,R-CN-pub,102566560e228197,Optimal,55533,55290,0.36,2.3
+base,base:A0,A0,28d1cfb980e5fd07,Optimal,55608,55393,0.34,4.05

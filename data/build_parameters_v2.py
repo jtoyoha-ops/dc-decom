@@ -443,10 +443,11 @@ def paths(pue: Dict[str, object]) -> List[Row]:
             st, src, der = "derived", "METI_KOKUJI27_2026", "FY2026 value x 1.03^(t-2026): " \
                 "告示 rule for FY2027-2030 (x (1.03 + CGPI outlook)); real terms, CGPI omitted"
         elif t < 2035:
-            st, src, der = "derived", "MRI2025", "linear 2030 -> 2035"
+            st, src, der = "derived", "ENERGIES2026", "linear 2030 -> 2035 (2030: " \
+                "METI_KOKUJI27_2026 rule; 2035: Table 8 setting, an assumption)"
         elif t == 2035:
-            st, src, der = "paper", "ENERGIES2026", "Table 8: MRI [50] 7,000-15,000 (midpoint " \
-                "11,000); the MRI column text does not state the range"
+            st, src, der = "paper", "ENERGIES2026", "Table 8 setting 7,000-15,000 (midpoint " \
+                "11,000); treated as an assumption"
         else:
             st, src, der = "assumption", "ASSUMPTION", "linear continuation of the 2030-2035 " \
                                                        "slope"

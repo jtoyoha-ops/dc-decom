@@ -14,7 +14,7 @@ EF_grid_2024,0.43,kg-CO2/kWh,MOE_2022,grid emission factor base,Table 8; Section
 EF_grid_2040,0.10,kg-CO2/kWh,SEP7,grid emission factor 2040 target,code-only (Section 3.11 names the 7th SEP target without a value)
 EF_fossil,0.49,kg-CO2/kWh,METI_Cogen,CGS natural gas emission factor,Table 8
 P_carbon_2026,3000,yen/t-CO2,GX-ETS,FY2026 mid-point,Table 8 range 1700-4300 (code midpoint)
-P_carbon_2035,11000,yen/t-CO2,MRI,2035 mid-point,Table 8 range 7000-15000 (code midpoint)
+P_carbon_2035,11000,yen/t-CO2,paper_Table8,2035 mid-point of the Table 8 setting (assumption),Table 8 range 7000-15000 (code midpoint)
 P_carbon_2040,18000,yen/t-CO2,projected,2040 extrapolation,code-only (paper gives no 2040 value)
 E_2024,8.2,Mt-CO2/yr,base-year_calc,total Japan DC emissions baseline,Table 8; Eq. 14
 N_resilience,1,unitless,N+1_standard,backup redundancy,Table 8; Eq. 16

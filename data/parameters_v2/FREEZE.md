@@ -5,6 +5,7 @@
 - 固定まで、候補の v2 の値で LP を解いていない（シナリオの総額、C-CN と R-CN の差は計算していない）。実行したのは、試験用の仮の値（tests/fixtures/params_dev、status 'dev'）での試験と、調査値の幅を目標にする PUE の較正（data/calibrate_pue_v2.py、LP なし）だけ。
 - どの値も、Energies の報告値の範囲（18〜23% など）や、モデルの結果への影響を見て選んでいない。
 - 固定の後に値を変えていない。感度・不確実性の分析の値は、設定ファイル（config/）の上書きとしてメモリの中で変える。
+- 固定の後に変えた記述（v2.0.0 の公開の前）：paths.csv の炭素価格の 2031〜2034年の source_id（MRI2025 → ENERGIES2026）と derivation、2035年の derivation、sources.csv の MRI2025 の行の要旨と閲覧日。value・low・high・status は同じ。
 
 ## 固定に含むもの
 - data/raw/jma/（気象庁の時別値5ファイル、fetch_jma.py、fetch_log.json、RETRIEVAL.md）、data/raw/egc/（電力取引報 FY2025 の12ファイル）、data/raw/moe/（電気事業者別排出係数 R6年度実績）。生データのファイルはこのリポジトリに含めていない（取得の方法と sha256 は各フォルダの README.md・RETRIEVAL.md）。

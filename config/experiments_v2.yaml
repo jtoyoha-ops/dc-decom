@@ -123,7 +123,7 @@ bridge:
       change: "carbon_price(t) = 1500 + (t - 2024) / 16 x 10500 for every year"
       energies: "partly: 2026 value 2,813 and 2035 value 8,719 lie in the Table 8 ranges
         (1,700-4,300; 7,000-15,000); a price in 2024-2025 contradicts Section 1 (mandatory from FY2026)"
-      source: "GX-ETS / MRI ranges for 2026 and 2035; none for the linear form"
+      source: "GX-ETS FY2026 band for 2026; Table 8 setting for 2035 (assumption); none for the linear form"
     - id: T7
       name: certificate price 5 yen/kWh (no volume limit)
       change: "nfc_yen_per_kWh = 5.0 (certificates are allowed in the base since C1)"
@@ -160,7 +160,7 @@ bridge:
       name: paper carbon price path
       change: "paths.carbon_price = 3,000 / 11,000 / 18,000 interpolation, 3,000 before 2026"
       energies: "Table 8 mid-points; 2040 value and pre-2026 price are code-only"
-      source: "GX-ETS / MRI mid-points"
+      source: "mid-points of the GX-ETS FY2026 band (2026) and of the Table 8 setting (2035; assumption)"
     - id: P5
       name: Table 9 regional tariff and EF, national EF 0.43 -> 0.10
       change: "tariff_yen_per_kWh[r], grid_ef_base[r] = Table 9; ef_national@t = 0.43 -> 0.10 linear"

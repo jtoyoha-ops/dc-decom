@@ -94,8 +94,8 @@ uncertainty:
     - {id: 1, name: carbon_q, mapping: "carbon_price(t) piecewise linear in q ~ U(0,1): q=0 low, 0.5 value,
         1 high, every year (2024-2025 are 0 in all three)",
        range: "2026: 1,700-4,300 yen/t; 2035: 7,000-15,000; 2040: 12,087-25,160",
-       status: "2026 sourced (METI_KOKUJI27_2026); 2027-2030 derived (+3%/yr); 2031-2034 derived (MRI2025);
-         2035 paper (ENERGIES2026 / MRI); 2036+ assumption (仮定, extension)"}
+       status: "2026 sourced (METI_KOKUJI27_2026); 2027-2030 derived (+3%/yr); 2031-2034 derived (linear
+         2030 -> 2035); 2035 paper (ENERGIES2026 Table 8 setting, assumption); 2036+ assumption (仮定, extension)"}
     - {id: 2, name: demand_q, mapping: "demand_TWh(t) piecewise linear in q (low / value / high)",
        range: "2040: 22.1 / 59.5 / 64.4 TWh IT",
        status: "2024-2034 sourced/derived (WOODMAC2025, PUECAL_V2); low 2030 paper (JST Modest);

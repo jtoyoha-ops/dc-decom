@@ -7,7 +7,8 @@ from .load_inputs import GlobalParameters
 
 
 def carbon_price_trajectory(years: np.ndarray, p: GlobalParameters) -> np.ndarray:
-    """Piecewise-linear GX-ETS / MRI carbon-price path in yen/t-CO2."""
+    """Piecewise-linear carbon-price path in yen/t-CO2: GX-ETS FY2026 band mid-point
+    (2026), mid-point of the Table 8 setting (2035, an assumption), code value (2040)."""
     years = np.asarray(years, dtype=float)
     # Three anchor points: 2026, 2035, 2040
     xp = np.array([2026.0, 2035.0, 2040.0])

@@ -66,10 +66,10 @@ git status --short outputs/                  # committed files that changed
 
 `run_thesis_v2.py --all` runs the spec version (`src/scripts/run_spec.py` → `outputs/stage2/`), every part of `src/scripts/run_stage3.py` (→ `outputs/stage3/`, `outputs/abc/`) and writes `outputs/manifest.json` (git commit, package and CBC versions, run time per part, sha256 of every output file).
 
-Time on the development machine (macOS on Apple silicon, the x86_64 CBC of PuLP under Rosetta 2, 8 worker processes): about 4 hours when every LP is solved, of which the Monte Carlo part (`mc`) takes about 3.4 hours; about 4 minutes when the solves are read from `outputs/cache/`.
+Time on the development machine (macOS on Apple silicon, the x86_64 CBC of PuLP under Rosetta 2, 8 worker processes): about 6 hours when every LP is solved, of which the Monte Carlo part (`mc`) takes about 5 hours (measured on 2026-11-09); about 4 minutes when the solves are read from `outputs/cache/`.
 
 - A single part: `python src/scripts/run_stage3.py --part <name>`; `--check` recomputes the part into a temporary directory and compares every file with the committed one.
-- CBC runs with one thread. On the development machine, re-solving the LPs of the parts `base` to `interactions` gave value files (CSV, JSON, Markdown) byte-identical to the earlier runs; the parts added later (`mc` to `b_minus_a0`) have been solved once. `run_log_*.csv` contain solve times and differ after re-solving; `manifest.json` differs in its time stamps and git state. Other platforms and CBC builds have not been checked.
+- CBC runs with one thread. On the development machine, re-solving every LP of every part without the cache (2026-11-09) gave value files (CSV, JSON, Markdown) byte-identical to the earlier runs. `run_log_*.csv` contain solve times and differ after re-solving; `manifest.json` differs in its time stamps and git state. Other platforms and CBC builds have not been checked.
 - The v1 model alone: `python src/scripts/run_all.py` (REF, C-CN, R-CN; under a minute).
 
 ## Repository layout

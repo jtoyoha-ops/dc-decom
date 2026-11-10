@@ -3,7 +3,7 @@
 All notable changes to DC-DECOM will be documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [2.0.0] — 2026-11-07
+## [2.0.0] — 2026-11-10
 
 Version 2.0.0 is the updated model (DC-DECOM v2) of the doctoral thesis of Jin Toyohara (Graduate School of Policy Science, Ritsumeikan University). Its results differ from those of 1.x and from the values reported in Toyohara & Zhou (2026), *Energies* 19(10), 2485. No 1.0.2 release was made; the fixes of the v1 package are part of 2.0.0.
 
